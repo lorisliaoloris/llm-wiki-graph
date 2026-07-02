@@ -138,6 +138,7 @@ let graphData = null, simulation = null;
 let svg, gRoot, gEdges, gNodes, gLabels;
 let currentClusterId = null, selectedNodeId = null;
 let currentNodes = [], currentEdges = [];
+let pendingRaf = null;  // track pending rAF for cleanup
 const container = document.getElementById('graph-container');
 const tooltip = document.getElementById('tooltip');
 const nodeDetail = document.getElementById('node-detail');
@@ -309,20 +310,31 @@ function goHome() {
 function rebuildGraph() {
   const {width, height} = getContainerSize();
 
-  // Clean up old
-  if (simulation) simulation.stop();
-  if (svg) svg.selectAll('*').remove();
+  // Cancel any pending rAF from previous rebuild
+  if (pendingRaf) { cancelAnimationFrame(pendingRaf); pendingRaf = null; }
+
+  // Clean up old simulation
+  if (simulation) { simulation.stop(); simulation = null; }
+
+  // Remove old zoom listeners (D3 stacks them, don't replace)
+  svg = d3.select('#graph-svg');
+  svg.on('.zoom', null);
+
+  // Clear SVG contents
+  svg.selectAll('*').remove();
   gRoot = null; gEdges = null; gNodes = null; gLabels = null;
 
-  svg = d3.select('#graph-svg')
-    .attr('viewBox', [0, 0, width, height])
-    .attr('width', width).attr('height', height);
+  svg.attr('viewBox', [0, 0, width, height])
+     .attr('width', width).attr('height', height);
 
   const zoom = d3.zoom().scaleExtent([0.12, 5])
     .on('zoom', ev => { if (gRoot) gRoot.attr('transform', ev.transform); });
   svg.call(zoom);
 
   gRoot = svg.append('g');
+  gEdges = gRoot.append('g');
+  gNodes = gRoot.append('g');
+  gLabels = gRoot.append('g');
 
   // Arrow marker
   svg.append('defs').append('marker')
@@ -331,10 +343,6 @@ function rebuildGraph() {
     .attr('markerWidth', 5).attr('markerHeight', 5)
     .attr('orient', 'auto')
     .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', '#565f89');
-
-  gEdges = gRoot.append('g');
-  gNodes = gRoot.append('g');
-  gLabels = gRoot.append('g');
 
   // Use stronger forces for clusters vs detail views
   const isClusterView = !currentClusterId;
@@ -352,24 +360,22 @@ function rebuildGraph() {
   renderElements();
   simulation.on('tick', ticked);
 
-  // Set initial zoom for cluster view (show full graph)
-  requestAnimationFrame(() => {
+  // Set initial zoom transform (deferred via rAF, tracked for cancellation)
+  pendingRaf = requestAnimationFrame(() => {
+    pendingRaf = null;
     const sz = getContainerSize();
     svg.attr('viewBox', [0, 0, sz.width, sz.height])
        .attr('width', sz.width).attr('height', sz.height);
-    simulation.force('center', d3.forceCenter(sz.width / 2, sz.height / 2));
-    simulation.force('x', d3.forceX(sz.width / 2).strength(0.02));
-    simulation.force('y', d3.forceY(sz.height / 2).strength(0.02));
-    simulation.alpha(0.5).restart();
-    if (isClusterView) {
-      svg.call(zoom.transform, d3.zoomIdentity
-        .translate(sz.width / 2, sz.height / 2).scale(0.7)
-        .translate(-sz.width / 2, -sz.height / 2));
-    } else {
-      svg.call(zoom.transform, d3.zoomIdentity
-        .translate(sz.width / 2, sz.height / 2).scale(0.9)
-        .translate(-sz.width / 2, -sz.height / 2));
+    if (simulation) {
+      simulation.force('center', d3.forceCenter(sz.width / 2, sz.height / 2));
+      simulation.force('x', d3.forceX(sz.width / 2).strength(0.02));
+      simulation.force('y', d3.forceY(sz.height / 2).strength(0.02));
+      simulation.alpha(0.5).restart();
     }
+    const scale = isClusterView ? 0.7 : 0.9;
+    svg.call(zoom.transform, d3.zoomIdentity
+      .translate(sz.width / 2, sz.height / 2).scale(scale)
+      .translate(-sz.width / 2, -sz.height / 2));
   });
 }
 
