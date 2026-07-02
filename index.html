@@ -218,14 +218,26 @@ function getNodeRadius(d) {
 
 async function loadGraph() {
   try {
-    const resp = await fetch('graph.json');
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    graphData = await resp.json();
+    const resp = await fetch('graph.json?v=2');
+    if (!resp.ok) throw new Error(`HTTP ${resp.status} fetching graph.json`);
+    const text = await resp.text();
+    try {
+      graphData = JSON.parse(text);
+    } catch(pe) {
+      throw new Error(`JSON parse error: ${pe.message} (first 100 chars: ${text.substring(0,100)})`);
+    }
+    if (!graphData.clusters) throw new Error('graph.json missing "clusters" field (v2 required)');
+    if (!graphData.nodes) throw new Error('graph.json missing "nodes" field');
     document.title = graphData.meta.title;
     showClusters();
   } catch(e) {
-    document.getElementById('graph-container').innerHTML =
-      `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;">❌ 加载失败: ${e.message}</div>`;
+    console.error('LLM Wiki Graph load error:', e);
+    var gc = document.getElementById('graph-container');
+    gc.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;gap:12px;">' +
+      '<div style="font-size:18px;">❌ 加载失败</div>' +
+      '<div style="max-width:500px;text-align:center;line-height:1.6;word-break:break-all;">' + e.message + '</div>' +
+      '<div style="font-size:11px;color:#565f89;">按 F12 打开控制台查看详细错误</div>' +
+      '</div>';
   }
 }
 
@@ -646,7 +658,26 @@ window.addEventListener('keydown', e => {
 });
 
 // Start
-loadGraph();
+window.addEventListener('error', function(e) {
+  console.error('Global error:', e.message, e.filename, e.lineno, e.colno);
+  var gc = document.getElementById('graph-container');
+  if (gc && gc.querySelector('svg')) return; // graph already rendered, ignore
+  if (gc && !gc.querySelector('.load-error')) {
+    gc.innerHTML = '<div class="load-error" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;gap:8px;">' +
+      '<div>❌ 脚本错误</div>' +
+      '<div style="font-size:12px;max-width:500px;text-align:center;">' + e.message + '</div>' +
+      '<div style="font-size:11px;">检查 D3.js 是否加载成功 (d3.v7.min.js)</div>' +
+      '</div>';
+  }
+});
+
+// Check D3 availability
+if (typeof d3 === 'undefined') {
+  document.getElementById('graph-container').innerHTML =
+    '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;">❌ D3.js 加载失败 — 检查 d3.v7.min.js 是否存在</div>';
+} else {
+  loadGraph();
+}
 </script>
 </body>
 </html>
