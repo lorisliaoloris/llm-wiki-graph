@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "知识图谱 · 全量",
-    "description": "从Gbrain自动生成 — 65节点 41连线",
+    "description": "从Gbrain导出 — 71节点 10团 41边",
     "lastUpdated": "2026-07-02",
-    "version": "4.1-linked",
+    "version": "5.0-intel",
     "source": "gbrain-auto-export"
   },
   "clusters": [
@@ -60,6 +60,12 @@
       "label": "Hermes 技巧",
       "summary": "1个页面",
       "color": "#ff7043"
+    },
+    {
+      "id": "情报与报告",
+      "label": "情报与报告",
+      "summary": "跨领域情报研判、技术调研、趋势报告",
+      "color": "#ec407a"
     }
   ],
   "nodes": [
@@ -776,6 +782,72 @@
       "status": "active",
       "tags": [
         "concept"
+      ]
+    },
+    {
+      "id": "soul-shadow-node-ovin",
+      "label": "Shadow Node Ovin",
+      "type": "entity",
+      "cluster": "情报与报告",
+      "summary": "跨领域情报总监",
+      "status": "active",
+      "tags": [
+        "soul"
+      ]
+    },
+    {
+      "id": "skills-deep-intelligence",
+      "label": "Deep Intelligence",
+      "type": "concept",
+      "cluster": "情报与报告",
+      "summary": "AI-to-AI情报升级",
+      "status": "active",
+      "tags": [
+        "skill"
+      ]
+    },
+    {
+      "id": "intelligence-gathering",
+      "label": "Intelligence Gathering",
+      "type": "concept",
+      "cluster": "情报与报告",
+      "summary": "技术情报搜索方法",
+      "status": "active",
+      "tags": [
+        "skill"
+      ]
+    },
+    {
+      "id": "research-ai-agent-scheduling-alternatives-survey",
+      "label": "AI Agent Scheduling",
+      "type": "concept",
+      "cluster": "情报与报告",
+      "summary": "Agent调度方案调研",
+      "status": "active",
+      "tags": [
+        "research"
+      ]
+    },
+    {
+      "id": "research-sysak-comprehensive-report",
+      "label": "SysAK报告",
+      "type": "concept",
+      "cluster": "情报与报告",
+      "summary": "SysAK全面研究",
+      "status": "active",
+      "tags": [
+        "research"
+      ]
+    },
+    {
+      "id": "test-w26-upload",
+      "label": "GitHub Trending W26",
+      "type": "concept",
+      "cluster": "情报与报告",
+      "summary": "GitHub趋势",
+      "status": "active",
+      "tags": [
+        "trending"
       ]
     }
   ],
