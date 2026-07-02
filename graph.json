@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "知识图谱 · 全量",
-    "description": "从Gbrain自动生成 — 68节点 68连线",
+    "description": "从Gbrain自动生成 — 89节点 92连线",
     "lastUpdated": "2026-07-02T15:00:00",
-    "version": "5.0-intel",
+    "version": "4.3-godot",
     "source": "gbrain-auto-export"
   },
   "clusters": [
@@ -66,6 +66,12 @@
       "label": "情报与报告",
       "summary": "跨领域情报研判、技术调研、趋势报告",
       "color": "#ec407a"
+    },
+    {
+      "id": "godot-引擎",
+      "label": "Godot 引擎",
+      "color": "#4fc3f7",
+      "summary": "Godot 4.x 游戏引擎编程书籍、设计模式、架构知识"
     }
   ],
   "nodes": [
@@ -557,7 +563,7 @@
       "id": "reference-godot-automation",
       "label": "Godot自动化",
       "type": "concept",
-      "cluster": "技能与工具",
+      "cluster": "godot-引擎",
       "summary": "[skill] reference/godot-automation",
       "status": "active",
       "tags": [
@@ -816,6 +822,132 @@
       "tags": [
         "research"
       ]
+    },
+    {
+      "id": "books-full-game-development-with-godot-4-and-csharp",
+      "label": "Godot 4 + C#",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-game-development-with-godot-4-and-csharp-cont",
+      "label": "Godot 4 + C# (续)",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-game-development-patterns-with-godot4",
+      "label": "Godot 4 设计模式",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-game-development-patterns-with-godot4-cont",
+      "label": "Godot 4 设计模式(续)",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-game-development-patterns-with-godot",
+      "label": "Godot 3 设计模式",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-godot-engine-game-development-projects",
+      "label": "Godot 3 项目实战",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-godot4-游戏开发项目",
+      "label": "Godot 4 项目实战",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-procedural-generation-in-godot",
+      "label": "Godot 程序化生成",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-game-engine-architecture-volume-i",
+      "label": "游戏引擎架构 Vol.I",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-game-engine-architecture-volume-i-cont",
+      "label": "游戏引擎架构(续)",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-game-programming-patterns-robert-nystrom-著",
+      "label": "游戏编程模式 Nystrom",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "books-full-the-book-of-shaders",
+      "label": "The Book of Shaders",
+      "type": "entity",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "game-patterns-introduction",
+      "label": "设计模式再探",
+      "type": "concept",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "game-patterns-command_pattern",
+      "label": "Command 模式",
+      "type": "concept",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "game-patterns-flyweight_pattern",
+      "label": "Flyweight 享元",
+      "type": "concept",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "game-patterns-event_queue",
+      "label": "Event Queue",
+      "type": "concept",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "game-patterns-component",
+      "label": "Component 组件",
+      "type": "concept",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "game-patterns-game_loop",
+      "label": "Game Loop",
+      "type": "concept",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "game-patterns-data_locality",
+      "label": "Data Locality",
+      "type": "concept",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "game-patterns-double_buffer",
+      "label": "Double Buffer",
+      "type": "concept",
+      "cluster": "godot-引擎"
+    },
+    {
+      "id": "game-patterns-dirty_flag",
+      "label": "Dirty Flag",
+      "type": "concept",
+      "cluster": "godot-引擎"
     }
   ],
   "edges": [
@@ -1199,6 +1331,126 @@
       "source": "three-layers",
       "target": "llm-wiki-philosophy",
       "type": "references"
+    },
+    {
+      "source": "books-full-game-programming-patterns-robert-nystrom-著",
+      "target": "game-patterns-introduction",
+      "type": "references"
+    },
+    {
+      "source": "books-full-game-development-patterns-with-godot4",
+      "target": "game-patterns-command_pattern",
+      "type": "implements"
+    },
+    {
+      "source": "books-full-game-development-patterns-with-godot4",
+      "target": "game-patterns-component",
+      "type": "implements"
+    },
+    {
+      "source": "books-full-game-development-patterns-with-godot4-cont",
+      "target": "game-patterns-event_queue",
+      "type": "implements"
+    },
+    {
+      "source": "books-full-game-development-patterns-with-godot4-cont",
+      "target": "game-patterns-data_locality",
+      "type": "implements"
+    },
+    {
+      "source": "books-full-game-development-patterns-with-godot4",
+      "target": "books-full-game-programming-patterns-robert-nystrom-著",
+      "type": "references"
+    },
+    {
+      "source": "books-full-game-development-patterns-with-godot4-cont",
+      "target": "books-full-game-development-patterns-with-godot4",
+      "type": "builds"
+    },
+    {
+      "source": "books-full-game-development-with-godot-4-and-csharp",
+      "target": "books-full-godot4-游戏开发项目",
+      "type": "complements"
+    },
+    {
+      "source": "books-full-game-development-with-godot-4-and-csharp-cont",
+      "target": "books-full-game-development-with-godot-4-and-csharp",
+      "type": "builds"
+    },
+    {
+      "source": "books-full-game-engine-architecture-volume-i",
+      "target": "books-full-game-programming-patterns-robert-nystrom-著",
+      "type": "references"
+    },
+    {
+      "source": "books-full-game-engine-architecture-volume-i",
+      "target": "game-patterns-data_locality",
+      "type": "references"
+    },
+    {
+      "source": "books-full-game-engine-architecture-volume-i-cont",
+      "target": "books-full-game-engine-architecture-volume-i",
+      "type": "builds"
+    },
+    {
+      "source": "books-full-the-book-of-shaders",
+      "target": "books-full-procedural-generation-in-godot",
+      "type": "complements"
+    },
+    {
+      "source": "books-full-procedural-generation-in-godot",
+      "target": "books-full-godot4-游戏开发项目",
+      "type": "complements"
+    },
+    {
+      "source": "books-full-procedural-generation-in-godot",
+      "target": "game-patterns-dirty_flag",
+      "type": "uses"
+    },
+    {
+      "source": "reference-godot-automation",
+      "target": "books-full-godot4-游戏开发项目",
+      "type": "uses"
+    },
+    {
+      "source": "reference-godot-automation",
+      "target": "books-full-game-development-patterns-with-godot4",
+      "type": "uses"
+    },
+    {
+      "source": "books-full-godot-engine-game-development-projects",
+      "target": "books-full-godot4-游戏开发项目",
+      "type": "builds"
+    },
+    {
+      "source": "books-full-game-development-patterns-with-godot",
+      "target": "books-full-game-development-patterns-with-godot4",
+      "type": "builds"
+    },
+    {
+      "source": "reference-godot-automation",
+      "target": "gbrain",
+      "type": "uses"
+    },
+    {
+      "source": "game-patterns-command_pattern",
+      "target": "game-patterns-event_queue",
+      "type": "complements"
+    },
+    {
+      "source": "game-patterns-component",
+      "target": "game-patterns-flyweight_pattern",
+      "type": "complements"
+    },
+    {
+      "source": "game-patterns-game_loop",
+      "target": "game-patterns-double_buffer",
+      "type": "uses"
+    },
+    {
+      "source": "game-patterns-data_locality",
+      "target": "game-patterns-dirty_flag",
+      "type": "complements"
     }
   ]
 }
