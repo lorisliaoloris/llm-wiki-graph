@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "知识图谱 · 全量",
-    "description": "从 Gbrain 自动生成 — 65节点 10知识团",
+    "description": "从Gbrain自动生成 — 65节点 41连线",
     "lastUpdated": "2026-07-02",
-    "version": "4.0-full",
+    "version": "4.1-linked",
     "source": "gbrain-auto-export"
   },
   "clusters": [
@@ -821,6 +821,210 @@
       "target": "karpathy",
       "type": "references",
       "label": "提出者"
+    },
+    {
+      "source": "design-thinking-cf8",
+      "target": "design-theory-living-with-complexity-norman",
+      "type": "references",
+      "label": "复杂性管理"
+    },
+    {
+      "source": "design-thinking-cf8",
+      "target": "design-theory-gamers-brain-hodent",
+      "type": "references",
+      "label": "玩家认知"
+    },
+    {
+      "source": "design-thinking-cf8",
+      "target": "design-theory-game-feel-swink",
+      "type": "references",
+      "label": "操作手感"
+    },
+    {
+      "source": "design-thinking-cf8",
+      "target": "game-design-cf8-beat-top-v2",
+      "type": "relates",
+      "label": "CF8设计迭代"
+    },
+    {
+      "source": "design-thinking-cf8",
+      "target": "cf8-db-csv-sync-workflow",
+      "type": "relates",
+      "label": "开发管线"
+    },
+    {
+      "source": "design-thinking-cf8",
+      "target": "cf8-db-csv-sync-lessons",
+      "type": "relates",
+      "label": "开发教训"
+    },
+    {
+      "source": "game-design-cf8-beat-top-v2",
+      "target": "design-thinking-cf8",
+      "type": "builds",
+      "label": "CF8实现"
+    },
+    {
+      "source": "design-theory-book-index",
+      "target": "design-theory-art-of-game-design-schell",
+      "type": "indexes",
+      "label": "Schell"
+    },
+    {
+      "source": "design-theory-book-index",
+      "target": "design-theory-game-feel-swink",
+      "type": "indexes",
+      "label": "Swink"
+    },
+    {
+      "source": "design-theory-book-index",
+      "target": "design-theory-gamers-brain-hodent",
+      "type": "indexes",
+      "label": "Hodent"
+    },
+    {
+      "source": "design-theory-book-index",
+      "target": "design-theory-designing-interfaces-tidwell",
+      "type": "indexes",
+      "label": "Tidwell"
+    },
+    {
+      "source": "design-theory-book-index",
+      "target": "design-theory-living-with-complexity-norman",
+      "type": "indexes",
+      "label": "Norman"
+    },
+    {
+      "source": "design-theory-book-index",
+      "target": "design-theory-universal-principles-design-lidwell",
+      "type": "indexes",
+      "label": "Lidwell"
+    },
+    {
+      "source": "design-theory-book-index",
+      "target": "design-theory-game-characteristics",
+      "type": "indexes",
+      "label": "游戏特性"
+    },
+    {
+      "source": "design-theory-book-index",
+      "target": "design-theory-game-mechanics-patterns",
+      "type": "indexes",
+      "label": "游戏机制"
+    },
+    {
+      "source": "design-theory-art-of-game-design-schell",
+      "target": "design-theory-game-feel-swink",
+      "type": "complements",
+      "label": "设计+手感"
+    },
+    {
+      "source": "design-theory-gamers-brain-hodent",
+      "target": "design-theory-game-feel-swink",
+      "type": "complements",
+      "label": "认知+手感"
+    },
+    {
+      "source": "design-thinking-project-soccer-no1",
+      "target": "projects-soccer-no1-puzzle-engine-plan",
+      "type": "defines",
+      "label": "总计划"
+    },
+    {
+      "source": "design-thinking-project-soccer-no1",
+      "target": "projects-soccer-no1-prototype-v2-design",
+      "type": "defines",
+      "label": "原型"
+    },
+    {
+      "source": "projects-soccer-no1-puzzle-engine-plan",
+      "target": "projects-soccer-no1-step1-match-generator",
+      "type": "defines",
+      "label": "步骤1"
+    },
+    {
+      "source": "projects-soccer-no1-puzzle-engine-plan",
+      "target": "projects-soccer-no1-step2-multi-vector-delivered",
+      "type": "defines",
+      "label": "步骤2"
+    },
+    {
+      "source": "projects-soccer-no1-prototype-v2-design",
+      "target": "projects-soccer-no1-distillation-multi-vector",
+      "type": "builds",
+      "label": "蒸馏"
+    },
+    {
+      "source": "projects-soccer-no1-step2-multi-vector-delivered",
+      "target": "projects-soccer-no1-distillation-multi-vector",
+      "type": "builds",
+      "label": "蒸馏"
+    },
+    {
+      "source": "reverse-engineering-reading-list",
+      "target": "reverse-engineering-book-cloud-index",
+      "type": "indexes",
+      "label": "书单"
+    },
+    {
+      "source": "reverse-engineering-cm4-match-engine-full-analysis",
+      "target": "reverse-engineering-cm4-engine-godot-implementation",
+      "type": "builds",
+      "label": "Godot实现"
+    },
+    {
+      "source": "reverse-engineering-cm4-match-engine-full-analysis",
+      "target": "reverse-engineering-cm4-ghidra-output",
+      "type": "builds",
+      "label": "Ghidra"
+    },
+    {
+      "source": "reverse-engineering-cm4-match-engine-full-analysis",
+      "target": "reverse-engineering-cm4-hardcoded-constants",
+      "type": "builds",
+      "label": "常量"
+    },
+    {
+      "source": "reverse-engineering-cm4-match-engine-full-analysis",
+      "target": "reverse-engineering-cm4-formation-impact",
+      "type": "builds",
+      "label": "阵型"
+    },
+    {
+      "source": "reverse-engineering-cm4-match-engine-full-analysis",
+      "target": "reverse-engineering-cm4-commentary-system",
+      "type": "builds",
+      "label": "解说"
+    },
+    {
+      "source": "reverse-engineering-cm4-match-engine-full-analysis",
+      "target": "reverse-engineering-cm4-gaps-urgency-constraints-roles",
+      "type": "builds",
+      "label": "补缺"
+    },
+    {
+      "source": "skills-grill-me",
+      "target": "skills-game-designer-grill",
+      "type": "relates",
+      "label": "盘问"
+    },
+    {
+      "source": "skills-deep-intelligence",
+      "target": "skills-grill-me",
+      "type": "complements",
+      "label": "情报+盘问"
+    },
+    {
+      "source": "inventory-toolchain",
+      "target": "reference-godot-automation",
+      "type": "references",
+      "label": "Godot"
+    },
+    {
+      "source": "skills-game-designer-grill",
+      "target": "design-theory-art-of-game-design-schell",
+      "type": "references",
+      "label": "盘问Schell"
     }
   ]
 }
