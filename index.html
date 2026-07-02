@@ -4,147 +4,87 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LLM Wiki · 知识图谱</title>
-<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="d3.v7.min.js"></script>
 <style>
   :root {
-    --bg: #1a1b26;
-    --surface: #24283b;
-    --text: #c0caf5;
-    --text-dim: #565f89;
-    --accent: #7aa2f7;
-    --border: #3b4261;
+    --bg: #1a1b26; --surface: #24283b; --text: #c0caf5;
+    --text-dim: #565f89; --accent: #7aa2f7; --border: #3b4261;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    height: 100vh;
-    display: flex;
-    overflow: hidden;
+    background: var(--bg); color: var(--text); height: 100vh; display: flex; overflow: hidden;
   }
 
+  /* Sidebar */
   #sidebar {
-    width: 380px; min-width: 380px;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    display: flex; flex-direction: column;
-    z-index: 10;
-    transition: transform 0.3s ease;
+    width: 360px; min-width: 360px; background: var(--surface);
+    border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 10;
   }
-  #sidebar.hidden { transform: translateX(-100%); min-width: 0; width: 0; }
-
   #sidebar-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); }
-  #sidebar-header h1 { font-size: 20px; font-weight: 700; color: var(--accent); }
-  #sidebar-header .subtitle { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  #sidebar-header h1 { font-size: 18px; font-weight: 700; color: var(--accent); }
+  #sidebar-header .subtitle { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
 
-  #search-box { margin: 16px 24px; }
+  #search-box { margin: 12px 24px; }
   #search-input {
-    width: 100%; padding: 10px 14px;
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: 8px; color: var(--text); font-size: 14px; outline: none;
+    width: 100%; padding: 9px 12px; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 13px; outline: none;
   }
   #search-input:focus { border-color: var(--accent); }
-  #search-input::placeholder { color: var(--text-dim); }
 
-  #type-filters {
-    display: flex; flex-wrap: wrap; gap: 6px;
-    padding: 0 24px 16px; border-bottom: 1px solid var(--border);
-  }
-  .filter-btn {
-    padding: 4px 12px; border-radius: 12px;
-    border: 1px solid var(--border); background: var(--bg);
-    color: var(--text-dim); font-size: 12px; cursor: pointer;
-  }
-  .filter-btn:hover { border-color: var(--accent); color: var(--text); }
-  .filter-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  /* Breadcrumb */
+  #breadcrumb { padding: 8px 24px; border-bottom: 1px solid var(--border); font-size: 12px; }
+  #breadcrumb span { color: var(--text-dim); }
+  #breadcrumb a { color: var(--accent); cursor: pointer; text-decoration: none; }
+  #breadcrumb a:hover { text-decoration: underline; }
 
-  #node-detail { flex: 1; overflow-y: auto; padding: 24px; display: none; }
+  #node-detail { flex: 1; overflow-y: auto; padding: 20px 24px; display: none; }
   #node-detail.visible { display: block; }
-  #node-detail .empty-state { color: var(--text-dim); font-size: 14px; text-align: center; margin-top: 60px; line-height: 1.8; }
-
-  .detail-type {
-    display: inline-block; padding: 2px 10px; border-radius: 10px;
-    font-size: 11px; font-weight: 600; margin-bottom: 8px;
-    text-transform: uppercase;
-  }
-  .detail-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-  .detail-summary { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-bottom: 16px; }
-  .detail-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  #node-detail .empty-state { color: var(--text-dim); font-size: 14px; text-align: center; margin-top: 40px; line-height: 1.8; }
+  .detail-type { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; margin-bottom: 8px; }
+  .detail-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .detail-summary { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-bottom: 12px; }
+  .detail-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
   .detail-tag { padding: 2px 8px; border-radius: 4px; background: var(--bg); color: var(--text-dim); font-size: 11px; border: 1px solid var(--border); }
-  .detail-section { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
-  .detail-section h3 { font-size: 13px; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; }
-  .connection-item {
-    display: flex; align-items: center; gap: 8px; padding: 6px 0;
-    font-size: 13px; cursor: pointer; border-radius: 4px;
-  }
+  .detail-section { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .detail-section h3 { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .connection-item { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 13px; cursor: pointer; border-radius: 4px; }
   .connection-item:hover { background: var(--bg); }
-  .connection-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .connection-label { font-size: 11px; color: var(--text-dim); flex-shrink: 0; }
+  .connection-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .connection-label { font-size: 10px; color: var(--text-dim); flex-shrink: 0; }
 
-  #stats-bar {
-    padding: 12px 24px; border-top: 1px solid var(--border);
-    font-size: 11px; color: var(--text-dim);
-    display: flex; justify-content: space-between;
-  }
+  #stats-bar { padding: 10px 24px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-dim); display: flex; justify-content: space-between; }
 
   /* Graph */
   #graph-container { flex: 1; position: relative; cursor: grab; }
   #graph-container:active { cursor: grabbing; }
   #graph-svg { width: 100%; height: 100%; }
+  .node-label { font-size: 11px; fill: var(--text); pointer-events: none; text-anchor: middle; font-family: inherit; }
+  .cluster-label { font-size: 15px; fill: var(--text); pointer-events: none; text-anchor: middle; font-family: inherit; font-weight: 600; }
+  .edge-label { font-size: 9px; fill: var(--text-dim); pointer-events: none; text-anchor: middle; }
 
-  .node-label {
-    font-size: 11px; fill: var(--text); pointer-events: none;
-    text-anchor: middle; dominant-baseline: central;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  /* Zoom hint */
+  #zoom-hint {
+    position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+    padding: 6px 16px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border);
+    font-size: 12px; color: var(--text-dim); opacity: 0; transition: opacity 0.4s;
+    pointer-events: none;
   }
-  .edge-label {
-    font-size: 10px; fill: var(--text-dim); pointer-events: none;
-    text-anchor: middle;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
-  }
+  #zoom-hint.show { opacity: 1; }
 
-  /* Loading */
-  #loading {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; color: var(--text-dim); z-index: 3;
-  }
-  #loading.hidden { display: none; }
-
-  /* Controls */
-  #zoom-controls { position: absolute; bottom: 24px; right: 24px; display: flex; flex-direction: column; gap: 4px; }
+  #zoom-controls { position: absolute; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 4px; }
   .zoom-btn {
-    width: 36px; height: 36px; border-radius: 8px;
-    border: 1px solid var(--border); background: var(--surface);
-    color: var(--text); font-size: 18px; cursor: pointer;
+    width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text); font-size: 16px; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
   }
   .zoom-btn:hover { background: var(--bg); border-color: var(--accent); }
 
-  #toggle-sidebar {
-    position: absolute; top: 16px; left: 16px;
-    width: 36px; height: 36px; border-radius: 8px;
-    border: 1px solid var(--border); background: var(--surface);
-    color: var(--text); font-size: 16px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; z-index: 5;
-  }
-  #toggle-sidebar:hover { background: var(--bg); border-color: var(--accent); }
-
   #tooltip {
-    position: absolute; padding: 8px 12px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 8px; font-size: 13px; pointer-events: none;
-    opacity: 0; max-width: 280px; z-index: 20;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-  }
-
-  @media (max-width: 768px) {
-    #sidebar { width: 100%; min-width: 100%; position: absolute; height: 40%; bottom: 0; border-right: none; border-top: 1px solid var(--border); }
-    #sidebar.hidden { transform: translateY(100%); }
-    #toggle-sidebar { top: auto; bottom: calc(40% + 16px); }
+    position: absolute; padding: 8px 12px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; font-size: 12px; pointer-events: none; opacity: 0;
+    max-width: 260px; z-index: 20; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    line-height: 1.5;
   }
 </style>
 </head>
@@ -153,45 +93,37 @@
 <div id="sidebar">
   <div id="sidebar-header">
     <h1>🧠 LLM Wiki · 知识图谱</h1>
-    <div class="subtitle">持续编译的认知结构 | LLM 维护 · 人定方向</div>
+    <div class="subtitle">点击知识团钻取查看内部关系 | LLM 维护 · 人定方向</div>
   </div>
   <div id="search-box">
     <input type="text" id="search-input" placeholder="搜索节点...">
   </div>
-  <div id="type-filters">
-    <button class="filter-btn active" data-type="all">全部</button>
-    <button class="filter-btn" data-type="concept">概念</button>
-    <button class="filter-btn" data-type="entity">实体</button>
-    <button class="filter-btn" data-type="question">问题</button>
-    <button class="filter-btn" data-type="trend">趋势</button>
-    <button class="filter-btn" data-type="index">索引</button>
+  <div id="breadcrumb">
+    <a id="breadcrumb-home" onclick="goHome()">图谱总览</a>
   </div>
-  <div id="node-detail">
-    <div class="empty-state">👆 点击图谱中的节点<br>查看详细信息与关联</div>
-  </div>
+  <div id="node-detail"><div class="empty-state">👆 点击节点查看详情</div></div>
   <div id="stats-bar">
-    <span id="node-count">0 节点</span>
-    <span id="edge-count">0 连接</span>
+    <span id="node-count">—</span>
+    <span id="edge-count">—</span>
   </div>
 </div>
 
 <div id="graph-container">
-  <div id="loading">加载知识图谱...</div>
   <svg id="graph-svg"></svg>
-  <button id="toggle-sidebar" title="切换侧边栏">☰</button>
+  <div id="zoom-hint">🖱️ 点击知识团钻取 &nbsp;|&nbsp; 滚轮缩放 &nbsp;|&nbsp; 拖拽平移</div>
   <div id="zoom-controls">
     <button class="zoom-btn" id="zoom-in">+</button>
     <button class="zoom-btn" id="zoom-out">−</button>
-    <button class="zoom-btn" id="zoom-reset">⌂</button>
+    <button class="zoom-btn" id="zoom-reset" title="重置视图">⌂</button>
   </div>
   <div id="tooltip"></div>
 </div>
 
 <script>
-const TYPE_COLORS = { concept:'#4fc3f7', entity:'#9ccc65', trend:'#ffb74d', question:'#ef5350', index:'#b39ddb' };
-const TYPE_LABELS = { concept:'概念', entity:'实体', trend:'趋势', question:'问题', index:'索引' };
+const TYPE_COLORS = { concept:'#4fc3f7', entity:'#9ccc65', trend:'#ffb74d', question:'#ef5350', index:'#b39ddb', cluster:'#7aa2f7' };
+const TYPE_LABELS = { concept:'概念', entity:'实体', trend:'趋势', question:'问题', index:'索引', cluster:'知识团' };
 const EDGE_STYLES = {
-  defines:{dash:'',w:2,o:0.7}, references:{dash:'6,3',w:1.5,o:0.5},
+  defines:{dash:'',w:2.2,o:0.7}, references:{dash:'6,3',w:1.5,o:0.5},
   raises:{dash:'4,4',w:1.5,o:0.6}, implements:{dash:'',w:1.5,o:0.5},
   implemented_by:{dash:'',w:1.5,o:0.4}, visualized_by:{dash:'8,4',w:2,o:0.6},
   uses:{dash:'3,3',w:1,o:0.4}, maintains:{dash:'3,3',w:1.5,o:0.5},
@@ -202,28 +134,87 @@ const EDGE_STYLES = {
 
 let graphData = null, simulation = null;
 let svg, gRoot, gEdges, gNodes, gLabels;
-let currentFilter = 'all', selectedNodeId = null, sidebarVisible = true;
-
+let currentClusterId = null, selectedNodeId = null;
+let currentNodes = [], currentEdges = [];
 const container = document.getElementById('graph-container');
 const tooltip = document.getElementById('tooltip');
-const sidebar = document.getElementById('sidebar');
 const nodeDetail = document.getElementById('node-detail');
 const searchInput = document.getElementById('search-input');
-const loading = document.getElementById('loading');
+const breadcrumb = document.getElementById('breadcrumb');
+const zoomHint = document.getElementById('zoom-hint');
+const nodeCount = document.getElementById('node-count');
+const edgeCount = document.getElementById('edge-count');
 
-function getContainerSize() {
-  const w = container.clientWidth || window.innerWidth - 380;
-  const h = container.clientHeight || window.innerHeight;
-  return { width: Math.max(w, 400), height: Math.max(h, 300) };
+// ── Data helpers ──
+
+function getClusterNodes(cid) {
+  return graphData.nodes.filter(n => n.cluster === cid);
+}
+
+function getClusterEdges(cid) {
+  const nodeIds = new Set(getClusterNodes(cid).map(n => n.id));
+  return graphData.edges.filter(e => nodeIds.has(e.source) && nodeIds.has(e.target));
+}
+
+function getCrossEdges(cid) {
+  // Edges where one endpoint is in this cluster and the other is outside
+  const nodeIds = new Set(getClusterNodes(cid).map(n => n.id));
+  return graphData.edges.filter(e =>
+    (nodeIds.has(e.source) && !nodeIds.has(e.target)) ||
+    (nodeIds.has(e.target) && !nodeIds.has(e.source))
+  );
+}
+
+function buildClusterNodes() {
+  // Top-level: one node per cluster + size based on child count
+  return graphData.clusters.map(c => {
+    const children = getClusterNodes(c.id);
+    return {
+      id: c.id,
+      label: c.label,
+      type: 'cluster',
+      summary: c.summary,
+      color: c.color,
+      size: 30 + children.length * 8,
+      childCount: children.length
+    };
+  });
+}
+
+function buildClusterEdges() {
+  // Edges between clusters: derived from cross-cluster edges between their children
+  const clusterMap = {};
+  graphData.nodes.forEach(n => { clusterMap[n.id] = n.cluster; });
+
+  const pairKey = (a, b) => a < b ? `${a}|||${b}` : `${b}|||${a}`;
+  const pairData = {};
+
+  graphData.edges.forEach(e => {
+    const ca = clusterMap[e.source], cb = clusterMap[e.target];
+    if (!ca || !cb || ca === cb) return;
+    const key = pairKey(ca, cb);
+    if (!pairData[key]) pairData[key] = { source: ca, target: cb, edges: [] };
+    pairData[key].edges.push(e);
+  });
+
+  return Object.values(pairData).map(pd => ({
+    source: pd.source,
+    target: pd.target,
+    type: 'relates',
+    label: `${pd.edges.length}条连接`,
+    count: pd.edges.length
+  }));
 }
 
 function getNodeRadius(d) {
-  if (!graphData) return 12;
-  const deg = graphData.edges.filter(e =>
-    (e.source?.id||e.source)===d.id || (e.target?.id||e.target)===d.id
+  if (d.type === 'cluster') return d.size || 30;
+  const deg = currentEdges.filter(e =>
+    (e.source?.id || e.source) === d.id || (e.target?.id || e.target) === d.id
   ).length;
-  return Math.min(10 + deg*2.5, 30);
+  return Math.min(8 + deg * 2.5, 24);
 }
+
+// ── Load & Init ──
 
 async function loadGraph() {
   try {
@@ -231,292 +222,430 @@ async function loadGraph() {
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     graphData = await resp.json();
     document.title = graphData.meta.title;
-    document.getElementById('node-count').textContent = `${graphData.nodes.length} 节点`;
-    document.getElementById('edge-count').textContent = `${graphData.edges.length} 连接`;
-    loading.classList.add('hidden');
-    initGraph();
+    showClusters();
   } catch(e) {
-    loading.innerHTML = `❌ 加载失败: ${e.message}<br><small>检查 graph.json 是否存在</small>`;
+    document.getElementById('graph-container').innerHTML =
+      `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;">❌ 加载失败: ${e.message}</div>`;
   }
 }
 
-function initGraph() {
+// ── Views ──
+
+function showClusters() {
+  currentClusterId = null;
+  selectedNodeId = null;
+  currentNodes = buildClusterNodes();
+  currentEdges = buildClusterEdges();
+
+  nodeCount.textContent = `${currentNodes.length} 知识团`;
+  edgeCount.textContent = `${currentEdges.length} 团间连接`;
+  breadcrumb.innerHTML = '<span style="color:var(--accent);font-weight:600;">图谱总览</span>';
+  nodeDetail.innerHTML = '<div class="empty-state">👆 点击知识团<br>钻取查看内部节点与关系</div>';
+  nodeDetail.classList.remove('visible');
+
+  rebuildGraph();
+  zoomHint.classList.add('show');
+  setTimeout(() => zoomHint.classList.remove('show'), 5000);
+}
+
+function showClusterDetail(clusterId) {
+  const cluster = graphData.clusters.find(c => c.id === clusterId);
+  if (!cluster) return;
+
+  currentClusterId = clusterId;
+  selectedNodeId = null;
+  currentNodes = getClusterNodes(clusterId);
+
+  // Internal edges + ghost nodes for cross-cluster connections
+  currentEdges = getClusterEdges(clusterId);
+  const crossEdges = getCrossEdges(clusterId);
+  const existingIds = new Set(currentNodes.map(n => n.id));
+
+  // Add ghost nodes for external connections
+  crossEdges.forEach(e => {
+    const extId = existingIds.has(e.source) ? e.target : e.source;
+    if (!currentNodes.find(n => n.id === extId)) {
+      const extNode = graphData.nodes.find(n => n.id === extId);
+      if (extNode) {
+        currentNodes.push({ ...extNode, _ghost: true });
+      }
+    }
+    currentEdges.push(e);
+  });
+
+  nodeCount.textContent = `${currentNodes.filter(n => !n._ghost).length} 节点`;
+  edgeCount.textContent = `${currentEdges.length} 连接`;
+  breadcrumb.innerHTML = `<a onclick="showClusters()">图谱总览</a> <span>›</span> <span style="color:var(--accent);font-weight:600;">${cluster.label}</span>`;
+  nodeDetail.innerHTML = '<div class="empty-state">👆 点击节点查看详情<br><small style="color:var(--text-dim)">半透明节点来自其他知识团</small></div>';
+  nodeDetail.classList.remove('visible');
+
+  rebuildGraph();
+}
+
+function goHome() {
+  if (currentClusterId) showClusters();
+}
+
+// ── Graph rendering ──
+
+function rebuildGraph() {
   const {width, height} = getContainerSize();
+
+  // Clean up old
+  if (simulation) simulation.stop();
+  svg.selectAll('*').remove();
+  gRoot = null; gEdges = null; gNodes = null; gLabels = null;
+
   svg = d3.select('#graph-svg')
-    .attr('viewBox', [0,0,width,height])
+    .attr('viewBox', [0, 0, width, height])
     .attr('width', width).attr('height', height);
 
-  const zoom = d3.zoom().scaleExtent([0.15,4])
-    .on('zoom', ev => gRoot.attr('transform', ev.transform));
+  const zoom = d3.zoom().scaleExtent([0.12, 5])
+    .on('zoom', ev => { if (gRoot) gRoot.attr('transform', ev.transform); });
   svg.call(zoom);
 
   gRoot = svg.append('g');
 
+  // Arrow marker
   svg.append('defs').append('marker')
-    .attr('id','arrow').attr('viewBox','0 -5 10 10')
-    .attr('refX',28).attr('refY',0)
-    .attr('markerWidth',6).attr('markerHeight',6)
-    .attr('orient','auto')
-    .append('path').attr('d','M0,-5L10,0L0,5').attr('fill','#565f89');
+    .attr('id', 'arrow').attr('viewBox', '0 -5 10 10')
+    .attr('refX', 26).attr('refY', 0)
+    .attr('markerWidth', 5).attr('markerHeight', 5)
+    .attr('orient', 'auto')
+    .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', '#565f89');
 
   gEdges = gRoot.append('g');
   gNodes = gRoot.append('g');
   gLabels = gRoot.append('g');
 
-  simulation = d3.forceSimulation(graphData.nodes)
-    .force('link', d3.forceLink(graphData.edges).id(d=>d.id).distance(200))
-    .force('charge', d3.forceManyBody().strength(-900))
-    .force('center', d3.forceCenter(width/2, height/2))
-    .force('collision', d3.forceCollide().radius(d => getNodeRadius(d) + 35))
-    .force('x', d3.forceX(width/2).strength(0.01))
-    .force('y', d3.forceY(height/2).strength(0.01));
+  // Use stronger forces for clusters vs detail views
+  const isClusterView = !currentClusterId;
+  const linkDist = isClusterView ? 300 : 180;
+  const chargeStr = isClusterView ? -1200 : -700;
 
-  renderGraph();
+  simulation = d3.forceSimulation(currentNodes)
+    .force('link', d3.forceLink(currentEdges).id(d => d.id).distance(linkDist))
+    .force('charge', d3.forceManyBody().strength(chargeStr))
+    .force('center', d3.forceCenter(width / 2, height / 2))
+    .force('collision', d3.forceCollide().radius(d => getNodeRadius(d) + 40))
+    .force('x', d3.forceX(width / 2).strength(0.02))
+    .force('y', d3.forceY(height / 2).strength(0.02));
+
+  renderElements();
   simulation.on('tick', ticked);
 
+  // Set initial zoom for cluster view (show full graph)
   requestAnimationFrame(() => {
     const sz = getContainerSize();
-    svg.attr('viewBox',[0,0,sz.width,sz.height]).attr('width',sz.width).attr('height',sz.height);
-    simulation.force('center', d3.forceCenter(sz.width/2, sz.height/2));
-    simulation.force('x', d3.forceX(sz.width/2).strength(0.01));
-    simulation.force('y', d3.forceY(sz.height/2).strength(0.01));
+    svg.attr('viewBox', [0, 0, sz.width, sz.height])
+       .attr('width', sz.width).attr('height', sz.height);
+    simulation.force('center', d3.forceCenter(sz.width / 2, sz.height / 2));
+    simulation.force('x', d3.forceX(sz.width / 2).strength(0.02));
+    simulation.force('y', d3.forceY(sz.height / 2).strength(0.02));
     simulation.alpha(0.5).restart();
-    svg.call(zoom.transform, d3.zoomIdentity
-      .translate(sz.width/2, sz.height/2).scale(0.8)
-      .translate(-sz.width/2, -sz.height/2));
+    if (isClusterView) {
+      svg.call(zoom.transform, d3.zoomIdentity
+        .translate(sz.width / 2, sz.height / 2).scale(0.7)
+        .translate(-sz.width / 2, -sz.height / 2));
+    } else {
+      svg.call(zoom.transform, d3.zoomIdentity
+        .translate(sz.width / 2, sz.height / 2).scale(0.9)
+        .translate(-sz.width / 2, -sz.height / 2));
+    }
   });
 }
 
-function renderGraph() {
-  const filteredNodes = currentFilter==='all'
-    ? graphData.nodes
-    : graphData.nodes.filter(n=>n.type===currentFilter);
-  const fnIds = new Set(filteredNodes.map(n=>n.id));
-  const filteredEdges = graphData.edges.filter(e=>
-    fnIds.has(e.source?.id||e.source) && fnIds.has(e.target?.id||e.target));
+function renderElements() {
+  const isClusterView = !currentClusterId;
 
   // Edges
   const eSel = gEdges.selectAll('g.edge-group')
-    .data(filteredEdges, d=>`${d.source?.id||d.source}-${d.target?.id||d.target}-${d.type}`);
-  const eEnt = eSel.enter().append('g').attr('class','edge-group');
-  eEnt.append('line').attr('class','edge-line').attr('stroke','#3b4261').attr('stroke-opacity',0.5).attr('stroke-width',1.5).attr('marker-end','url(#arrow)');
-  eEnt.append('text').attr('class','edge-label').attr('dy',-4);
+    .data(currentEdges, d => `${d.source?.id || d.source}-${d.target?.id || d.target}-${d.type}`);
+  const eEnt = eSel.enter().append('g').attr('class', 'edge-group');
+  eEnt.append('line').attr('class', 'edge-line')
+    .attr('stroke', '#3b4261').attr('stroke-opacity', 0.4)
+    .attr('stroke-width', 1.5).attr('marker-end', 'url(#arrow)');
+  eEnt.append('text').attr('class', 'edge-label').attr('dy', -4);
   eSel.exit().remove();
 
   const eMrg = eSel.merge(eEnt);
   eMrg.select('.edge-line')
-    .attr('stroke', d=>{
-      const s=d.source?.id||d.source, t=d.target?.id||d.target;
-      return (s===selectedNodeId||t===selectedNodeId)?'#7aa2f7':'#3b4261';
+    .attr('stroke', d => {
+      const s = d.source?.id || d.source, t = d.target?.id || d.target;
+      return (s === selectedNodeId || t === selectedNodeId) ? '#7aa2f7' : '#3b4261';
     })
-    .attr('stroke-opacity', d=>{
-      if(!selectedNodeId) return 0.5;
-      const s=d.source?.id||d.source, t=d.target?.id||d.target;
-      return (s===selectedNodeId||t===selectedNodeId)?0.8:0.12;
+    .attr('stroke-opacity', d => {
+      if (!selectedNodeId) return isClusterView ? 0.6 : 0.4;
+      const s = d.source?.id || d.source, t = d.target?.id || d.target;
+      return (s === selectedNodeId || t === selectedNodeId) ? 0.8 : 0.08;
     })
-    .attr('stroke-width', d=>{
-      const s=d.source?.id||d.source, t=d.target?.id||d.target;
-      if(s===selectedNodeId||t===selectedNodeId) return 2.5;
-      return EDGE_STYLES[d.type]?.w||1.5;
+    .attr('stroke-width', d => {
+      const s = d.source?.id || d.source, t = d.target?.id || d.target;
+      if (s === selectedNodeId || t === selectedNodeId) return 2.5;
+      if (isClusterView) return Math.min(d.count * 1.5 || 1.5, 5);
+      return EDGE_STYLES[d.type]?.w || 1.5;
     })
-    .attr('stroke-dasharray', d=>EDGE_STYLES[d.type]?.dash||'');
+    .attr('stroke-dasharray', d => EDGE_STYLES[d.type]?.dash || '');
   eMrg.select('.edge-label')
-    .text(d=>d.label||'')
-    .attr('fill', d=>{
-      const s=d.source?.id||d.source, t=d.target?.id||d.target;
-      return (s===selectedNodeId||t===selectedNodeId)?'#7aa2f7':'#565f89';
+    .text(d => d.label || '')
+    .attr('fill', d => {
+      const s = d.source?.id || d.source, t = d.target?.id || d.target;
+      return (s === selectedNodeId || t === selectedNodeId) ? '#7aa2f7' : '#565f89';
     });
 
   // Nodes
-  const nSel = gNodes.selectAll('g.node-group').data(filteredNodes, d=>d.id);
-  const nEnt = nSel.enter().append('g').attr('class','node-group').attr('cursor','pointer')
-    .call(d3.drag().on('start',dragS).on('drag',dragD).on('end',dragE));
-  nEnt.append('circle').attr('r',d=>getNodeRadius(d))
-    .attr('fill',d=>TYPE_COLORS[d.type]||'#888').attr('stroke','#1a1b26').attr('stroke-width',2);
-  nEnt.on('click',(ev,d)=>selectNode(d))
-    .on('mouseenter',(ev,d)=>showTooltip(ev,d))
-    .on('mouseleave',hideTooltip);
+  const nSel = gNodes.selectAll('g.node-group').data(currentNodes, d => d.id);
+  const nEnt = nSel.enter().append('g').attr('class', 'node-group').attr('cursor', 'pointer')
+    .call(d3.drag().on('start', dragS).on('drag', dragD).on('end', dragE));
+  nEnt.append('circle')
+    .attr('r', d => getNodeRadius(d))
+    .attr('fill', d => d.color || TYPE_COLORS[d.type] || '#888')
+    .attr('stroke', '#1a1b26').attr('stroke-width', 2.5);
+  nEnt.on('click', (ev, d) => selectNode(d))
+    .on('mouseenter', (ev, d) => showTooltip(ev, d))
+    .on('mouseleave', hideTooltip);
   nSel.exit().remove();
 
   const nMrg = nSel.merge(nEnt);
   nMrg.select('circle')
-    .attr('r',d=>getNodeRadius(d))
-    .attr('fill',d=>TYPE_COLORS[d.type]||'#888')
-    .attr('stroke',d=>d.id===selectedNodeId?'#e0e0e0':'#1a1b26')
-    .attr('stroke-width',d=>d.id===selectedNodeId?3:2)
-    .attr('opacity', d=>{
-      if(!selectedNodeId) return 1;
-      if(d.id===selectedNodeId) return 1;
-      const conn = graphData.edges.some(e=>
-        ((e.source?.id||e.source)===selectedNodeId&&(e.target?.id||e.target)===d.id)||
-        ((e.target?.id||e.target)===selectedNodeId&&(e.source?.id||e.source)===d.id));
-      return conn?0.7:0.15;
+    .attr('r', d => getNodeRadius(d))
+    .attr('fill', d => d.color || TYPE_COLORS[d.type] || '#888')
+    .attr('stroke', d => d.id === selectedNodeId ? '#fff' : '#1a1b26')
+    .attr('stroke-width', d => d.id === selectedNodeId ? 3 : 2.5)
+    .attr('opacity', d => {
+      if (d._ghost) return 0.35;
+      if (!selectedNodeId) return 1;
+      if (d.id === selectedNodeId) return 1;
+      const conn = currentEdges.some(e =>
+        ((e.source?.id || e.source) === selectedNodeId && (e.target?.id || e.target) === d.id) ||
+        ((e.target?.id || e.target) === selectedNodeId && (e.source?.id || e.source) === d.id));
+      return conn ? 0.6 : 0.12;
     });
 
   // Labels
-  const lSel = gLabels.selectAll('text.node-label').data(filteredNodes, d=>d.id);
-  lSel.enter().append('text').attr('class','node-label').text(d=>d.label);
+  const lSel = gLabels.selectAll('text.node-label').data(currentNodes, d => d.id);
+  const lEnt = lSel.enter().append('text').attr('class', d => d.type === 'cluster' ? 'cluster-label' : 'node-label');
+  lEnt.text(d => d.label);
   lSel.exit().remove();
-  lSel.merge(lSel.enter()).text(d=>d.label)
-    .attr('opacity', d=>{
-      if(!selectedNodeId) return 1;
-      if(d.id===selectedNodeId) return 1;
-      const conn = graphData.edges.some(e=>
-        ((e.source?.id||e.source)===selectedNodeId&&(e.target?.id||e.target)===d.id)||
-        ((e.target?.id||e.target)===selectedNodeId&&(e.source?.id||e.source)===d.id));
-      return conn?0.7:0.15;
+  lSel.merge(lEnt).text(d => d.label)
+    .attr('opacity', d => {
+      if (d._ghost) return 0.35;
+      if (!selectedNodeId) return 1;
+      if (d.id === selectedNodeId) return 1;
+      const conn = currentEdges.some(e =>
+        ((e.source?.id || e.source) === selectedNodeId && (e.target?.id || e.target) === d.id) ||
+        ((e.target?.id || e.target) === selectedNodeId && (e.source?.id || e.source) === d.id));
+      return conn ? 0.6 : 0.12;
     });
 
-  simulation.nodes(filteredNodes);
-  simulation.force('link').links(filteredEdges);
+  simulation.nodes(currentNodes);
+  simulation.force('link').links(currentEdges);
   simulation.alpha(0.5).restart();
 }
 
+// ── Tick ──
+
 function ticked() {
   gEdges.selectAll('g.edge-group')
-    .attr('transform', d=>{
-      const sx=d.source.x, sy=d.source.y, tx=d.target.x, ty=d.target.y;
-      const a = Math.atan2(ty-sy, tx-sx)*180/Math.PI;
-      return `translate(${isNaN(sx)?0:sx},${isNaN(sy)?0:sy}) rotate(${isNaN(a)?0:a})`;
+    .attr('transform', d => {
+      const sx = d.source.x, sy = d.source.y, tx = d.target.x, ty = d.target.y;
+      const a = Math.atan2(ty - sy, tx - sx) * 180 / Math.PI;
+      return `translate(${isNaN(sx) ? 0 : sx},${isNaN(sy) ? 0 : sy}) rotate(${isNaN(a) ? 0 : a})`;
     });
   gEdges.selectAll('.edge-line')
-    .attr('x2', d=>{
-      const dx=(d.target.x||0)-(d.source.x||0), dy=(d.target.y||0)-(d.source.y||0);
-      const len = Math.sqrt(dx*dx+dy*dy);
-      return isNaN(len)?50:len-getNodeRadius(d.target)-5;
+    .attr('x2', d => {
+      const dx = (d.target.x || 0) - (d.source.x || 0);
+      const dy = (d.target.y || 0) - (d.source.y || 0);
+      const len = Math.sqrt(dx * dx + dy * dy);
+      return isNaN(len) ? 50 : len - getNodeRadius(d.target) - 5;
     });
   gEdges.selectAll('.edge-label')
-    .attr('x', d=>{
-      const dx=(d.target.x||0)-(d.source.x||0), dy=(d.target.y||0)-(d.source.y||0);
-      const len = Math.sqrt(dx*dx+dy*dy);
-      return isNaN(len)?25:len/2;
+    .attr('x', d => {
+      const dx = (d.target.x || 0) - (d.source.x || 0);
+      const dy = (d.target.y || 0) - (d.source.y || 0);
+      const len = Math.sqrt(dx * dx + dy * dy);
+      return isNaN(len) ? 25 : len / 2;
     });
   gNodes.selectAll('g.node-group')
-    .attr('transform', d=>`translate(${isNaN(d.x)?0:d.x},${isNaN(d.y)?0:d.y})`);
-  gLabels.selectAll('text.node-label')
-    .attr('x', d=>isNaN(d.x)?0:d.x)
-    .attr('y', d=>(isNaN(d.y)?0:d.y)+getNodeRadius(d)+14);
+    .attr('transform', d => `translate(${isNaN(d.x) ? 0 : d.x},${isNaN(d.y) ? 0 : d.y})`);
+  gLabels.selectAll('text')
+    .attr('x', d => isNaN(d.x) ? 0 : d.x)
+    .attr('y', d => (isNaN(d.y) ? 0 : d.y) + getNodeRadius(d) + 13);
 }
 
-function dragS(ev,d) { if(!ev.active) simulation.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; }
-function dragD(ev,d) { d.fx=ev.x; d.fy=ev.y; }
-function dragE(ev,d) { if(!ev.active) simulation.alphaTarget(0); d.fx=null; d.fy=null; }
+// ── Drag ──
+
+function dragS(ev, d) { if (!ev.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; }
+function dragD(ev, d) { d.fx = ev.x; d.fy = ev.y; }
+function dragE(ev, d) { if (!ev.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }
+
+// ── Selection ──
 
 function selectNode(d) {
-  selectedNodeId = (selectedNodeId===d.id)?null:d.id;
-  renderGraph();
-  selectedNodeId?showNodeDetail(d):showEmptyDetail();
+  if (d.type === 'cluster') {
+    // Drill down into cluster
+    showClusterDetail(d.id);
+    return;
+  }
+
+  if (d._ghost) {
+    // Clicked a ghost node: navigate to its cluster
+    const realNode = graphData.nodes.find(n => n.id === d.id);
+    if (realNode && realNode.cluster) {
+      showClusterDetail(realNode.cluster);
+      setTimeout(() => {
+        selectedNodeId = d.id;
+        highlightAndShowDetail(d.id);
+      }, 800);
+    }
+    return;
+  }
+
+  selectedNodeId = (selectedNodeId === d.id) ? null : d.id;
+  renderElements();
+  selectedNodeId ? highlightAndShowDetail(d.id) : showEmptyDetail();
 }
 
-function showNodeDetail(d) {
-  const conns = graphData.edges.filter(e=>
-    (e.source?.id||e.source)===d.id||(e.target?.id||e.target)===d.id);
-  const c = TYPE_COLORS[d.type]||'#888';
-  const tl = TYPE_LABELS[d.type]||d.type;
-  const st = {active:'活跃',thin:'待补充',stale:'可能过时',candidate:'候选',merged:'已合并'};
+function highlightAndShowDetail(nodeId) {
+  const d = currentNodes.find(n => n.id === nodeId);
+  if (!d) return;
+
+  const conns = currentEdges.filter(e =>
+    (e.source?.id || e.source) === d.id || (e.target?.id || e.target) === d.id);
+  const c = d.color || TYPE_COLORS[d.type] || '#888';
+  const tl = TYPE_LABELS[d.type] || d.type;
+  const st = { active: '活跃', thin: '待补充', stale: '可能过时', candidate: '候选', merged: '已合并' };
 
   let h = `<span class="detail-type" style="background:${c}22;color:${c}">${tl}</span>
     <div class="detail-title">${d.label}</div>
-    <div class="detail-summary">${d.summary||''}</div>`;
-  if(d.tags?.length) h+=`<div class="detail-meta">${d.tags.map(t=>`<span class="detail-tag">#${t}</span>`).join('')}</div>`;
-  if(d.source) h+=`<div class="detail-meta"><span class="detail-tag">📎 ${d.source}</span></div>`;
-  if(d.status) h+=`<div class="detail-meta"><span class="detail-tag">● ${st[d.status]||d.status}</span></div>`;
-  if(conns.length){
-    h+='<div class="detail-section"><h3>关联节点</h3>';
-    conns.forEach(e=>{
-      const isSrc=(e.source?.id||e.source)===d.id;
-      const oid=isSrc?(e.target?.id||e.target):(e.source?.id||e.source);
-      const on=graphData.nodes.find(n=>n.id===oid);
-      if(on) h+=`<div class="connection-item" onclick="navigateToNode('${oid}')">
-        <span class="connection-dot" style="background:${TYPE_COLORS[on.type]||'#888'}"></span>
-        <span>${on.label}</span>
-        <span class="connection-label">${isSrc?(e.label||e.type):'← '+(e.label||e.type)}</span></div>`;
+    <div class="detail-summary">${d.summary || ''}</div>`;
+  if (d.tags?.length) h += `<div class="detail-meta">${d.tags.map(t => `<span class="detail-tag">#${t}</span>`).join('')}</div>`;
+  if (d.source) h += `<div class="detail-meta"><span class="detail-tag">📎 ${d.source}</span></div>`;
+  if (d.status) h += `<div class="detail-meta"><span class="detail-tag">● ${st[d.status] || d.status}</span></div>`;
+  if (d._ghost) h += `<div class="detail-meta"><span class="detail-tag" style="border-color:#ffb74d;color:#ffb74d;">⤤ 来自其他知识团</span></div>`;
+
+  if (conns.length) {
+    h += '<div class="detail-section"><h3>关联节点</h3>';
+    conns.forEach(e => {
+      const isSrc = (e.source?.id || e.source) === d.id;
+      const oid = isSrc ? (e.target?.id || e.target) : (e.source?.id || e.source);
+      const on = currentNodes.find(n => n.id === oid);
+      if (on) {
+        const oc = on.color || TYPE_COLORS[on.type] || '#888';
+        h += `<div class="connection-item" onclick="navigateToNode('${oid}')">
+          <span class="connection-dot" style="background:${oc};opacity:${on._ghost?0.4:1}"></span>
+          <span style="opacity:${on._ghost?0.5:1}">${on.label}</span>
+          <span class="connection-label">${isSrc ? (e.label || e.type) : '← ' + (e.label || e.type)}</span>
+          ${on._ghost ? '<span class="connection-label" style="color:#ffb74d;">外团</span>' : ''}
+        </div>`;
+      }
     });
-    h+='</div>';
+    h += '</div>';
   }
-  nodeDetail.innerHTML=h;
+  nodeDetail.innerHTML = h;
   nodeDetail.classList.add('visible');
 }
 
 function showEmptyDetail() {
-  nodeDetail.innerHTML='<div class="empty-state">👆 点击图谱中的节点<br>查看详细信息与关联</div>';
+  if (!currentClusterId) {
+    nodeDetail.innerHTML = '<div class="empty-state">👆 点击知识团<br>钻取查看内部节点与关系</div>';
+  } else {
+    nodeDetail.innerHTML = '<div class="empty-state">👆 点击节点查看详情<br><small style="color:var(--text-dim)">半透明节点来自其他知识团</small></div>';
+  }
   nodeDetail.classList.remove('visible');
 }
 
-function navigateToNode(id) { const n=graphData.nodes.find(x=>x.id===id); if(n) selectNode(n); }
-
-function showTooltip(ev,d) {
-  const c=TYPE_COLORS[d.type]||'#888';
-  tooltip.innerHTML=`<div style="font-size:10px;color:${c};text-transform:uppercase;margin-bottom:2px">${TYPE_LABELS[d.type]||d.type}</div>
-    <div style="font-weight:600;color:#c0caf5;margin-bottom:4px">${d.label}</div>
-    <div style="font-size:12px;color:#565f89;line-height:1.5">${(d.summary||'').substring(0,100)}</div>`;
-  tooltip.style.opacity='1';
-  tooltip.style.left=(ev.pageX+16)+'px';
-  tooltip.style.top=(ev.pageY-16)+'px';
+function navigateToNode(id) {
+  const n = currentNodes.find(x => x.id === id);
+  if (n) selectNode(n);
 }
 
-function hideTooltip() { tooltip.style.opacity='0'; }
+// ── Tooltip ──
 
-// Filters
-document.getElementById('type-filters').addEventListener('click',e=>{
-  if(!e.target.classList.contains('filter-btn')) return;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  e.target.classList.add('active');
-  currentFilter=e.target.dataset.type;
-  selectedNodeId=null; showEmptyDetail(); renderGraph();
+function showTooltip(ev, d) {
+  const c = d.color || TYPE_COLORS[d.type] || '#888';
+  let html = `<div style="font-size:10px;color:${c};text-transform:uppercase;margin-bottom:2px">${TYPE_LABELS[d.type] || d.type}${d._ghost ? ' · 外团' : ''}${d.type==='cluster' ? ` · ${d.childCount}子节点` : ''}</div>
+    <div style="font-weight:600;color:var(--text);margin-bottom:4px">${d.label}</div>
+    <div style="font-size:11px;color:var(--text-dim);line-height:1.5">${(d.summary || '').substring(0, 120)}</div>`;
+  if (d.type === 'cluster') {
+    html += `<div style="font-size:11px;color:var(--accent);margin-top:4px;">🖱️ 点击钻取 →</div>`;
+  }
+  tooltip.innerHTML = html;
+  tooltip.style.opacity = '1';
+  tooltip.style.left = (ev.pageX + 16) + 'px';
+  tooltip.style.top = (ev.pageY - 16) + 'px';
+}
+
+function hideTooltip() { tooltip.style.opacity = '0'; }
+
+// ── Search ──
+
+searchInput.addEventListener('input', e => {
+  const q = e.target.value.toLowerCase().trim();
+  if (!q) {
+    if (currentClusterId) showClusterDetail(currentClusterId);
+    else showClusters();
+    return;
+  }
+  // Search in cluster nodes first, then detail nodes
+  if (!currentClusterId) {
+    const m = graphData.clusters.find(c => c.label.toLowerCase().includes(q) || c.summary.toLowerCase().includes(q));
+    if (m) showClusterDetail(m.id);
+  } else {
+    const m = currentNodes.find(n => n.label.toLowerCase().includes(q) || n.id.toLowerCase().includes(q) || (n.summary || '').toLowerCase().includes(q));
+    if (m) { selectedNodeId = m.id; renderElements(); highlightAndShowDetail(m.id); }
+  }
 });
 
-// Search
-searchInput.addEventListener('input',e=>{
-  const q=e.target.value.toLowerCase().trim();
-  if(!q){renderGraph();return;}
-  const m=graphData.nodes.find(n=>
-    n.label.toLowerCase().includes(q)||n.id.toLowerCase().includes(q)||(n.summary||'').toLowerCase().includes(q));
-  if(m) selectNode(m);
-});
+// ── Zoom controls ──
 
-// Zoom
 let zoomInst = null;
 function getZoom() {
-  if(!zoomInst) zoomInst = d3.zoom().scaleExtent([0.15,4]).on('zoom',ev=>gRoot.attr('transform',ev.transform));
+  if (!zoomInst) zoomInst = d3.zoom().scaleExtent([0.12, 5]).on('zoom', ev => { if (gRoot) gRoot.attr('transform', ev.transform); });
   return zoomInst;
 }
-document.getElementById('zoom-in').addEventListener('click',()=>{ svg.transition().duration(300).call(getZoom().scaleBy,1.3); });
-document.getElementById('zoom-out').addEventListener('click',()=>{ svg.transition().duration(300).call(getZoom().scaleBy,0.7); });
-document.getElementById('zoom-reset').addEventListener('click',()=>{
-  const {width,height}=getContainerSize();
-  svg.transition().duration(500).call(getZoom().transform, d3.zoomIdentity.translate(width/2,height/2).scale(0.8).translate(-width/2,-height/2));
+
+document.getElementById('zoom-in').addEventListener('click', () => {
+  svg.transition().duration(300).call(getZoom().scaleBy, 1.3);
+});
+document.getElementById('zoom-out').addEventListener('click', () => {
+  svg.transition().duration(300).call(getZoom().scaleBy, 0.7);
+});
+document.getElementById('zoom-reset').addEventListener('click', () => {
+  const {width, height} = getContainerSize();
+  const scale = currentClusterId ? 0.9 : 0.7;
+  svg.transition().duration(500).call(getZoom().transform,
+    d3.zoomIdentity.translate(width / 2, height / 2).scale(scale).translate(-width / 2, -height / 2));
 });
 
-// Toggle sidebar
-document.getElementById('toggle-sidebar').addEventListener('click',()=>{
-  sidebarVisible=!sidebarVisible;
-  sidebar.classList.toggle('hidden',!sidebarVisible);
-  setTimeout(()=>{
-    const {width,height}=getContainerSize();
-    svg.attr('viewBox',[0,0,width,height]).attr('width',width).attr('height',height);
-    simulation.force('center',d3.forceCenter(width/2,height/2));
-    simulation.force('x',d3.forceX(width/2).strength(0.01));
-    simulation.force('y',d3.forceY(height/2).strength(0.01));
-    simulation.alpha(0.3).restart();
-  },350);
-});
+// ── Helpers ──
 
-// Resize
-window.addEventListener('resize',()=>{
-  const {width,height}=getContainerSize();
-  svg.attr('viewBox',[0,0,width,height]).attr('width',width).attr('height',height);
-  simulation.force('center',d3.forceCenter(width/2,height/2));
-  simulation.force('x',d3.forceX(width/2).strength(0.01));
-  simulation.force('y',d3.forceY(height/2).strength(0.01));
+function getContainerSize() {
+  const w = container.clientWidth || window.innerWidth - 360;
+  const h = container.clientHeight || window.innerHeight;
+  return { width: Math.max(w, 300), height: Math.max(h, 300) };
+}
+
+window.addEventListener('resize', () => {
+  const {width, height} = getContainerSize();
+  svg.attr('viewBox', [0, 0, width, height]).attr('width', width).attr('height', height);
+  simulation.force('center', d3.forceCenter(width / 2, height / 2));
+  simulation.force('x', d3.forceX(width / 2).strength(0.02));
+  simulation.force('y', d3.forceY(height / 2).strength(0.02));
   simulation.alpha(0.3).restart();
 });
 
-// Keyboard
-window.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){ selectedNodeId=null; showEmptyDetail(); renderGraph(); }
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (selectedNodeId) { selectedNodeId = null; showEmptyDetail(); renderElements(); }
+    else if (currentClusterId) showClusters();
+  }
+  if (e.key === 'Backspace' && !e.target.closest('input')) {
+    if (currentClusterId) showClusters();
+  }
 });
 
+// Start
 loadGraph();
 </script>
 </body>
