@@ -1,33 +1,34 @@
 {
   "meta": {
     "title": "LLM Wiki · 知识图谱",
-    "description": "持续编译的认知结构——由 LLM Agent 维护，人负责方向",
+    "description": "从 Gbrain 自动生成 | 人不手改 graph.json，只维护 Gbrain 页面",
     "lastUpdated": "2026-07-02",
-    "version": "2.0"
+    "version": "3.0-auto",
+    "source": "gbrain-sync"
   },
   "clusters": [
     {
       "id": "cluster-philosophy",
       "label": "LLM Wiki 核心理念",
-      "summary": "Karpathy 提出的十条长期维护约束：编译而非检索、原始资料不可侵犯、增长控制、可追溯、查询回流",
+      "summary": "Karpathy十条长期维护约束",
       "color": "#4fc3f7"
     },
     {
       "id": "cluster-workflows",
       "label": "工作流与操作",
-      "summary": "Ingest 摄取、Lint 修剪、Query 查询——三大操作闭环及信息膨胀风险管理",
+      "summary": "Ingest/Lint/Query三大操作闭环",
       "color": "#ffb74d"
     },
     {
       "id": "cluster-toolchain",
       "label": "工具链与实现",
-      "summary": "Gbrain(查询后端) + Obsidian(IDE) + llm-wiki-graph(可视化) + Hermes Agent(维护者)",
+      "summary": "Gbrain+Obsidian+llm-wiki-graph+Hermes Agent",
       "color": "#9ccc65"
     },
     {
       "id": "cluster-cross-domain",
       "label": "跨领域连接",
-      "summary": "逆向工程方法论与 Wiki 三层架构的结构同构，以及理念溯源",
+      "summary": "逆向工程方法论与Wiki三层同构",
       "color": "#b39ddb"
     }
   ],
@@ -37,9 +38,11 @@
       "label": "LLM Wiki 理念约束",
       "type": "concept",
       "cluster": "cluster-philosophy",
-      "summary": "十条长期维护约束：编译而非检索、原始资料不可侵犯、增长控制、可追溯、查询回流",
+      "summary": "十条长期维护约束：编译而非检索、原始资料不可侵犯、增长控制",
       "status": "active",
-      "tags": ["philosophy", "knowledge-management"],
+      "tags": [
+        "knowledge-management"
+      ],
       "source": "https://gist.github.com/Karpathy/442a6bf555914893e9891c11519de94f"
     },
     {
@@ -47,157 +50,293 @@
       "label": "复利型知识",
       "type": "concept",
       "cluster": "cluster-philosophy",
-      "summary": "Wiki 是持续积累的资产，每次 Ingest 和 Query 都让它更丰富，不是每次都从零检索",
+      "summary": "Wiki是持续积累的资产，每次Ingest和Query都让它更丰富",
       "status": "active",
-      "tags": ["core-principle"]
+      "tags": [
+        "core-principle"
+      ]
     },
     {
       "id": "three-layers",
       "label": "三层架构",
       "type": "concept",
       "cluster": "cluster-philosophy",
-      "summary": "原始资料（只读）→ Wiki 层（LLM 维护）→ 规则层（Agent 行为约束）",
+      "summary": "原始资料(只读)→Wiki层(LLM维护)→规则层(Agent约束)",
       "status": "active",
-      "tags": ["architecture"]
+      "tags": [
+        "architecture"
+      ]
     },
     {
       "id": "source-immutability",
       "label": "原始资料不可侵犯",
       "type": "concept",
       "cluster": "cluster-philosophy",
-      "summary": "原始资料是 source of truth，LLM 只读不写；Wiki 是衍生物，错了可以回到原始资料重来",
+      "summary": "原始资料只读不写，Wiki是衍生物",
       "status": "active",
-      "tags": ["core-principle"]
+      "tags": [
+        "core-principle"
+      ]
     },
     {
       "id": "update-over-create",
       "label": "更新优先于新建",
       "type": "concept",
       "cluster": "cluster-philosophy",
-      "summary": "新信息优先合并到已有页面，新页面只在旧页面装不下时才创建——控制增长速度",
+      "summary": "新信息优先合并，控制增长速度",
       "status": "active",
-      "tags": ["anti-bloat"]
+      "tags": [
+        "anti-bloat"
+      ]
     },
     {
       "id": "query-reflux",
       "label": "查询结果回流",
       "type": "concept",
       "cluster": "cluster-philosophy",
-      "summary": "好的对话结果应归档回 Wiki——探索本身也在积累，不应消失在聊天记录里",
+      "summary": "好的对话结果归档回Wiki，不消失在聊天记录",
       "status": "active",
-      "tags": ["workflow"]
+      "tags": [
+        "workflow"
+      ]
     },
     {
       "id": "ingest-workflow",
       "label": "Ingest 摄取工作流",
       "type": "concept",
       "cluster": "cluster-workflows",
-      "summary": "新资料→LLM 读取→讨论要点→写摘要→更新索引→更新实体/概念页→追加日志。一次 Ingest 可能触及 10-15 个页面",
+      "summary": "新资料→写摘要→更新索引→追加日志。一次Ingest触及10-15个页面",
       "status": "active",
-      "tags": ["workflow"]
+      "tags": [
+        "workflow"
+      ]
     },
     {
       "id": "lint-workflow",
       "label": "Lint 修剪工作流",
       "type": "concept",
       "cluster": "cluster-workflows",
-      "summary": "周期性巡检：矛盾检测、stale 标记、thin 合并、orphan 清理、缺失交叉引用补充",
+      "summary": "周期性巡检：矛盾检测、stale标记、thin合并、orphan清理",
       "status": "active",
-      "tags": ["workflow"]
+      "tags": [
+        "workflow"
+      ]
     },
     {
       "id": "ai-vs-anti-bloat",
-      "label": "AI 时代的信息膨胀问题",
+      "label": "AI时代的信息膨胀问题",
       "type": "question",
       "cluster": "cluster-workflows",
-      "summary": "LLM 可以无限生成内容——如何确保 Wiki 不会变成空洞的页面堆？修剪机制是否足够？",
+      "summary": "LLM可无限生成内容——如何确保Wiki不变成空洞页面堆",
       "status": "active",
-      "tags": ["risk"]
+      "tags": [
+        "risk"
+      ]
     },
     {
       "id": "llm-wiki-graph-project",
       "label": "llm-wiki-graph",
       "type": "entity",
       "cluster": "cluster-toolchain",
-      "summary": "知识图谱可视化工程——将 graph.json 渲染为交互式力导向图，部署在 GitHub Pages",
+      "summary": "知识图谱可视化工程。D3力导向图+分层钻取，数据源从Gbrain同步",
       "status": "active",
-      "tags": ["project", "visualization"]
+      "tags": [
+        "project",
+        "visualization"
+      ]
     },
     {
       "id": "gbrain",
       "label": "Gbrain",
       "type": "entity",
       "cluster": "cluster-toolchain",
-      "summary": "ECS 上的中央知识库——语义搜索、页面管理、take 系统。Wiki 层的查询后端",
+      "summary": "ECS中央知识库——语义搜索+页面管理+take系统",
       "status": "active",
-      "tags": ["tool", "knowledge-base"]
+      "tags": [
+        "tool",
+        "knowledge-base"
+      ]
     },
     {
       "id": "obsidian",
       "label": "Obsidian",
       "type": "entity",
       "cluster": "cluster-toolchain",
-      "summary": "Markdown 知识管理 IDE——图视图、Dataview、Web Clipper、模板系统",
+      "summary": "Markdown知识管理IDE。图视图、Dataview、Web Clipper",
       "status": "active",
-      "tags": ["tool", "ide"]
+      "tags": [
+        "tool",
+        "ide"
+      ]
     },
     {
       "id": "hermes-agent",
       "label": "Hermes Agent",
       "type": "entity",
       "cluster": "cluster-toolchain",
-      "summary": "Windows 开发机上的主 LLM Agent，负责执行复杂的多工具任务编排",
+      "summary": "Windows主LLM Agent。维护llm-wiki-graph，通过MCP操作Gbrain",
       "status": "active",
-      "tags": ["tool", "agent"]
+      "tags": [
+        "tool",
+        "agent"
+      ]
     },
     {
       "id": "graph-json-schema",
       "label": "graph.json Schema",
       "type": "concept",
       "cluster": "cluster-toolchain",
-      "summary": "nodes 和 edges 的数据结构定义，11 种语义化边类型",
+      "summary": "nodes/edges数据结构定义，11种语义化边类型",
       "status": "active",
-      "tags": ["data-format"]
+      "tags": [
+        "data-format"
+      ]
     },
     {
       "id": "reverse-engineering-methodology",
       "label": "逆向工程方法论",
       "type": "concept",
       "cluster": "cluster-cross-domain",
-      "summary": "三阶段流程：评估（架构/语言/防护）→ 策略路由 → 输出可执行方案。与 Wiki 三层架构同构",
+      "summary": "三阶段流程与Wiki三层架构同构",
       "status": "active",
-      "tags": ["reverse-engineering", "methodology"]
+      "tags": [
+        "methodology"
+      ]
     },
     {
       "id": "karpathy",
       "label": "Andrej Karpathy",
       "type": "entity",
       "cluster": "cluster-cross-domain",
-      "summary": "LLM Wiki 理念提出者，原 gist 是本知识图谱的奠基文档",
+      "summary": "LLM Wiki理念提出者，原gist是本图谱奠基文档",
       "status": "active",
-      "tags": ["person", "author"]
+      "tags": [
+        "person",
+        "author"
+      ],
+      "source": "https://gist.github.com/Karpathy/442a6bf555914893e9891c11519de94f"
     }
   ],
   "edges": [
-    { "source": "llm-wiki-philosophy", "target": "compounding-artifact", "type": "defines", "label": "核心主张" },
-    { "source": "llm-wiki-philosophy", "target": "three-layers", "type": "defines", "label": "架构定义" },
-    { "source": "llm-wiki-philosophy", "target": "source-immutability", "type": "defines", "label": "原则一" },
-    { "source": "llm-wiki-philosophy", "target": "update-over-create", "type": "defines", "label": "原则二" },
-    { "source": "llm-wiki-philosophy", "target": "query-reflux", "type": "defines", "label": "原则三" },
-    { "source": "llm-wiki-philosophy", "target": "ai-vs-anti-bloat", "type": "raises", "label": "引出问题" },
-    { "source": "llm-wiki-philosophy", "target": "karpathy", "type": "references", "label": "提出者" },
-    { "source": "three-layers", "target": "gbrain", "type": "implemented_by", "label": "Wiki层后端" },
-    { "source": "three-layers", "target": "obsidian", "type": "implemented_by", "label": "IDE层" },
-    { "source": "three-layers", "target": "llm-wiki-graph-project", "type": "visualized_by", "label": "可视化层" },
-    { "source": "ingest-workflow", "target": "gbrain", "type": "uses", "label": "存储目标" },
-    { "source": "ingest-workflow", "target": "update-over-create", "type": "implements", "label": "落实原则" },
-    { "source": "lint-workflow", "target": "update-over-create", "type": "implements", "label": "周期性执行" },
-    { "source": "lint-workflow", "target": "ai-vs-anti-bloat", "type": "addresses", "label": "应对策略" },
-    { "source": "llm-wiki-graph-project", "target": "graph-json-schema", "type": "defines", "label": "数据格式" },
-    { "source": "llm-wiki-graph-project", "target": "gbrain", "type": "complements", "label": "可视层vs查询层" },
-    { "source": "hermes-agent", "target": "llm-wiki-graph-project", "type": "builds", "label": "构建和维护" },
-    { "source": "hermes-agent", "target": "gbrain", "type": "maintains", "label": "维护Wiki层" },
-    { "source": "reverse-engineering-methodology", "target": "three-layers", "type": "parallels", "label": "同构" },
-    { "source": "compounding-artifact", "target": "ingest-workflow", "type": "enables", "label": "驱动工作流" }
+    {
+      "source": "llm-wiki-philosophy",
+      "target": "compounding-artifact",
+      "type": "defines",
+      "label": "核心主张"
+    },
+    {
+      "source": "llm-wiki-philosophy",
+      "target": "three-layers",
+      "type": "defines",
+      "label": "架构定义"
+    },
+    {
+      "source": "llm-wiki-philosophy",
+      "target": "source-immutability",
+      "type": "defines",
+      "label": "原则一"
+    },
+    {
+      "source": "llm-wiki-philosophy",
+      "target": "update-over-create",
+      "type": "defines",
+      "label": "原则二"
+    },
+    {
+      "source": "llm-wiki-philosophy",
+      "target": "query-reflux",
+      "type": "defines",
+      "label": "原则三"
+    },
+    {
+      "source": "llm-wiki-philosophy",
+      "target": "ai-vs-anti-bloat",
+      "type": "raises",
+      "label": "引出问题"
+    },
+    {
+      "source": "llm-wiki-philosophy",
+      "target": "karpathy",
+      "type": "references",
+      "label": "提出者"
+    },
+    {
+      "source": "three-layers",
+      "target": "gbrain",
+      "type": "implemented_by",
+      "label": "Wiki层后端"
+    },
+    {
+      "source": "three-layers",
+      "target": "obsidian",
+      "type": "implemented_by",
+      "label": "IDE层"
+    },
+    {
+      "source": "three-layers",
+      "target": "llm-wiki-graph-project",
+      "type": "visualized_by",
+      "label": "可视化层"
+    },
+    {
+      "source": "ingest-workflow",
+      "target": "gbrain",
+      "type": "uses",
+      "label": "存储目标"
+    },
+    {
+      "source": "ingest-workflow",
+      "target": "update-over-create",
+      "type": "implements",
+      "label": "落实原则"
+    },
+    {
+      "source": "lint-workflow",
+      "target": "update-over-create",
+      "type": "implements",
+      "label": "周期性执行"
+    },
+    {
+      "source": "lint-workflow",
+      "target": "ai-vs-anti-bloat",
+      "type": "addresses",
+      "label": "应对策略"
+    },
+    {
+      "source": "llm-wiki-graph-project",
+      "target": "graph-json-schema",
+      "type": "defines",
+      "label": "数据格式"
+    },
+    {
+      "source": "llm-wiki-graph-project",
+      "target": "gbrain",
+      "type": "complements",
+      "label": "可视层vs查询层"
+    },
+    {
+      "source": "hermes-agent",
+      "target": "llm-wiki-graph-project",
+      "type": "builds",
+      "label": "构建和维护"
+    },
+    {
+      "source": "hermes-agent",
+      "target": "gbrain",
+      "type": "maintains",
+      "label": "维护Wiki层"
+    },
+    {
+      "source": "reverse-engineering-methodology",
+      "target": "three-layers",
+      "type": "parallels",
+      "label": "同构"
+    },
+    {
+      "source": "compounding-artifact",
+      "target": "ingest-workflow",
+      "type": "enables",
+      "label": "驱动工作流"
+    }
   ]
 }
