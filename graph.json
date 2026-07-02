@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "知识图谱 · 全量",
-    "description": "从Gbrain导出 — 71节点 10团 41边",
+    "description": "从Gbrain自动生成 — 68节点 68连线",
     "lastUpdated": "2026-07-02T15:00:00",
     "version": "5.0-intel",
     "source": "gbrain-auto-export"
@@ -785,7 +785,7 @@
       ]
     },
     {
-      "id": "soul-shadow-node-ovin",
+      "id": "soul/shadow-node-ovin",
       "label": "Shadow Node Ovin",
       "type": "entity",
       "cluster": "情报与报告",
@@ -796,29 +796,7 @@
       ]
     },
     {
-      "id": "skills-deep-intelligence",
-      "label": "Deep Intelligence",
-      "type": "concept",
-      "cluster": "情报与报告",
-      "summary": "AI-to-AI情报升级",
-      "status": "active",
-      "tags": [
-        "skill"
-      ]
-    },
-    {
-      "id": "intelligence-gathering",
-      "label": "Intelligence Gathering",
-      "type": "concept",
-      "cluster": "情报与报告",
-      "summary": "技术情报搜索方法",
-      "status": "active",
-      "tags": [
-        "skill"
-      ]
-    },
-    {
-      "id": "research-ai-agent-scheduling-alternatives-survey",
+      "id": "research/ai-agent-scheduling-alternatives-survey",
       "label": "AI Agent Scheduling",
       "type": "concept",
       "cluster": "情报与报告",
@@ -829,7 +807,7 @@
       ]
     },
     {
-      "id": "research-sysak-comprehensive-report",
+      "id": "research/sysak-comprehensive-report",
       "label": "SysAK报告",
       "type": "concept",
       "cluster": "情报与报告",
@@ -837,17 +815,6 @@
       "status": "active",
       "tags": [
         "research"
-      ]
-    },
-    {
-      "id": "test-w26-upload",
-      "label": "GitHub Trending W26",
-      "type": "concept",
-      "cluster": "情报与报告",
-      "summary": "GitHub趋势",
-      "status": "active",
-      "tags": [
-        "trending"
       ]
     }
   ],
@@ -1097,6 +1064,141 @@
       "target": "design-theory-art-of-game-design-schell",
       "type": "references",
       "label": "盘问Schell"
+    },
+    {
+      "source": "compounding-artifact",
+      "target": "llm-wiki-philosophy",
+      "type": "references"
+    },
+    {
+      "source": "compounding-artifact",
+      "target": "ingest-workflow",
+      "type": "enables"
+    },
+    {
+      "source": "source-immutability",
+      "target": "llm-wiki-philosophy",
+      "type": "references"
+    },
+    {
+      "source": "source-immutability",
+      "target": "three-layers",
+      "type": "references"
+    },
+    {
+      "source": "update-over-create",
+      "target": "llm-wiki-philosophy",
+      "type": "references"
+    },
+    {
+      "source": "update-over-create",
+      "target": "lint-workflow",
+      "type": "enables"
+    },
+    {
+      "source": "query-reflux",
+      "target": "llm-wiki-philosophy",
+      "type": "references"
+    },
+    {
+      "source": "query-reflux",
+      "target": "compounding-artifact",
+      "type": "enables"
+    },
+    {
+      "source": "ai-vs-anti-bloat",
+      "target": "lint-workflow",
+      "type": "addresses"
+    },
+    {
+      "source": "ai-vs-anti-bloat",
+      "target": "update-over-create",
+      "type": "addresses"
+    },
+    {
+      "source": "ingest-workflow",
+      "target": "llm-wiki-philosophy",
+      "type": "references"
+    },
+    {
+      "source": "ingest-workflow",
+      "target": "gbrain",
+      "type": "uses"
+    },
+    {
+      "source": "lint-workflow",
+      "target": "llm-wiki-philosophy",
+      "type": "references"
+    },
+    {
+      "source": "lint-workflow",
+      "target": "update-over-create",
+      "type": "implements"
+    },
+    {
+      "source": "gbrain",
+      "target": "hermes-agent",
+      "type": "uses"
+    },
+    {
+      "source": "gbrain",
+      "target": "llm-wiki-graph-project",
+      "type": "enables"
+    },
+    {
+      "source": "hermes-agent",
+      "target": "gbrain",
+      "type": "uses"
+    },
+    {
+      "source": "hermes-agent",
+      "target": "llm-wiki-graph-project",
+      "type": "maintains"
+    },
+    {
+      "source": "obsidian",
+      "target": "gbrain",
+      "type": "complements"
+    },
+    {
+      "source": "obsidian",
+      "target": "three-layers",
+      "type": "implements"
+    },
+    {
+      "source": "llm-wiki-graph-project",
+      "target": "gbrain",
+      "type": "uses"
+    },
+    {
+      "source": "llm-wiki-graph-project",
+      "target": "graph-json-schema",
+      "type": "uses"
+    },
+    {
+      "source": "graph-json-schema",
+      "target": "llm-wiki-graph-project",
+      "type": "implements"
+    },
+    {
+      "source": "graph-json-schema",
+      "target": "llm-wiki-philosophy",
+      "type": "references"
+    },
+    {
+      "source": "karpathy",
+      "target": "llm-wiki-philosophy",
+      "type": "references"
+    },
+    {
+      "source": "karpathy",
+      "target": "three-layers",
+      "type": "proposes"
+    },
+    {
+      "source": "three-layers",
+      "target": "llm-wiki-philosophy",
+      "type": "references"
     }
   ]
 }
