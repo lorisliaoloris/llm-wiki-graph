@@ -82,6 +82,67 @@ GitHub Pages 默认用 Jekyll 构建站点。如果仓库里有 Jekyll 不认识
 
 **自查**：如果 graph.json 已更新但 Pages 不显示，先检查有无 。
 
+
+## 调试经验（Agent 必读）
+
+### D3 渲染 bug
+
+| 症状 | 根因 | 修复 |
+|------|------|------|
+| 导航后边线消失 | D3 force 改写 edge.source/target（字符串→对象），clusterMap 查不到 |  |
+| 反复钻取后图混乱 |  叠加监听器（D3 的  不替换旧 handler） |  先清再绑 |
+| 首次加载  报错 |  全局变量首次调用时为 undefined |  |
+| 快速导航后图错位 | rAF 回调引用旧 zoom 实例（闭包过期） |  杀残留 |
+
+### MSYS2 路径陷阱
+
+在 MSYS/git-bash 的 Python 中使用  会被解析为 。
+**必须用  格式**。否则所有文件写入到错误位置，git 看不到变更。
+
+### GitHub Pages 部署失败
+
+| 症状 | 根因 | 修复 |
+|------|------|------|
+| 首页不变但 raw 文件正确 | 缺  → Jekyll 构建失败 |  |
+| Build 成功但 deploy 超时 | Pages CDN 推送堵塞 |  +  |
+
+**对比法自查**：对比最后一次成功构建 vs 首次失败构建的 diff，定位引入问题的 commit。
+
+### 远程调试
+
+Edge CDP:  → CDP 注入 JS 验证页面状态。
+computer_use 不可用时，CDP 是降级方案。
+
+
+## 调试经验（Agent 必读）
+
+### D3 渲染 bug
+
+| 症状 | 根因 | 修复 |
+|------|------|------|
+| 导航后边线消失 | D3 force 改写 edge.source/target(字符串→对象), clusterMap查不到 | typeof e.source === "object" ? e.source.id : e.source |
+| 反复钻取后图混乱 | d3.zoom() 叠加监听器(D3的call不替换旧handler) | svg.on(".zoom", null) 先清再绑 |
+| 首次加载 selectAll 报错 | svg 全局变量首次为 undefined | if (svg) svg.selectAll("*").remove() |
+| 快速导航后图错位 | rAF 回调引用旧 zoom 实例(闭包过期) | cancelAnimationFrame(pendingRaf) |
+
+### MSYS2 路径陷阱
+
+MSYS/git-bash 的 Python 中 /c/Users/... 被解析为 C:\\c\\Users\\...
+必须用 C:/Users/... 格式。否则所有文件写入错误位置,git 看不到变更。
+
+### GitHub Pages 部署失败
+
+| 症状 | 原因 | 修复 |
+|------|------|------|
+| 首页不变但 raw 正确 | 缺 .nojekyll → Jekyll 构建失败 | touch .nojekyll |
+| Build成功 deploy超时 | Pages CDN 推送堵塞 | peaceiris/actions-gh-pages + timeout-minutes:30 |
+| 连续多个构建全部 failure | 根因不是CDN缓存,查部署状态API | 对比法:最后一次成功vs首次失败commit diff |
+
+### 远程调试方法
+
+CDP连接: msedge --remote-debugging-port=9222 → browser_cdp 注入JS验证页面状态。
+computer_use 不可用时,CDP 是降级方案。
+
 ## 参考
 
 - Gbrain Ingest 规则：加载 Hermes skill `llm-wiki` → Gbrain Backend 章节
