@@ -106,6 +106,14 @@
   <div id="stats-bar">
     <span id="node-count">—</span>
     <span id="edge-count">—</span>
+  <div id="debug-panel" style="padding:8px 24px;border-top:1px solid var(--border);font-size:10px;color:var(--text-dim);font-family:monospace;line-height:1.6;">
+    <div>DEBUG <span id="debug-toggle" style="cursor:pointer;float:right;">[-]</span></div>
+    <div id="debug-body">
+      <div>dataEdges: <span id="dbg-de">-</span> | domEdges: <span id="dbg-dm">-</span> | match: <span id="dbg-mt">-</span></div>
+      <div>gEdges: <span id="dbg-ge">-</span> | svgKids: <span id="dbg-sk">-</span></div>
+      <div>view: <span id="dbg-vw">-</span> | cid: <span id="dbg-ci">-</span> | last: <span id="dbg-ac">init</span></div>
+    </div>
+  </div>
   </div>
 </div>
 
@@ -379,6 +387,21 @@ function rebuildGraph() {
   });
 }
 
+function compareState(a) {
+  var de=document.getElementById('dbg-de'),dm=document.getElementById('dbg-dm'),mt=document.getElementById('dbg-mt');
+  if(!de)return;
+  de.textContent=currentEdges.length;
+  dm.textContent=document.querySelectorAll('#graph-svg g.edge-group').length;
+  var m=currentEdges.length===dm.textContent*1;
+  mt.textContent=m?'OK':'MISMATCH';
+  mt.style.color=m?'#9ccc65':'#ef5350';
+  document.getElementById('dbg-ge').textContent=gEdges?'ok':'NULL';
+  document.getElementById('dbg-sk').textContent=document.getElementById('graph-svg').children.length;
+  document.getElementById('dbg-ci').textContent=currentClusterId||'null';
+  document.getElementById('dbg-vw').textContent=currentClusterId?'detail':'clusters';
+  document.getElementById('dbg-ac').textContent=a;
+}
+
 function renderElements() {
   const isClusterView = !currentClusterId;
 
@@ -527,6 +550,7 @@ function selectNode(d) {
 
   selectedNodeId = (selectedNodeId === d.id) ? null : d.id;
   renderElements();
+  compareState("select");
   selectedNodeId ? highlightAndShowDetail(d.id) : showEmptyDetail();
 }
 
@@ -617,7 +641,7 @@ searchInput.addEventListener('input', e => {
     if (m) showClusterDetail(m.id);
   } else {
     const m = currentNodes.find(n => n.label.toLowerCase().includes(q) || n.id.toLowerCase().includes(q) || (n.summary || '').toLowerCase().includes(q));
-    if (m) { selectedNodeId = m.id; renderElements(); highlightAndShowDetail(m.id); }
+    if (m) { selectedNodeId = m.id; renderElements(); compareState("search"); highlightAndShowDetail(m.id); }
   }
 });
 
@@ -688,7 +712,12 @@ if (typeof d3 === 'undefined') {
   document.getElementById('graph-container').innerHTML =
     '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;">❌ D3.js 加载失败 — 检查 d3.v7.min.js 是否存在</div>';
 } else {
-  loadGraph();
+  document.getElementById('debug-toggle').addEventListener('click',function(){
+  var b=document.getElementById('debug-body');
+  b.style.display=b.style.display==='none'?'block':'none';
+  this.textContent=b.style.display==='none'?'[+]':'[-]';
+});
+loadGraph();
 }
 </script>
 </body>
