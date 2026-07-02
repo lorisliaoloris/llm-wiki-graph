@@ -305,7 +305,7 @@ function rebuildGraph() {
 
   // Clean up old
   if (simulation) simulation.stop();
-  svg.selectAll('*').remove();
+  if (svg) svg.selectAll('*').remove();
   gRoot = null; gEdges = null; gNodes = null; gLabels = null;
 
   svg = d3.select('#graph-svg')
