@@ -13,20 +13,12 @@
     --text-dim: #565f89;
     --accent: #7aa2f7;
     --border: #3b4261;
-    --concept: #4fc3f7;
-    --entity: #9ccc65;
-    --trend: #ffb74d;
-    --question: #ef5350;
-    --index: #b39ddb;
-    --edge-default: #3b4261;
-    --edge-active: #7aa2f7;
-    --node-hover: #e0e0e0;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
     background: var(--bg);
     color: var(--text);
     height: 100vh;
@@ -34,339 +26,157 @@
     overflow: hidden;
   }
 
-  /* ---- Sidebar ---- */
   #sidebar {
-    width: 380px;
-    min-width: 380px;
+    width: 380px; min-width: 380px;
     background: var(--surface);
     border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     z-index: 10;
     transition: transform 0.3s ease;
   }
-
   #sidebar.hidden { transform: translateX(-100%); min-width: 0; width: 0; }
 
-  #sidebar-header {
-    padding: 20px 24px 16px;
-    border-bottom: 1px solid var(--border);
-  }
+  #sidebar-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); }
+  #sidebar-header h1 { font-size: 20px; font-weight: 700; color: var(--accent); }
+  #sidebar-header .subtitle { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
 
-  #sidebar-header h1 {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: -0.3px;
-  }
-
-  #sidebar-header .subtitle {
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-top: 4px;
-  }
-
-  /* Search */
-  #search-box {
-    margin: 16px 24px;
-  }
-
+  #search-box { margin: 16px 24px; }
   #search-input {
-    width: 100%;
-    padding: 10px 14px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s;
+    width: 100%; padding: 10px 14px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 14px; outline: none;
   }
-
   #search-input:focus { border-color: var(--accent); }
   #search-input::placeholder { color: var(--text-dim); }
 
-  /* Type filters */
   #type-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 0 24px 16px;
-    border-bottom: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 0 24px 16px; border-bottom: 1px solid var(--border);
   }
-
   .filter-btn {
-    padding: 4px 12px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--text-dim);
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
+    padding: 4px 12px; border-radius: 12px;
+    border: 1px solid var(--border); background: var(--bg);
+    color: var(--text-dim); font-size: 12px; cursor: pointer;
   }
-
   .filter-btn:hover { border-color: var(--accent); color: var(--text); }
   .filter-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 
-  /* Node detail panel */
-  #node-detail {
-    flex: 1;
-    overflow-y: auto;
-    padding: 24px;
-    display: none;
-  }
-
+  #node-detail { flex: 1; overflow-y: auto; padding: 24px; display: none; }
   #node-detail.visible { display: block; }
+  #node-detail .empty-state { color: var(--text-dim); font-size: 14px; text-align: center; margin-top: 60px; line-height: 1.8; }
 
-  #node-detail .empty-state {
-    color: var(--text-dim);
-    font-size: 14px;
-    text-align: center;
-    margin-top: 60px;
-    line-height: 1.8;
-  }
-
-  #node-detail .detail-type {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 600;
-    margin-bottom: 8px;
+  .detail-type {
+    display: inline-block; padding: 2px 10px; border-radius: 10px;
+    font-size: 11px; font-weight: 600; margin-bottom: 8px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
   }
-
-  #node-detail .detail-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    line-height: 1.3;
+  .detail-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .detail-summary { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-bottom: 16px; }
+  .detail-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .detail-tag { padding: 2px 8px; border-radius: 4px; background: var(--bg); color: var(--text-dim); font-size: 11px; border: 1px solid var(--border); }
+  .detail-section { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .detail-section h3 { font-size: 13px; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; }
+  .connection-item {
+    display: flex; align-items: center; gap: 8px; padding: 6px 0;
+    font-size: 13px; cursor: pointer; border-radius: 4px;
   }
+  .connection-item:hover { background: var(--bg); }
+  .connection-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .connection-label { font-size: 11px; color: var(--text-dim); flex-shrink: 0; }
 
-  #node-detail .detail-summary {
-    font-size: 14px;
-    color: var(--text-dim);
-    line-height: 1.7;
-    margin-bottom: 16px;
-  }
-
-  #node-detail .detail-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-
-  #node-detail .detail-tag {
-    padding: 2px 8px;
-    border-radius: 4px;
-    background: var(--bg);
-    color: var(--text-dim);
-    font-size: 11px;
-    border: 1px solid var(--border);
-  }
-
-  #node-detail .detail-section {
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-  }
-
-  #node-detail .detail-section h3 {
-    font-size: 13px;
-    color: var(--text-dim);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  #node-detail .connection-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 0;
-    font-size: 13px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background 0.15s;
-  }
-
-  #node-detail .connection-item:hover { background: var(--bg); }
-
-  #node-detail .connection-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  #node-detail .connection-label {
-    font-size: 11px;
-    color: var(--text-dim);
-    flex-shrink: 0;
-  }
-
-  /* Stats bar */
   #stats-bar {
-    padding: 12px 24px;
-    border-top: 1px solid var(--border);
-    font-size: 11px;
-    color: var(--text-dim);
-    display: flex;
-    justify-content: space-between;
+    padding: 12px 24px; border-top: 1px solid var(--border);
+    font-size: 11px; color: var(--text-dim);
+    display: flex; justify-content: space-between;
   }
 
-  /* ---- Graph Container ---- */
-  #graph-container {
-    flex: 1;
-    position: relative;
-    cursor: grab;
-  }
-
+  /* Graph */
+  #graph-container { flex: 1; position: relative; cursor: grab; }
   #graph-container:active { cursor: grabbing; }
-  #graph-container.dragging { cursor: grabbing; }
+  #graph-svg { width: 100%; height: 100%; }
 
-  #graph-svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  /* Edge labels */
-  .edge-label {
-    font-size: 10px;
-    fill: var(--text-dim);
-    pointer-events: none;
-    text-anchor: middle;
-  }
-
-  /* Node labels */
   .node-label {
-    font-size: 11px;
-    fill: var(--text);
-    pointer-events: none;
+    font-size: 11px; fill: var(--text); pointer-events: none;
+    text-anchor: middle; dominant-baseline: central;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  }
+  .edge-label {
+    font-size: 10px; fill: var(--text-dim); pointer-events: none;
     text-anchor: middle;
-    dominant-baseline: central;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
   }
 
-  /* Zoom controls */
-  #zoom-controls {
-    position: absolute;
-    bottom: 24px;
-    right: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  /* Loading */
+  #loading {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--text-dim); z-index: 3;
   }
+  #loading.hidden { display: none; }
 
+  /* Controls */
+  #zoom-controls { position: absolute; bottom: 24px; right: 24px; display: flex; flex-direction: column; gap: 4px; }
   .zoom-btn {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text); font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
   }
-
   .zoom-btn:hover { background: var(--bg); border-color: var(--accent); }
 
-  /* Toggle sidebar button */
   #toggle-sidebar {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-    z-index: 5;
+    position: absolute; top: 16px; left: 16px;
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text); font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; z-index: 5;
   }
-
   #toggle-sidebar:hover { background: var(--bg); border-color: var(--accent); }
 
-  /* Tooltip */
   #tooltip {
-    position: absolute;
-    padding: 8px 12px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 13px;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.15s;
-    max-width: 280px;
-    z-index: 20;
+    position: absolute; padding: 8px 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; font-size: 13px; pointer-events: none;
+    opacity: 0; max-width: 280px; z-index: 20;
     box-shadow: 0 4px 16px rgba(0,0,0,0.4);
   }
 
-  #tooltip .tt-type {
-    font-size: 10px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-
-  #tooltip .tt-name { font-weight: 600; color: var(--text); margin-bottom: 4px; }
-  #tooltip .tt-summary { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
-
-  /* Responsive */
   @media (max-width: 768px) {
     #sidebar { width: 100%; min-width: 100%; position: absolute; height: 40%; bottom: 0; border-right: none; border-top: 1px solid var(--border); }
     #sidebar.hidden { transform: translateY(100%); }
-    #graph-container { height: 100%; }
     #toggle-sidebar { top: auto; bottom: calc(40% + 16px); }
   }
 </style>
 </head>
 <body>
 
-<!-- Sidebar -->
 <div id="sidebar">
   <div id="sidebar-header">
     <h1>🧠 LLM Wiki · 知识图谱</h1>
     <div class="subtitle">持续编译的认知结构 | LLM 维护 · 人定方向</div>
   </div>
-
   <div id="search-box">
     <input type="text" id="search-input" placeholder="搜索节点...">
   </div>
-
   <div id="type-filters">
     <button class="filter-btn active" data-type="all">全部</button>
-    <button class="filter-btn" data-type="concept" style="--c:var(--concept)">概念</button>
-    <button class="filter-btn" data-type="entity" style="--c:var(--entity)">实体</button>
-    <button class="filter-btn" data-type="question" style="--c:var(--question)">问题</button>
-    <button class="filter-btn" data-type="trend" style="--c:var(--trend)">趋势</button>
-    <button class="filter-btn" data-type="index" style="--c:var(--index)">索引</button>
+    <button class="filter-btn" data-type="concept">概念</button>
+    <button class="filter-btn" data-type="entity">实体</button>
+    <button class="filter-btn" data-type="question">问题</button>
+    <button class="filter-btn" data-type="trend">趋势</button>
+    <button class="filter-btn" data-type="index">索引</button>
   </div>
-
   <div id="node-detail">
-    <div class="empty-state">
-      👆 点击图谱中的节点<br>查看详细信息与关联
-    </div>
+    <div class="empty-state">👆 点击图谱中的节点<br>查看详细信息与关联</div>
   </div>
-
   <div id="stats-bar">
     <span id="node-count">0 节点</span>
     <span id="edge-count">0 连接</span>
   </div>
 </div>
 
-<!-- Graph -->
 <div id="graph-container">
+  <div id="loading">加载知识图谱...</div>
   <svg id="graph-svg"></svg>
   <button id="toggle-sidebar" title="切换侧边栏">☰</button>
   <div id="zoom-controls">
@@ -378,486 +188,335 @@
 </div>
 
 <script>
-// ─── Constants ────────────────────────────────────────────
-const TYPE_COLORS = {
-  concept: '#4fc3f7',
-  entity: '#9ccc65',
-  trend: '#ffb74d',
-  question: '#ef5350',
-  index: '#b39ddb'
-};
-
-const TYPE_LABELS = {
-  concept: '概念',
-  entity: '实体',
-  trend: '趋势',
-  question: '问题',
-  index: '索引'
-};
-
+const TYPE_COLORS = { concept:'#4fc3f7', entity:'#9ccc65', trend:'#ffb74d', question:'#ef5350', index:'#b39ddb' };
+const TYPE_LABELS = { concept:'概念', entity:'实体', trend:'趋势', question:'问题', index:'索引' };
 const EDGE_STYLES = {
-  defines: { dash: '', width: 2, opacity: 0.7 },
-  references: { dash: '6,3', width: 1.5, opacity: 0.5 },
-  raises: { dash: '4,4', width: 1.5, opacity: 0.6 },
-  implements: { dash: '', width: 1.5, opacity: 0.5 },
-  implemented_by: { dash: '', width: 1.5, opacity: 0.4 },
-  visualized_by: { dash: '8,4', width: 2, opacity: 0.6 },
-  uses: { dash: '3,3', width: 1, opacity: 0.4 },
-  maintains: { dash: '3,3', width: 1.5, opacity: 0.5 },
-  builds: { dash: '', width: 2, opacity: 0.6 },
-  addresses: { dash: '3,3', width: 1.5, opacity: 0.6 },
-  parallels: { dash: '8,4', width: 1.5, opacity: 0.5 },
-  complements: { dash: '5,3', width: 1.5, opacity: 0.5 },
-  enables: { dash: '', width: 1.5, opacity: 0.5 },
-  relates: { dash: '3,3', width: 1, opacity: 0.4 }
+  defines:{dash:'',w:2,o:0.7}, references:{dash:'6,3',w:1.5,o:0.5},
+  raises:{dash:'4,4',w:1.5,o:0.6}, implements:{dash:'',w:1.5,o:0.5},
+  implemented_by:{dash:'',w:1.5,o:0.4}, visualized_by:{dash:'8,4',w:2,o:0.6},
+  uses:{dash:'3,3',w:1,o:0.4}, maintains:{dash:'3,3',w:1.5,o:0.5},
+  builds:{dash:'',w:2,o:0.6}, addresses:{dash:'3,3',w:1.5,o:0.6},
+  parallels:{dash:'8,4',w:1.5,o:0.5}, complements:{dash:'5,3',w:1.5,o:0.5},
+  enables:{dash:'',w:1.5,o:0.5}, relates:{dash:'3,3',w:1,o:0.4}
 };
 
-// ─── State ────────────────────────────────────────────────
-let graphData = null;
-let simulation = null;
+let graphData = null, simulation = null;
 let svg, gRoot, gEdges, gNodes, gLabels;
-let currentFilter = 'all';
-let selectedNodeId = null;
-let sidebarVisible = true;
+let currentFilter = 'all', selectedNodeId = null, sidebarVisible = true;
 
-// ─── DOM refs ─────────────────────────────────────────────
 const container = document.getElementById('graph-container');
-const svgEl = document.getElementById('graph-svg');
 const tooltip = document.getElementById('tooltip');
 const sidebar = document.getElementById('sidebar');
 const nodeDetail = document.getElementById('node-detail');
 const searchInput = document.getElementById('search-input');
-const nodeCountEl = document.getElementById('node-count');
-const edgeCountEl = document.getElementById('edge-count');
+const loading = document.getElementById('loading');
 
-// ─── Load data ────────────────────────────────────────────
-async function loadGraph() {
-  const resp = await fetch('graph.json');
-  graphData = await resp.json();
-  document.title = graphData.meta.title;
-
-  nodeCountEl.textContent = `${graphData.nodes.length} 节点`;
-  edgeCountEl.textContent = `${graphData.edges.length} 连接`;
-
-  initGraph();
+function getContainerSize() {
+  const w = container.clientWidth || window.innerWidth - 380;
+  const h = container.clientHeight || window.innerHeight;
+  return { width: Math.max(w, 400), height: Math.max(h, 300) };
 }
 
-// ─── Initialize graph ─────────────────────────────────────
+function getNodeRadius(d) {
+  if (!graphData) return 12;
+  const deg = graphData.edges.filter(e =>
+    (e.source?.id||e.source)===d.id || (e.target?.id||e.target)===d.id
+  ).length;
+  return Math.min(10 + deg*2.5, 30);
+}
+
+async function loadGraph() {
+  try {
+    const resp = await fetch('graph.json');
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    graphData = await resp.json();
+    document.title = graphData.meta.title;
+    document.getElementById('node-count').textContent = `${graphData.nodes.length} 节点`;
+    document.getElementById('edge-count').textContent = `${graphData.edges.length} 连接`;
+    loading.classList.add('hidden');
+    initGraph();
+  } catch(e) {
+    loading.innerHTML = `❌ 加载失败: ${e.message}<br><small>检查 graph.json 是否存在</small>`;
+  }
+}
+
 function initGraph() {
-  const { width, height } = container.getBoundingClientRect();
-
+  const {width, height} = getContainerSize();
   svg = d3.select('#graph-svg')
-    .attr('viewBox', [0, 0, width, height])
-    .attr('width', width)
-    .attr('height', height);
+    .attr('viewBox', [0,0,width,height])
+    .attr('width', width).attr('height', height);
 
-  // Zoom behavior
-  const zoom = d3.zoom()
-    .scaleExtent([0.15, 4])
-    .on('zoom', (event) => {
-      gRoot.attr('transform', event.transform);
-    });
-
+  const zoom = d3.zoom().scaleExtent([0.15,4])
+    .on('zoom', ev => gRoot.attr('transform', ev.transform));
   svg.call(zoom);
 
-  // Root group for zoom/pan
   gRoot = svg.append('g');
 
-  // Arrowhead marker
-  svg.append('defs').selectAll('marker')
-    .data(['arrow'])
-    .join('marker')
-    .attr('id', 'arrow')
-    .attr('viewBox', '0 -5 10 10')
-    .attr('refX', 28)
-    .attr('refY', 0)
-    .attr('markerWidth', 6)
-    .attr('markerHeight', 6)
-    .attr('orient', 'auto')
-    .append('path')
-    .attr('d', 'M0,-5L10,0L0,5')
-    .attr('fill', '#565f89');
+  svg.append('defs').append('marker')
+    .attr('id','arrow').attr('viewBox','0 -5 10 10')
+    .attr('refX',28).attr('refY',0)
+    .attr('markerWidth',6).attr('markerHeight',6)
+    .attr('orient','auto')
+    .append('path').attr('d','M0,-5L10,0L0,5').attr('fill','#565f89');
 
-  // Layers
-  gEdges = gRoot.append('g').attr('class', 'edges');
-  gNodes = gRoot.append('g').attr('class', 'nodes');
-  gLabels = gRoot.append('g').attr('class', 'labels');
+  gEdges = gRoot.append('g');
+  gNodes = gRoot.append('g');
+  gLabels = gRoot.append('g');
 
-  // Force simulation
   simulation = d3.forceSimulation(graphData.nodes)
-    .force('link', d3.forceLink(graphData.edges).id(d => d.id).distance(140))
-    .force('charge', d3.forceManyBody().strength(-400))
-    .force('center', d3.forceCenter(width / 2, height / 2))
-    .force('collision', d3.forceCollide().radius(40))
-    .force('x', d3.forceX(width / 2).strength(0.03))
-    .force('y', d3.forceY(height / 2).strength(0.03));
+    .force('link', d3.forceLink(graphData.edges).id(d=>d.id).distance(170))
+    .force('charge', d3.forceManyBody().strength(-500))
+    .force('center', d3.forceCenter(width/2, height/2))
+    .force('collision', d3.forceCollide().radius(55))
+    .force('x', d3.forceX(width/2).strength(0.02))
+    .force('y', d3.forceY(height/2).strength(0.02));
 
   renderGraph();
   simulation.on('tick', ticked);
 
-  // Center initially
-  svg.call(zoom.transform, d3.zoomIdentity.translate(width / 2, height / 2).scale(0.85).translate(-width / 2, -height / 2));
+  requestAnimationFrame(() => {
+    const sz = getContainerSize();
+    svg.attr('viewBox',[0,0,sz.width,sz.height]).attr('width',sz.width).attr('height',sz.height);
+    simulation.force('center', d3.forceCenter(sz.width/2, sz.height/2));
+    simulation.force('x', d3.forceX(sz.width/2).strength(0.02));
+    simulation.force('y', d3.forceY(sz.height/2).strength(0.02));
+    simulation.alpha(0.5).restart();
+    svg.call(zoom.transform, d3.zoomIdentity
+      .translate(sz.width/2, sz.height/2).scale(0.8)
+      .translate(-sz.width/2, -sz.height/2));
+  });
 }
 
-// ─── Render ────────────────────────────────────────────────
 function renderGraph() {
-  const filteredNodes = currentFilter === 'all'
+  const filteredNodes = currentFilter==='all'
     ? graphData.nodes
-    : graphData.nodes.filter(n => n.type === currentFilter);
-
-  const filteredNodeIds = new Set(filteredNodes.map(n => n.id));
-  const filteredEdges = graphData.edges.filter(e =>
-    filteredNodeIds.has(e.source?.id || e.source) && filteredNodeIds.has(e.target?.id || e.target)
-  );
+    : graphData.nodes.filter(n=>n.type===currentFilter);
+  const fnIds = new Set(filteredNodes.map(n=>n.id));
+  const filteredEdges = graphData.edges.filter(e=>
+    fnIds.has(e.source?.id||e.source) && fnIds.has(e.target?.id||e.target));
 
   // Edges
-  const edgeSel = gEdges.selectAll('g.edge-group')
-    .data(filteredEdges, d => `${d.source?.id || d.source}-${d.target?.id || d.target}-${d.type}`);
+  const eSel = gEdges.selectAll('g.edge-group')
+    .data(filteredEdges, d=>`${d.source?.id||d.source}-${d.target?.id||d.target}-${d.type}`);
+  const eEnt = eSel.enter().append('g').attr('class','edge-group');
+  eEnt.append('line').attr('class','edge-line').attr('stroke','#3b4261').attr('stroke-opacity',0.5).attr('stroke-width',1.5).attr('marker-end','url(#arrow)');
+  eEnt.append('text').attr('class','edge-label').attr('dy',-4);
+  eSel.exit().remove();
 
-  const edgeEnter = edgeSel.enter().append('g').attr('class', 'edge-group');
-
-  edgeEnter.append('line')
-    .attr('class', 'edge-line')
-    .attr('stroke', '#3b4261')
-    .attr('stroke-opacity', 0.5)
-    .attr('stroke-width', 1.5)
-    .attr('marker-end', 'url(#arrow)');
-
-  edgeEnter.append('text')
-    .attr('class', 'edge-label')
-    .attr('dy', -4);
-
-  edgeSel.exit().remove();
-
-  // Merge + update edges
-  const edgeMerge = edgeSel.merge(edgeEnter);
-
-  edgeMerge.select('.edge-line')
-    .attr('stroke', d => {
-      const srcId = d.source?.id || d.source;
-      const tgtId = d.target?.id || d.target;
-      if (srcId === selectedNodeId || tgtId === selectedNodeId) return '#7aa2f7';
-      return '#3b4261';
+  const eMrg = eSel.merge(eEnt);
+  eMrg.select('.edge-line')
+    .attr('stroke', d=>{
+      const s=d.source?.id||d.source, t=d.target?.id||d.target;
+      return (s===selectedNodeId||t===selectedNodeId)?'#7aa2f7':'#3b4261';
     })
-    .attr('stroke-opacity', d => {
-      const srcId = d.source?.id || d.source;
-      const tgtId = d.target?.id || d.target;
-      if (selectedNodeId && (srcId === selectedNodeId || tgtId === selectedNodeId)) return 0.8;
-      return selectedNodeId ? 0.15 : 0.5;
+    .attr('stroke-opacity', d=>{
+      if(!selectedNodeId) return 0.5;
+      const s=d.source?.id||d.source, t=d.target?.id||d.target;
+      return (s===selectedNodeId||t===selectedNodeId)?0.8:0.12;
     })
-    .attr('stroke-width', d => {
-      const srcId = d.source?.id || d.source;
-      const tgtId = d.target?.id || d.target;
-      if (srcId === selectedNodeId || tgtId === selectedNodeId) return 2.5;
-      return (EDGE_STYLES[d.type]?.width || 1.5);
+    .attr('stroke-width', d=>{
+      const s=d.source?.id||d.source, t=d.target?.id||d.target;
+      if(s===selectedNodeId||t===selectedNodeId) return 2.5;
+      return EDGE_STYLES[d.type]?.w||1.5;
     })
-    .attr('stroke-dasharray', d => EDGE_STYLES[d.type]?.dash || '');
-
-  edgeMerge.select('.edge-label')
-    .text(d => d.label || '')
-    .attr('fill', d => {
-      const srcId = d.source?.id || d.source;
-      const tgtId = d.target?.id || d.target;
-      if (srcId === selectedNodeId || tgtId === selectedNodeId) return '#7aa2f7';
-      return '#565f89';
-    })
-    .attr('font-size', d => {
-      const srcId = d.source?.id || d.source;
-      const tgtId = d.target?.id || d.target;
-      if (srcId === selectedNodeId || tgtId === selectedNodeId) return 11;
-      return 10;
+    .attr('stroke-dasharray', d=>EDGE_STYLES[d.type]?.dash||'');
+  eMrg.select('.edge-label')
+    .text(d=>d.label||'')
+    .attr('fill', d=>{
+      const s=d.source?.id||d.source, t=d.target?.id||d.target;
+      return (s===selectedNodeId||t===selectedNodeId)?'#7aa2f7':'#565f89';
     });
 
   // Nodes
-  const nodeSel = gNodes.selectAll('g.node-group')
-    .data(filteredNodes, d => d.id);
+  const nSel = gNodes.selectAll('g.node-group').data(filteredNodes, d=>d.id);
+  const nEnt = nSel.enter().append('g').attr('class','node-group').attr('cursor','pointer')
+    .call(d3.drag().on('start',dragS).on('drag',dragD).on('end',dragE));
+  nEnt.append('circle').attr('r',d=>getNodeRadius(d))
+    .attr('fill',d=>TYPE_COLORS[d.type]||'#888').attr('stroke','#1a1b26').attr('stroke-width',2);
+  nEnt.on('click',(ev,d)=>selectNode(d))
+    .on('mouseenter',(ev,d)=>showTooltip(ev,d))
+    .on('mouseleave',hideTooltip);
+  nSel.exit().remove();
 
-  const nodeEnter = nodeSel.enter().append('g')
-    .attr('class', 'node-group')
-    .attr('cursor', 'pointer')
-    .call(d3.drag()
-      .on('start', dragStarted)
-      .on('drag', dragged)
-      .on('end', dragEnded));
-
-  nodeEnter.append('circle')
-    .attr('r', d => getNodeRadius(d))
-    .attr('fill', d => TYPE_COLORS[d.type] || '#888')
-    .attr('stroke', '#1a1b26')
-    .attr('stroke-width', 2);
-
-  nodeEnter.on('click', (event, d) => selectNode(d))
-    .on('mouseenter', (event, d) => showTooltip(event, d))
-    .on('mouseleave', hideTooltip);
-
-  nodeSel.exit().remove();
-
-  const nodeMerge = nodeSel.merge(nodeEnter);
-
-  nodeMerge.select('circle')
-    .attr('r', d => getNodeRadius(d))
-    .attr('fill', d => TYPE_COLORS[d.type] || '#888')
-    .attr('stroke', d => d.id === selectedNodeId ? '#e0e0e0' : '#1a1b26')
-    .attr('stroke-width', d => d.id === selectedNodeId ? 3 : 2)
-    .attr('opacity', d => {
-      if (!selectedNodeId) return 1;
-      if (d.id === selectedNodeId) return 1;
-      const isConnected = graphData.edges.some(e =>
-        (e.source?.id || e.source) === selectedNodeId && (e.target?.id || e.target) === d.id ||
-        (e.target?.id || e.target) === selectedNodeId && (e.source?.id || e.source) === d.id
-      );
-      return isConnected ? 0.7 : 0.25;
+  const nMrg = nSel.merge(nEnt);
+  nMrg.select('circle')
+    .attr('r',d=>getNodeRadius(d))
+    .attr('fill',d=>TYPE_COLORS[d.type]||'#888')
+    .attr('stroke',d=>d.id===selectedNodeId?'#e0e0e0':'#1a1b26')
+    .attr('stroke-width',d=>d.id===selectedNodeId?3:2)
+    .attr('opacity', d=>{
+      if(!selectedNodeId) return 1;
+      if(d.id===selectedNodeId) return 1;
+      const conn = graphData.edges.some(e=>
+        ((e.source?.id||e.source)===selectedNodeId&&(e.target?.id||e.target)===d.id)||
+        ((e.target?.id||e.target)===selectedNodeId&&(e.source?.id||e.source)===d.id));
+      return conn?0.7:0.15;
     });
 
   // Labels
-  const labelSel = gLabels.selectAll('text.node-label')
-    .data(filteredNodes, d => d.id);
-
-  labelSel.enter().append('text')
-    .attr('class', 'node-label')
-    .text(d => d.label);
-
-  labelSel.exit().remove();
-
-  labelSel.merge(labelSel.enter())
-    .text(d => d.label)
-    .attr('opacity', d => {
-      if (!selectedNodeId) return 1;
-      if (d.id === selectedNodeId) return 1;
-      const isConnected = graphData.edges.some(e =>
-        (e.source?.id || e.source) === selectedNodeId && (e.target?.id || e.target) === d.id ||
-        (e.target?.id || e.target) === selectedNodeId && (e.source?.id || e.source) === d.id
-      );
-      return isConnected ? 0.7 : 0.25;
+  const lSel = gLabels.selectAll('text.node-label').data(filteredNodes, d=>d.id);
+  lSel.enter().append('text').attr('class','node-label').text(d=>d.label);
+  lSel.exit().remove();
+  lSel.merge(lSel.enter()).text(d=>d.label)
+    .attr('opacity', d=>{
+      if(!selectedNodeId) return 1;
+      if(d.id===selectedNodeId) return 1;
+      const conn = graphData.edges.some(e=>
+        ((e.source?.id||e.source)===selectedNodeId&&(e.target?.id||e.target)===d.id)||
+        ((e.target?.id||e.target)===selectedNodeId&&(e.source?.id||e.source)===d.id));
+      return conn?0.7:0.15;
     });
 
-  // Update simulation
   simulation.nodes(filteredNodes);
   simulation.force('link').links(filteredEdges);
   simulation.alpha(0.5).restart();
 }
 
-// ─── Tick ──────────────────────────────────────────────────
 function ticked() {
   gEdges.selectAll('g.edge-group')
-    .attr('transform', d => {
-      const sx = d.source.x, sy = d.source.y;
-      const tx = d.target.x, ty = d.target.y;
-      const angle = Math.atan2(ty - sy, tx - sx) * 180 / Math.PI;
-      return `translate(${sx},${sy}) rotate(${angle})`;
+    .attr('transform', d=>{
+      const sx=d.source.x, sy=d.source.y, tx=d.target.x, ty=d.target.y;
+      const a = Math.atan2(ty-sy, tx-sx)*180/Math.PI;
+      return `translate(${isNaN(sx)?0:sx},${isNaN(sy)?0:sy}) rotate(${isNaN(a)?0:a})`;
     });
-
   gEdges.selectAll('.edge-line')
-    .attr('x2', d => {
-      const dx = d.target.x - d.source.x;
-      const dy = d.target.y - d.source.y;
-      return Math.sqrt(dx * dx + dy * dy) - getNodeRadius(d.target) - 5;
+    .attr('x2', d=>{
+      const dx=(d.target.x||0)-(d.source.x||0), dy=(d.target.y||0)-(d.source.y||0);
+      const len = Math.sqrt(dx*dx+dy*dy);
+      return isNaN(len)?50:len-getNodeRadius(d.target)-5;
     });
-
   gEdges.selectAll('.edge-label')
-    .attr('x', d => {
-      const dx = d.target.x - d.source.x;
-      const dy = d.target.y - d.source.y;
-      return Math.sqrt(dx * dx + dy * dy) / 2;
+    .attr('x', d=>{
+      const dx=(d.target.x||0)-(d.source.x||0), dy=(d.target.y||0)-(d.source.y||0);
+      const len = Math.sqrt(dx*dx+dy*dy);
+      return isNaN(len)?25:len/2;
     });
-
   gNodes.selectAll('g.node-group')
-    .attr('transform', d => `translate(${d.x},${d.y})`);
-
+    .attr('transform', d=>`translate(${isNaN(d.x)?0:d.x},${isNaN(d.y)?0:d.y})`);
   gLabels.selectAll('text.node-label')
-    .attr('x', d => d.x)
-    .attr('y', d => d.y + getNodeRadius(d) + 14);
+    .attr('x', d=>isNaN(d.x)?0:d.x)
+    .attr('y', d=>(isNaN(d.y)?0:d.y)+getNodeRadius(d)+14);
 }
 
-// ─── Drag ──────────────────────────────────────────────────
-function dragStarted(event, d) {
-  if (!event.active) simulation.alphaTarget(0.3).restart();
-  d.fx = d.x;
-  d.fy = d.y;
-}
+function dragS(ev,d) { if(!ev.active) simulation.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; }
+function dragD(ev,d) { d.fx=ev.x; d.fy=ev.y; }
+function dragE(ev,d) { if(!ev.active) simulation.alphaTarget(0); d.fx=null; d.fy=null; }
 
-function dragged(event, d) {
-  d.fx = event.x;
-  d.fy = event.y;
-}
-
-function dragEnded(event, d) {
-  if (!event.active) simulation.alphaTarget(0);
-  d.fx = null;
-  d.fy = null;
-}
-
-// ─── Node radius ──────────────────────────────────────────
-function getNodeRadius(d) {
-  const degree = graphData.edges.filter(e =>
-    (e.source?.id || e.source) === d.id || (e.target?.id || e.target) === d.id
-  ).length;
-  return Math.min(10 + degree * 2.5, 30);
-}
-
-// ─── Selection ─────────────────────────────────────────────
 function selectNode(d) {
-  selectedNodeId = (selectedNodeId === d.id) ? null : d.id;
+  selectedNodeId = (selectedNodeId===d.id)?null:d.id;
   renderGraph();
-  if (selectedNodeId) {
-    showNodeDetail(d);
-  } else {
-    showEmptyDetail();
-  }
+  selectedNodeId?showNodeDetail(d):showEmptyDetail();
 }
 
 function showNodeDetail(d) {
-  const connections = graphData.edges.filter(e =>
-    (e.source?.id || e.source) === d.id || (e.target?.id || e.target) === d.id
-  );
+  const conns = graphData.edges.filter(e=>
+    (e.source?.id||e.source)===d.id||(e.target?.id||e.target)===d.id);
+  const c = TYPE_COLORS[d.type]||'#888';
+  const tl = TYPE_LABELS[d.type]||d.type;
+  const st = {active:'活跃',thin:'待补充',stale:'可能过时',candidate:'候选',merged:'已合并'};
 
-  const color = TYPE_COLORS[d.type] || '#888';
-  const typeLabel = TYPE_LABELS[d.type] || d.type;
-
-  let html = `
-    <span class="detail-type" style="background:${color}22;color:${color}">${typeLabel}</span>
+  let h = `<span class="detail-type" style="background:${c}22;color:${c}">${tl}</span>
     <div class="detail-title">${d.label}</div>
-    <div class="detail-summary">${d.summary || ''}</div>
-  `;
-
-  if (d.tags && d.tags.length) {
-    html += `<div class="detail-meta">${d.tags.map(t => `<span class="detail-tag">#${t}</span>`).join('')}</div>`;
-  }
-
-  if (d.source) {
-    html += `<div class="detail-meta"><span class="detail-tag">📎 ${d.source}</span></div>`;
-  }
-
-  if (d.status) {
-    const statusLabels = { active: '活跃', thin: '待补充', stale: '可能过时', candidate: '候选', merged: '已合并' };
-    html += `<div class="detail-meta"><span class="detail-tag">● ${statusLabels[d.status] || d.status}</span></div>`;
-  }
-
-  if (connections.length) {
-    html += '<div class="detail-section"><h3>关联节点</h3>';
-    connections.forEach(e => {
-      const isSource = (e.source?.id || e.source) === d.id;
-      const otherId = isSource ? (e.target?.id || e.target) : (e.source?.id || e.source);
-      const otherNode = graphData.nodes.find(n => n.id === otherId);
-      if (otherNode) {
-        const oc = TYPE_COLORS[otherNode.type] || '#888';
-        html += `
-          <div class="connection-item" onclick="navigateToNode('${otherId}')">
-            <span class="connection-dot" style="background:${oc}"></span>
-            <span>${otherNode.label}</span>
-            <span class="connection-label">${isSource ? (e.label || e.type) : '← ' + (e.label || e.type)}</span>
-          </div>`;
-      }
+    <div class="detail-summary">${d.summary||''}</div>`;
+  if(d.tags?.length) h+=`<div class="detail-meta">${d.tags.map(t=>`<span class="detail-tag">#${t}</span>`).join('')}</div>`;
+  if(d.source) h+=`<div class="detail-meta"><span class="detail-tag">📎 ${d.source}</span></div>`;
+  if(d.status) h+=`<div class="detail-meta"><span class="detail-tag">● ${st[d.status]||d.status}</span></div>`;
+  if(conns.length){
+    h+='<div class="detail-section"><h3>关联节点</h3>';
+    conns.forEach(e=>{
+      const isSrc=(e.source?.id||e.source)===d.id;
+      const oid=isSrc?(e.target?.id||e.target):(e.source?.id||e.source);
+      const on=graphData.nodes.find(n=>n.id===oid);
+      if(on) h+=`<div class="connection-item" onclick="navigateToNode('${oid}')">
+        <span class="connection-dot" style="background:${TYPE_COLORS[on.type]||'#888'}"></span>
+        <span>${on.label}</span>
+        <span class="connection-label">${isSrc?(e.label||e.type):'← '+(e.label||e.type)}</span></div>`;
     });
-    html += '</div>';
+    h+='</div>';
   }
-
-  nodeDetail.innerHTML = html;
+  nodeDetail.innerHTML=h;
   nodeDetail.classList.add('visible');
-  nodeDetail.querySelector('.empty-state')?.remove();
 }
 
 function showEmptyDetail() {
-  nodeDetail.innerHTML = '<div class="empty-state">👆 点击图谱中的节点<br>查看详细信息与关联</div>';
+  nodeDetail.innerHTML='<div class="empty-state">👆 点击图谱中的节点<br>查看详细信息与关联</div>';
   nodeDetail.classList.remove('visible');
 }
 
-function navigateToNode(id) {
-  const node = graphData.nodes.find(n => n.id === id);
-  if (node) selectNode(node);
+function navigateToNode(id) { const n=graphData.nodes.find(x=>x.id===id); if(n) selectNode(n); }
+
+function showTooltip(ev,d) {
+  const c=TYPE_COLORS[d.type]||'#888';
+  tooltip.innerHTML=`<div style="font-size:10px;color:${c};text-transform:uppercase;margin-bottom:2px">${TYPE_LABELS[d.type]||d.type}</div>
+    <div style="font-weight:600;color:#c0caf5;margin-bottom:4px">${d.label}</div>
+    <div style="font-size:12px;color:#565f89;line-height:1.5">${(d.summary||'').substring(0,100)}</div>`;
+  tooltip.style.opacity='1';
+  tooltip.style.left=(ev.pageX+16)+'px';
+  tooltip.style.top=(ev.pageY-16)+'px';
 }
 
-// ─── Tooltip ────────────────────────────────────────────────
-function showTooltip(event, d) {
-  const color = TYPE_COLORS[d.type] || '#888';
-  const typeLabel = TYPE_LABELS[d.type] || d.type;
-  tooltip.innerHTML = `
-    <div class="tt-type" style="color:${color}">${typeLabel}</div>
-    <div class="tt-name">${d.label}</div>
-    <div class="tt-summary">${(d.summary || '').substring(0, 100)}</div>
-  `;
-  tooltip.style.opacity = '1';
-  tooltip.style.left = (event.pageX + 16) + 'px';
-  tooltip.style.top = (event.pageY - 16) + 'px';
-}
+function hideTooltip() { tooltip.style.opacity='0'; }
 
-function hideTooltip() {
-  tooltip.style.opacity = '0';
-}
-
-// ─── Filters ───────────────────────────────────────────────
-document.getElementById('type-filters').addEventListener('click', (e) => {
-  if (!e.target.classList.contains('filter-btn')) return;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+// Filters
+document.getElementById('type-filters').addEventListener('click',e=>{
+  if(!e.target.classList.contains('filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   e.target.classList.add('active');
-  currentFilter = e.target.dataset.type;
-  selectedNodeId = null;
-  showEmptyDetail();
-  renderGraph();
+  currentFilter=e.target.dataset.type;
+  selectedNodeId=null; showEmptyDetail(); renderGraph();
 });
 
-// ─── Search ────────────────────────────────────────────────
-searchInput.addEventListener('input', (e) => {
-  const query = e.target.value.toLowerCase().trim();
-  if (!query) {
-    renderGraph();
-    return;
-  }
-  const match = graphData.nodes.find(n =>
-    n.label.toLowerCase().includes(query) ||
-    n.id.toLowerCase().includes(query) ||
-    (n.summary && n.summary.toLowerCase().includes(query))
-  );
-  if (match) {
-    selectNode(match);
-  }
+// Search
+searchInput.addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase().trim();
+  if(!q){renderGraph();return;}
+  const m=graphData.nodes.find(n=>
+    n.label.toLowerCase().includes(q)||n.id.toLowerCase().includes(q)||(n.summary||'').toLowerCase().includes(q));
+  if(m) selectNode(m);
 });
 
-// ─── Zoom controls ─────────────────────────────────────────
-document.getElementById('zoom-in').addEventListener('click', () => {
-  svg.transition().duration(300).call(
-    d3.zoom().on('zoom', (event) => gRoot.attr('transform', event.transform)).scaleBy, 1.3
-  );
+// Zoom
+let zoomInst = null;
+function getZoom() {
+  if(!zoomInst) zoomInst = d3.zoom().scaleExtent([0.15,4]).on('zoom',ev=>gRoot.attr('transform',ev.transform));
+  return zoomInst;
+}
+document.getElementById('zoom-in').addEventListener('click',()=>{ svg.transition().duration(300).call(getZoom().scaleBy,1.3); });
+document.getElementById('zoom-out').addEventListener('click',()=>{ svg.transition().duration(300).call(getZoom().scaleBy,0.7); });
+document.getElementById('zoom-reset').addEventListener('click',()=>{
+  const {width,height}=getContainerSize();
+  svg.transition().duration(500).call(getZoom().transform, d3.zoomIdentity.translate(width/2,height/2).scale(0.8).translate(-width/2,-height/2));
 });
 
-document.getElementById('zoom-out').addEventListener('click', () => {
-  svg.transition().duration(300).call(
-    d3.zoom().on('zoom', (event) => gRoot.attr('transform', event.transform)).scaleBy, 0.7
-  );
+// Toggle sidebar
+document.getElementById('toggle-sidebar').addEventListener('click',()=>{
+  sidebarVisible=!sidebarVisible;
+  sidebar.classList.toggle('hidden',!sidebarVisible);
+  setTimeout(()=>{
+    const {width,height}=getContainerSize();
+    svg.attr('viewBox',[0,0,width,height]).attr('width',width).attr('height',height);
+    simulation.force('center',d3.forceCenter(width/2,height/2));
+    simulation.force('x',d3.forceX(width/2).strength(0.02));
+    simulation.force('y',d3.forceY(height/2).strength(0.02));
+    simulation.alpha(0.3).restart();
+  },350);
 });
 
-document.getElementById('zoom-reset').addEventListener('click', () => {
-  const { width, height } = container.getBoundingClientRect();
-  svg.transition().duration(500).call(
-    d3.zoom().on('zoom', (event) => gRoot.attr('transform', event.transform)).transform,
-    d3.zoomIdentity.translate(width/2, height/2).scale(0.85).translate(-width/2, -height/2)
-  );
-});
-
-// ─── Toggle sidebar ────────────────────────────────────────
-document.getElementById('toggle-sidebar').addEventListener('click', () => {
-  sidebarVisible = !sidebarVisible;
-  sidebar.classList.toggle('hidden', !sidebarVisible);
-});
-
-// ─── Resize ────────────────────────────────────────────────
-window.addEventListener('resize', () => {
-  const { width, height } = container.getBoundingClientRect();
-  svg.attr('viewBox', [0, 0, width, height]).attr('width', width).attr('height', height);
-  simulation.force('center', d3.forceCenter(width / 2, height / 2));
+// Resize
+window.addEventListener('resize',()=>{
+  const {width,height}=getContainerSize();
+  svg.attr('viewBox',[0,0,width,height]).attr('width',width).attr('height',height);
+  simulation.force('center',d3.forceCenter(width/2,height/2));
+  simulation.force('x',d3.forceX(width/2).strength(0.02));
+  simulation.force('y',d3.forceY(height/2).strength(0.02));
   simulation.alpha(0.3).restart();
 });
 
-// ─── Keyboard ──────────────────────────────────────────────
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    selectedNodeId = null;
-    showEmptyDetail();
-    renderGraph();
-  }
+// Keyboard
+window.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ selectedNodeId=null; showEmptyDetail(); renderGraph(); }
 });
 
-// ─── Start ─────────────────────────────────────────────────
 loadGraph();
 </script>
 </body>
