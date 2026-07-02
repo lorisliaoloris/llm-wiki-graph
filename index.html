@@ -158,22 +158,26 @@ const edgeCount = document.getElementById('edge-count');
 
 // ── Data helpers ──
 
+
+function edgeSourceId(e) { return typeof e.source === "object" ? e.source.id : e.source; }
+function edgeTargetId(e) { return typeof e.target === "object" ? e.target.id : e.target; }
+
 function getClusterNodes(cid) {
   return graphData.nodes.filter(n => n.cluster === cid);
 }
 
 function getClusterEdges(cid) {
   const nodeIds = new Set(getClusterNodes(cid).map(n => n.id));
-  return graphData.edges.filter(e => nodeIds.has(e.source) && nodeIds.has(e.target));
+  return graphData.edges.filter(e => nodeIds.has(edgeSourceId(e)) && nodeIds.has(edgeTargetId(e)));
 }
 
 function getCrossEdges(cid) {
   // Edges where one endpoint is in this cluster and the other is outside
   const nodeIds = new Set(getClusterNodes(cid).map(n => n.id));
-  return graphData.edges.filter(e =>
-    (nodeIds.has(e.source) && !nodeIds.has(e.target)) ||
-    (nodeIds.has(e.target) && !nodeIds.has(e.source))
-  );
+  return graphData.edges.filter(e => {
+    const sid = edgeSourceId(e), tid = edgeTargetId(e);
+    return (nodeIds.has(sid) && !nodeIds.has(tid)) || (nodeIds.has(tid) && !nodeIds.has(sid));
+  });
 }
 
 function buildClusterNodes() {
@@ -201,10 +205,12 @@ function buildClusterEdges() {
   const pairData = {};
 
   graphData.edges.forEach(e => {
-    const ca = clusterMap[e.source], cb = clusterMap[e.target];
+    const sid = typeof e.source === 'object' ? e.source.id : e.source;
+    const tid = typeof e.target === 'object' ? e.target.id : e.target;
+    const ca = clusterMap[sid], cb = clusterMap[tid];
     if (!ca || !cb || ca === cb) return;
     const key = pairKey(ca, cb);
-    if (!pairData[key]) pairData[key] = { source: ca, target: cb, edges: [] };
+    if (!pairData[key]) pairData[key] = { sourceId: ca, targetId: cb, source: ca, target: cb, edges: [] };
     pairData[key].edges.push(e);
   });
 
@@ -288,7 +294,8 @@ function showClusterDetail(clusterId) {
 
   // Add ghost nodes for external connections
   crossEdges.forEach(e => {
-    const extId = existingIds.has(e.source) ? e.target : e.source;
+    const sid = edgeSourceId(e), tid = edgeTargetId(e);
+    const extId = existingIds.has(sid) ? tid : sid;
     if (!currentNodes.find(n => n.id === extId)) {
       const extNode = graphData.nodes.find(n => n.id === extId);
       if (extNode) {
