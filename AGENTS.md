@@ -63,6 +63,25 @@ const tid = typeof e.target === 'object' ? e.target.id : e.target;
 - 边数变化
 - 来源（手动 / gbrain-export / agent-lint）
 
+
+## GitHub Pages .nojekyll（必读）
+
+GitHub Pages 默认用 Jekyll 构建站点。如果仓库里有 Jekyll 不认识的
+文件类型（如 、 目录），构建会静默失败，回退到上一个
+成功的版本——但不会报错。
+
+**症状**：多次 push 后首页一直不更新，但 raw.githubusercontent.com 上的
+文件是最新的。
+
+**根因**：缺少  文件。
+
+**修复**：在仓库根目录创建空的  文件并推送。
+只做一次，之后所有构建都会跳过 Jekyll。
+
+
+
+**自查**：如果 graph.json 已更新但 Pages 不显示，先检查有无 。
+
 ## 参考
 
 - Gbrain Ingest 规则：加载 Hermes skill `llm-wiki` → Gbrain Backend 章节
