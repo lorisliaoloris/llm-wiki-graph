@@ -1,12 +1,12 @@
 # LLM Wiki Graph
 
-> 知识图谱可视化工程——将 `graph.json` 渲染为交互式力导向图。
-> LLM Agent 维护数据，人浏览和决策。部署在 GitHub Pages。
+> 分层钻取知识图谱可视化——将 `graph.json` 渲染为可钻取的交互式力导向图。
+> 顶层看知识团，点击钻取到内部节点与连线。LLM Agent 维护数据，人浏览和决策。
 
 ## 快速开始
 
 ```bash
-# 本地预览
+# 本地预览（无外部依赖，D3 已本地化）
 python -m http.server 8080
 # 打开 http://localhost:8080
 ```
@@ -31,16 +31,23 @@ LLM Agent 在每次 Ingest/Query/Lint 后更新此文件。
 
 ```json
 {
-  "meta": {
-    "title": "知识图谱标题",
-    "description": "一句话描述",
-    "lastUpdated": "YYYY-MM-DD",
-    "version": "1.0"
-  },
+  "meta": { "title": "...", "description": "...", "lastUpdated": "YYYY-MM-DD", "version": "2.0" },
+  "clusters": [...],   // 知识团定义（v2.0）
   "nodes": [...],
   "edges": [...]
 }
 ```
+
+### 知识团 (clusters)
+
+顶层分组，每个知识团包含若干节点。点击知识团可钻取其内部。
+
+| 字段 | 必填 | 类型 | 说明 |
+|------|------|------|------|
+| `id` | ✅ | string | 唯一标识，kebab-case，以 `cluster-` 开头 |
+| `label` | ✅ | string | 显示名称 |
+| `summary` | ✅ | string | 团的一句话描述 |
+| `color` | ✅ | string | 团的颜色（hex 值） |
 
 ### 节点 (nodes)
 
@@ -48,9 +55,10 @@ LLM Agent 在每次 Ingest/Query/Lint 后更新此文件。
 |------|------|------|------|
 | `id` | ✅ | string | 唯一标识，kebab-case |
 | `label` | ✅ | string | 显示名称 |
-| `type` | ✅ | enum | `concept`\|`entity`\|`trend`\|`question`\|`index` |
+| `type` | ✅ | enum | `concept`\\|`entity`\\|`trend`\\|`question`\\|`index` |
+| `cluster` | ✅ | string | 所属知识团的 id |
 | `summary` | ✅ | string | 一句话描述（显示在 tooltip 和侧边栏） |
-| `status` | 选填 | enum | `active`\|`thin`\|`stale`\|`candidate`\|`merged` |
+| `status` | 选填 | enum | `active`\\|`thin`\\|`stale`\\|`candidate`\\|`merged` |
 | `tags` | 选填 | string[] | 标签数组 |
 | `source` | 选填 | string | 原始资料 URL 或路径 |
 
@@ -105,23 +113,23 @@ Agent 读取并维护 `graph.json` 时，必须遵循以下规则：
 
 ## 部署
 
-推送到 `main` 分支，在 GitHub 仓库 Settings → Pages 中：
-- Source: Deploy from a branch
-- Branch: `main`, folder: `/ (root)`
+推送到 `main` 分支，GitHub Pages 自动部署。无需外部 CDN，D3.js 已本地化。
 
 ## 技术栈
 
-- **D3.js v7** — 力导向图渲染
-- **纯 HTML/CSS/JS** — 零构建步骤，零依赖安装
+- **D3.js v7** — 力导向图渲染（**已本地化**，无 CDN 依赖）
+- **纯 HTML/CSS/JS** — 零构建步骤，零安装
 - **GitHub Pages** — 静态托管
 
 ## 功能
 
-- 🔍 搜索节点（自动高亮并展示详情）
-- 🏷️ 按类型筛选（概念/实体/趋势/问题/索引）
-- 🖱️ 拖拽节点、缩放平移
-- 📋 点击节点查看详情 + 关联列表
-- 🎨 选中节点的关联边高亮
-- ⌨️ Esc 取消选中
+- 🧩 **分层钻取** — 顶层看知识团，点击钻取到内部节点与连线
+- 🔗 **跨团连接** — 外团节点半透明显示，保留跨领域关系
+- 🧭 **面包屑导航** — "图谱总览 › LLM Wiki 核心理念"，随时返回
+- 🔍 搜索节点（自动定位所在团并高亮）
+- 🖱️ 拖拽节点、滚轮缩放、平移
+- 📋 点击节点查看详情 + 关联列表（含跨团标记）
+- 🎨 选中节点关联边高亮，未关联节点淡出
+- ⌨️ Esc 取消选中 / Backspace 返回上层
 - 📱 响应式布局
 - 🌙 深色主题
