@@ -1,220 +1,782 @@
 {
   "meta": {
-    "title": "LLM Wiki · 知识图谱",
-    "description": "从 Gbrain 自动生成 | 人不手改 graph.json，只维护 Gbrain 页面",
+    "title": "知识图谱 · 全量",
+    "description": "从 Gbrain 自动生成 — 65节点 10知识团",
     "lastUpdated": "2026-07-02",
-    "version": "3.0-auto",
-    "source": "gbrain-sync"
+    "version": "4.0-full",
+    "source": "gbrain-auto-export"
   },
   "clusters": [
     {
-      "id": "cluster-philosophy",
-      "label": "LLM Wiki 核心理念",
-      "summary": "Karpathy十条长期维护约束",
+      "id": "llm-wiki-知识图谱",
+      "label": "LLM Wiki 知识图谱",
+      "summary": "17个页面",
       "color": "#4fc3f7"
     },
     {
-      "id": "cluster-workflows",
-      "label": "工作流与操作",
-      "summary": "Ingest/Lint/Query三大操作闭环",
+      "id": "游戏设计",
+      "label": "游戏设计",
+      "summary": "17个页面",
       "color": "#ffb74d"
     },
     {
-      "id": "cluster-toolchain",
-      "label": "工具链与实现",
-      "summary": "Gbrain+Obsidian+llm-wiki-graph+Hermes Agent",
+      "id": "逆向工程",
+      "label": "逆向工程",
+      "summary": "9个页面",
       "color": "#9ccc65"
     },
     {
-      "id": "cluster-cross-domain",
-      "label": "跨领域连接",
-      "summary": "逆向工程方法论与Wiki三层同构",
+      "id": "技能与工具",
+      "label": "技能与工具",
+      "summary": "8个页面",
       "color": "#b39ddb"
+    },
+    {
+      "id": "soccer-no.1",
+      "label": "Soccer NO.1",
+      "summary": "5个页面",
+      "color": "#ef5350"
+    },
+    {
+      "id": "参考资料",
+      "label": "参考资料",
+      "summary": "4个页面",
+      "color": "#26c6da"
+    },
+    {
+      "id": "cf8-开发",
+      "label": "CF8 开发",
+      "summary": "2个页面",
+      "color": "#ab47bc"
+    },
+    {
+      "id": "其他",
+      "label": "其他",
+      "summary": "2个页面",
+      "color": "#66bb6a"
+    },
+    {
+      "id": "hermes-技巧",
+      "label": "Hermes 技巧",
+      "summary": "1个页面",
+      "color": "#ff7043"
     }
   ],
   "nodes": [
     {
-      "id": "llm-wiki-philosophy",
-      "label": "LLM Wiki 理念约束",
-      "type": "concept",
-      "cluster": "cluster-philosophy",
-      "summary": "十条长期维护约束：编译而非检索、原始资料不可侵犯、增长控制",
-      "status": "active",
-      "tags": [
-        "knowledge-management"
-      ],
-      "source": "https://gist.github.com/Karpathy/442a6bf555914893e9891c11519de94f"
-    },
-    {
-      "id": "compounding-artifact",
-      "label": "复利型知识",
-      "type": "concept",
-      "cluster": "cluster-philosophy",
-      "summary": "Wiki是持续积累的资产，每次Ingest和Query都让它更丰富",
-      "status": "active",
-      "tags": [
-        "core-principle"
-      ]
-    },
-    {
-      "id": "three-layers",
-      "label": "三层架构",
-      "type": "concept",
-      "cluster": "cluster-philosophy",
-      "summary": "原始资料(只读)→Wiki层(LLM维护)→规则层(Agent约束)",
-      "status": "active",
-      "tags": [
-        "architecture"
-      ]
-    },
-    {
-      "id": "source-immutability",
-      "label": "原始资料不可侵犯",
-      "type": "concept",
-      "cluster": "cluster-philosophy",
-      "summary": "原始资料只读不写，Wiki是衍生物",
-      "status": "active",
-      "tags": [
-        "core-principle"
-      ]
-    },
-    {
-      "id": "update-over-create",
-      "label": "更新优先于新建",
-      "type": "concept",
-      "cluster": "cluster-philosophy",
-      "summary": "新信息优先合并，控制增长速度",
-      "status": "active",
-      "tags": [
-        "anti-bloat"
-      ]
-    },
-    {
-      "id": "query-reflux",
-      "label": "查询结果回流",
-      "type": "concept",
-      "cluster": "cluster-philosophy",
-      "summary": "好的对话结果归档回Wiki，不消失在聊天记录",
-      "status": "active",
-      "tags": [
-        "workflow"
-      ]
-    },
-    {
-      "id": "ingest-workflow",
-      "label": "Ingest 摄取工作流",
-      "type": "concept",
-      "cluster": "cluster-workflows",
-      "summary": "新资料→写摘要→更新索引→追加日志。一次Ingest触及10-15个页面",
-      "status": "active",
-      "tags": [
-        "workflow"
-      ]
-    },
-    {
-      "id": "lint-workflow",
-      "label": "Lint 修剪工作流",
-      "type": "concept",
-      "cluster": "cluster-workflows",
-      "summary": "周期性巡检：矛盾检测、stale标记、thin合并、orphan清理",
-      "status": "active",
-      "tags": [
-        "workflow"
-      ]
-    },
-    {
-      "id": "ai-vs-anti-bloat",
-      "label": "AI时代的信息膨胀问题",
-      "type": "question",
-      "cluster": "cluster-workflows",
-      "summary": "LLM可无限生成内容——如何确保Wiki不变成空洞页面堆",
-      "status": "active",
-      "tags": [
-        "risk"
-      ]
-    },
-    {
-      "id": "llm-wiki-graph-project",
-      "label": "llm-wiki-graph",
+      "id": "karpathy",
+      "label": "Karpathy",
       "type": "entity",
-      "cluster": "cluster-toolchain",
-      "summary": "知识图谱可视化工程。D3力导向图+分层钻取，数据源从Gbrain同步",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[entity] karpathy",
       "status": "active",
       "tags": [
-        "project",
-        "visualization"
-      ]
-    },
-    {
-      "id": "gbrain",
-      "label": "Gbrain",
-      "type": "entity",
-      "cluster": "cluster-toolchain",
-      "summary": "ECS中央知识库——语义搜索+页面管理+take系统",
-      "status": "active",
-      "tags": [
-        "tool",
-        "knowledge-base"
-      ]
-    },
-    {
-      "id": "obsidian",
-      "label": "Obsidian",
-      "type": "entity",
-      "cluster": "cluster-toolchain",
-      "summary": "Markdown知识管理IDE。图视图、Dataview、Web Clipper",
-      "status": "active",
-      "tags": [
-        "tool",
-        "ide"
-      ]
-    },
-    {
-      "id": "hermes-agent",
-      "label": "Hermes Agent",
-      "type": "entity",
-      "cluster": "cluster-toolchain",
-      "summary": "Windows主LLM Agent。维护llm-wiki-graph，通过MCP操作Gbrain",
-      "status": "active",
-      "tags": [
-        "tool",
-        "agent"
-      ]
-    },
-    {
-      "id": "graph-json-schema",
-      "label": "graph.json Schema",
-      "type": "concept",
-      "cluster": "cluster-toolchain",
-      "summary": "nodes/edges数据结构定义，11种语义化边类型",
-      "status": "active",
-      "tags": [
-        "data-format"
+        "entity"
       ]
     },
     {
       "id": "reverse-engineering-methodology",
       "label": "逆向工程方法论",
       "type": "concept",
-      "cluster": "cluster-cross-domain",
-      "summary": "三阶段流程与Wiki三层架构同构",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[concept] reverse-engineering-methodology",
       "status": "active",
       "tags": [
-        "methodology"
+        "concept"
       ]
     },
     {
-      "id": "karpathy",
-      "label": "Andrej Karpathy",
-      "type": "entity",
-      "cluster": "cluster-cross-domain",
-      "summary": "LLM Wiki理念提出者，原gist是本图谱奠基文档",
+      "id": "graph-json-schema",
+      "label": "graph.json Schema",
+      "type": "concept",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[concept] graph-json-schema",
       "status": "active",
       "tags": [
-        "person",
-        "author"
-      ],
-      "source": "https://gist.github.com/Karpathy/442a6bf555914893e9891c11519de94f"
+        "concept"
+      ]
+    },
+    {
+      "id": "hermes-agent",
+      "label": "Hermes Agent",
+      "type": "entity",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[entity] hermes-agent",
+      "status": "active",
+      "tags": [
+        "entity"
+      ]
+    },
+    {
+      "id": "obsidian",
+      "label": "Obsidian",
+      "type": "entity",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[entity] obsidian",
+      "status": "active",
+      "tags": [
+        "entity"
+      ]
+    },
+    {
+      "id": "gbrain",
+      "label": "Gbrain",
+      "type": "entity",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[entity] gbrain",
+      "status": "active",
+      "tags": [
+        "entity"
+      ]
+    },
+    {
+      "id": "llm-wiki-graph-project",
+      "label": "llm-wiki-graph",
+      "type": "entity",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[entity] llm-wiki-graph-project",
+      "status": "active",
+      "tags": [
+        "entity"
+      ]
+    },
+    {
+      "id": "ai-vs-anti-bloat",
+      "label": "AI信息膨胀问题",
+      "type": "question",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[question] ai-vs-anti-bloat",
+      "status": "active",
+      "tags": [
+        "question"
+      ]
+    },
+    {
+      "id": "lint-workflow",
+      "label": "Lint修剪工作流",
+      "type": "concept",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[concept] lint-workflow",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "ingest-workflow",
+      "label": "Ingest摄取工作流",
+      "type": "concept",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[concept] ingest-workflow",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "query-reflux",
+      "label": "查询结果回流",
+      "type": "concept",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[concept] query-reflux",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "update-over-create",
+      "label": "更新优先于新建",
+      "type": "concept",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[concept] update-over-create",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "source-immutability",
+      "label": "原始资料不可侵犯",
+      "type": "concept",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[concept] source-immutability",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "three-layers",
+      "label": "三层架构",
+      "type": "concept",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[concept] three-layers",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "compounding-artifact",
+      "label": "复利型知识",
+      "type": "concept",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[concept] compounding-artifact",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "llm-wiki-philosophy",
+      "label": "LLM Wiki理念约束",
+      "type": "concept",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[concept] llm-wiki-philosophy",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "reference-karpathy-claude-md",
+      "label": "Karpathy Claude MD",
+      "type": "entity",
+      "cluster": "llm-wiki-知识图谱",
+      "summary": "[reference] reference/karpathy-claude-md",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-thinking-cf8",
+      "label": "CF8设计思考",
+      "type": "concept",
+      "cluster": "游戏设计",
+      "summary": "[design-thinking] design-thinking/cf8",
+      "status": "active",
+      "tags": [
+        "design-thinking"
+      ]
+    },
+    {
+      "id": "game-design-cf8-beat-top-v2",
+      "label": "CF8 Beat Top v2",
+      "type": "concept",
+      "cluster": "游戏设计",
+      "summary": "[game-design] game-design/cf8-beat-top-v2",
+      "status": "active",
+      "tags": [
+        "game-design"
+      ]
+    },
+    {
+      "id": "design-theory-book-index",
+      "label": "设计理论书单索引",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/book-index",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-universal-principles-design-lidwell",
+      "label": "通用设计法则(Lidwell)",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/universal-principles-design-lidwell",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-living-with-complexity-norman",
+      "label": "与复杂共存(Norman)",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/living-with-complexity-norman",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-designing-interfaces-tidwell",
+      "label": "界面设计(Tidwell)",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/designing-interfaces-tidwell",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-gamers-brain-hodent",
+      "label": "玩家大脑(Hodent)",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/gamers-brain-hodent",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-game-feel-swink",
+      "label": "游戏手感(Swink)",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/game-feel-swink",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-art-of-game-design-schell",
+      "label": "游戏设计艺术(Schell)",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/art-of-game-design-schell",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-football-soccer-iq",
+      "label": "足球智商",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/football-soccer-iq",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-statistics-concepts",
+      "label": "统计学概念",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/statistics-concepts",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-simulation-modeling",
+      "label": "模拟建模",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/simulation-modeling",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-feedback-control",
+      "label": "反馈控制",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/feedback-control",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-psychology-gambling",
+      "label": "赌博心理学",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/psychology-gambling",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-game-characteristics",
+      "label": "游戏特性",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/game-characteristics",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-theory-game-mechanics-patterns",
+      "label": "游戏机制模式",
+      "type": "entity",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/game-mechanics-patterns",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "design-thinking-project-soccer-no1",
+      "label": "Soccer NO.1项目",
+      "type": "concept",
+      "cluster": "游戏设计",
+      "summary": "[design-thinking] design-thinking/project-soccer-no1",
+      "status": "active",
+      "tags": [
+        "design-thinking"
+      ]
+    },
+    {
+      "id": "reverse-engineering-cm4-commentary-system",
+      "label": "CM4解说系统",
+      "type": "entity",
+      "cluster": "逆向工程",
+      "summary": "[reference] reverse-engineering/cm4-commentary-system",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reverse-engineering-cm4-hardcoded-constants",
+      "label": "CM4硬编码常量",
+      "type": "entity",
+      "cluster": "逆向工程",
+      "summary": "[reference] reverse-engineering/cm4-hardcoded-constants",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reverse-engineering-cm4-ghidra-output",
+      "label": "CM4 Ghidra产出",
+      "type": "entity",
+      "cluster": "逆向工程",
+      "summary": "[reference] reverse-engineering/cm4-ghidra-output",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reverse-engineering-cm4-gaps-urgency-constraints-roles",
+      "label": "CM4补缺分析",
+      "type": "entity",
+      "cluster": "逆向工程",
+      "summary": "[reference] reverse-engineering/cm4-gaps-urgency-constraints-roles",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reverse-engineering-cm4-formation-impact",
+      "label": "CM4阵型影响",
+      "type": "entity",
+      "cluster": "逆向工程",
+      "summary": "[reference] reverse-engineering/cm4-formation-impact",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reverse-engineering-cm4-engine-godot-implementation",
+      "label": "CM4引擎Godot实现",
+      "type": "entity",
+      "cluster": "逆向工程",
+      "summary": "[reference] reverse-engineering/cm4-engine-godot-implementation",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reverse-engineering-cm4-match-engine-full-analysis",
+      "label": "CM4引擎完整分析",
+      "type": "entity",
+      "cluster": "逆向工程",
+      "summary": "[reference] reverse-engineering/cm4-match-engine-full-analysis",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reverse-engineering-book-cloud-index",
+      "label": "逆向书籍云索引",
+      "type": "entity",
+      "cluster": "逆向工程",
+      "summary": "[reference] reverse-engineering/book-cloud-index",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reverse-engineering-reading-list",
+      "label": "逆向核心书单",
+      "type": "entity",
+      "cluster": "逆向工程",
+      "summary": "[reference] reverse-engineering/reading-list",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "skills-github-auth",
+      "label": "GitHub认证",
+      "type": "concept",
+      "cluster": "技能与工具",
+      "summary": "[concept] skills/github-auth",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "reference-godot-automation",
+      "label": "Godot自动化",
+      "type": "concept",
+      "cluster": "技能与工具",
+      "summary": "[skill] reference/godot-automation",
+      "status": "active",
+      "tags": [
+        "skill"
+      ]
+    },
+    {
+      "id": "skills-github-issue-first-search",
+      "label": "GitHub Issue优先搜索",
+      "type": "concept",
+      "cluster": "技能与工具",
+      "summary": "[concept] skills/github-issue-first-search",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "skills-ps-exec-cross-session-gui",
+      "label": "跨会话GUI执行",
+      "type": "concept",
+      "cluster": "技能与工具",
+      "summary": "[concept] skills/ps-exec-cross-session-gui",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "skills-grill-me",
+      "label": "Grill Me",
+      "type": "concept",
+      "cluster": "技能与工具",
+      "summary": "[skill] skills/grill-me",
+      "status": "active",
+      "tags": [
+        "skill"
+      ]
+    },
+    {
+      "id": "skills-deep-intelligence",
+      "label": "Deep Intelligence",
+      "type": "concept",
+      "cluster": "技能与工具",
+      "summary": "[skill] skills/deep-intelligence",
+      "status": "active",
+      "tags": [
+        "skill"
+      ]
+    },
+    {
+      "id": "skills-game-designer-grill",
+      "label": "游戏设计师盘问",
+      "type": "concept",
+      "cluster": "技能与工具",
+      "summary": "[skill] skills/game-designer-grill",
+      "status": "active",
+      "tags": [
+        "skill"
+      ]
+    },
+    {
+      "id": "inventory-toolchain",
+      "label": "工具链清单",
+      "type": "concept",
+      "cluster": "技能与工具",
+      "summary": "[note] inventory/toolchain",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "projects-soccer-no1-prototype-v2-design",
+      "label": "Soccer v2设计文档",
+      "type": "concept",
+      "cluster": "soccer-no.1",
+      "summary": "[note] projects/soccer-no1-prototype-v2-design",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "projects-soccer-no1-step2-multi-vector-delivered",
+      "label": "Soccer Step2已交付",
+      "type": "concept",
+      "cluster": "soccer-no.1",
+      "summary": "[plan] projects/soccer-no1-step2-multi-vector-delivered",
+      "status": "active",
+      "tags": [
+        "plan"
+      ]
+    },
+    {
+      "id": "projects-soccer-no1-distillation-multi-vector",
+      "label": "Soccer蒸馏结果",
+      "type": "concept",
+      "cluster": "soccer-no.1",
+      "summary": "[note] projects/soccer-no1-distillation-multi-vector",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "projects-soccer-no1-step1-match-generator",
+      "label": "Soccer Step1计划",
+      "type": "concept",
+      "cluster": "soccer-no.1",
+      "summary": "[plan] projects/soccer-no1-step1-match-generator",
+      "status": "active",
+      "tags": [
+        "plan"
+      ]
+    },
+    {
+      "id": "projects-soccer-no1-puzzle-engine-plan",
+      "label": "Soccer Puzzle引擎计划",
+      "type": "concept",
+      "cluster": "soccer-no.1",
+      "summary": "[plan] projects/soccer-no1-puzzle-engine-plan",
+      "status": "active",
+      "tags": [
+        "plan"
+      ]
+    },
+    {
+      "id": "reference-gdd-standard",
+      "label": "GDD标准",
+      "type": "entity",
+      "cluster": "参考资料",
+      "summary": "[reference] reference/gdd-standard",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reference-codebase-memory-mcp",
+      "label": "Codebase Memory MCP",
+      "type": "entity",
+      "cluster": "参考资料",
+      "summary": "[reference] reference/codebase-memory-mcp",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reference-awesome-claude-md",
+      "label": "Awesome Claude MD",
+      "type": "entity",
+      "cluster": "参考资料",
+      "summary": "[reference] reference/awesome-claude-md",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "reference-github-spec-kit",
+      "label": "GitHub Spec Kit",
+      "type": "entity",
+      "cluster": "参考资料",
+      "summary": "[reference] reference/github-spec-kit",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "cf8-db-csv-sync-workflow",
+      "label": "DB CSV同步工作流",
+      "type": "concept",
+      "cluster": "cf8-开发",
+      "summary": "[note] cf8/db-csv-sync-workflow",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "cf8-db-csv-sync-lessons",
+      "label": "DB CSV同步教训",
+      "type": "concept",
+      "cluster": "cf8-开发",
+      "summary": "[note] cf8/db-csv-sync-lessons",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "specs-demo-spec",
+      "label": "Demo规格",
+      "type": "concept",
+      "cluster": "其他",
+      "summary": "[spec] specs/demo-spec",
+      "status": "active",
+      "tags": [
+        "spec"
+      ]
+    },
+    {
+      "id": "test-w26-upload",
+      "label": "GitHub Trending W26",
+      "type": "concept",
+      "cluster": "其他",
+      "summary": "[note] test-w26-upload",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "hermes-tips-session-unlock",
+      "label": "会话解锁",
+      "type": "concept",
+      "cluster": "hermes-技巧",
+      "summary": "[concept] hermes-tips/session-unlock",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
     }
   ],
   "edges": [
@@ -259,84 +821,6 @@
       "target": "karpathy",
       "type": "references",
       "label": "提出者"
-    },
-    {
-      "source": "three-layers",
-      "target": "gbrain",
-      "type": "implemented_by",
-      "label": "Wiki层后端"
-    },
-    {
-      "source": "three-layers",
-      "target": "obsidian",
-      "type": "implemented_by",
-      "label": "IDE层"
-    },
-    {
-      "source": "three-layers",
-      "target": "llm-wiki-graph-project",
-      "type": "visualized_by",
-      "label": "可视化层"
-    },
-    {
-      "source": "ingest-workflow",
-      "target": "gbrain",
-      "type": "uses",
-      "label": "存储目标"
-    },
-    {
-      "source": "ingest-workflow",
-      "target": "update-over-create",
-      "type": "implements",
-      "label": "落实原则"
-    },
-    {
-      "source": "lint-workflow",
-      "target": "update-over-create",
-      "type": "implements",
-      "label": "周期性执行"
-    },
-    {
-      "source": "lint-workflow",
-      "target": "ai-vs-anti-bloat",
-      "type": "addresses",
-      "label": "应对策略"
-    },
-    {
-      "source": "llm-wiki-graph-project",
-      "target": "graph-json-schema",
-      "type": "defines",
-      "label": "数据格式"
-    },
-    {
-      "source": "llm-wiki-graph-project",
-      "target": "gbrain",
-      "type": "complements",
-      "label": "可视层vs查询层"
-    },
-    {
-      "source": "hermes-agent",
-      "target": "llm-wiki-graph-project",
-      "type": "builds",
-      "label": "构建和维护"
-    },
-    {
-      "source": "hermes-agent",
-      "target": "gbrain",
-      "type": "maintains",
-      "label": "维护Wiki层"
-    },
-    {
-      "source": "reverse-engineering-methodology",
-      "target": "three-layers",
-      "type": "parallels",
-      "label": "同构"
-    },
-    {
-      "source": "compounding-artifact",
-      "target": "ingest-workflow",
-      "type": "enables",
-      "label": "驱动工作流"
     }
   ]
 }
