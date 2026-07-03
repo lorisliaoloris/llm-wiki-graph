@@ -86,26 +86,6 @@
     max-width: 260px; z-index: 20; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
     line-height: 1.5;
   }
-
-.tree { padding:0;margin:0;list-style:none; }
-.tree li{padding:0;margin:0;}
-.tree-row{display:flex;align-items:center;padding:3px 24px;cursor:pointer;font-size:12px;color:var(--text-dim);}
-.tree-row:hover{color:var(--accent);background:rgba(122,162,247,0.08);}
-.tree-row.on{color:var(--accent);background:rgba(122,162,247,0.12);}
-.tree-row .arr{width:14px;font-size:9px;flex-shrink:0;}
-.tree-row .arr.open{transform:rotate(90deg);}
-.tree-row .icn{width:18px;text-align:center;flex-shrink:0;}
-.tree-row .lbl{flex:1;}
-.tree-row .cnt{font-size:9px;color:var(--text-dim);margin-left:4px;}
-.tree-sub{display:none;}
-.tree-sub.open{display:block;}
-.tree-sub-row{padding:2px 24px 2px 50px;display:flex;align-items:center;cursor:pointer;font-size:11px;color:var(--text-dim);}
-.tree-sub-row:hover{color:var(--accent);background:rgba(122,162,247,0.06);}
-#cv{display:none;position:absolute;inset:0;overflow-y:auto;padding:24px 32px;color:var(--text);line-height:1.8;font-size:13px;z-index:2;background:var(--bg);}
-#cv.on{display:block;}
-#cv h2{font-size:16px;margin-bottom:12px;color:var(--accent);}
-#cv a{color:var(--accent);}
-#cv .back{display:inline-block;margin-bottom:12px;padding:3px 10px;border-radius:4px;border:1px solid var(--border);color:var(--accent);cursor:pointer;font-size:11px;}
 </style>
 </head>
 <body>
@@ -118,36 +98,27 @@
   <div id="search-box">
     <input type="text" id="search-input" placeholder="搜索节点...">
   </div>
-  <div id="breadcrumb" style="display:flex;align-items:center;gap:6px;padding:6px 24px;border-bottom:1px solid var(--border);">
-    <button id="back-btn" onclick="goHome()" style="display:none;padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:var(--bg);color:var(--accent);cursor:pointer;font-size:11px;">←</button>
-    <span id="breadcrumb-text"><span style="color:var(--accent);font-weight:600;">图谱总览</span></span>
-  </div>
-  <div style="flex:1;overflow-y:auto;padding:4px 0;">
-    <ul class="tree">
-      <li><div class="tree-row on" onclick="goOverview()"><span class="icn">📊</span><span class="lbl">图谱总览</span></div></li>
-      <li><div class="tree-row" onclick="tr('schema')"><span class="arr">▶</span><span class="icn">📋</span><span class="lbl">Schema</span></div></li>
-      <li><div class="tree-row" onclick="tr('log')"><span class="arr">▶</span><span class="icn">📝</span><span class="lbl">Log</span></div></li>
-      <li><div class="tree-row" onclick="tr('sources')"><span class="arr">▶</span><span class="icn">📦</span><span class="lbl">Sources</span></div>
-        <ul class="tree-sub" id="ts-sources"><li><div class="tree-sub-row" style="font-size:10px;color:var(--text-dim);">加载中...</div></li></ul>
-      </li>
-      <li><div class="tree-row" onclick="tr('index')"><span class="arr">▶</span><span class="icn">📚</span><span class="lbl">Index</span></div>
-        <ul class="tree-sub" id="ts-index"><li><div class="tree-sub-row" style="font-size:10px;color:var(--text-dim);">加载中...</div></li></ul>
-      </li>
-      <li><div class="tree-row" onclick="tr('lint')"><span class="arr">▶</span><span class="icn">📋</span><span class="lbl">Lint</span></div>
-        <ul class="tree-sub" id="ts-lint">
-          <li><div class="tree-sub-row"><span class="lbl">🟡 过期</span> <span class="cnt" id="li-st">-</span></div></li>
-          <li><div class="tree-sub-row"><span class="lbl">🔴 矛盾</span> <span class="cnt" id="li-ct">-</span></div></li>
-          <li><div class="tree-sub-row"><span class="lbl">👻 孤立</span> <span class="cnt" id="li-or">-</span></div></li>
-        </ul>
-      </li>
-    </ul>
+  <div id="breadcrumb" style="display:flex;align-items:center;gap:6px;">
+    <button id="back-btn" onclick="goHome()" style="display:none;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--accent);cursor:pointer;font-size:12px;">← 返回总览</button>
+    <span id="breadcrumb-text"><a id="breadcrumb-home" onclick="goHome()" style="color:var(--accent);font-weight:600;">图谱总览</a></span>
   </div>
   <div id="node-detail"><div class="empty-state">👆 点击节点查看详情</div></div>
   <div id="stats-bar">
     <span id="node-count">—</span>
-    <span id="edge-count">—</span><div id="graph-container">
+    <span id="edge-count">—</span>
+  <div id="debug-panel" style="padding:8px 24px;border-top:1px solid var(--border);font-size:10px;color:var(--text-dim);font-family:monospace;line-height:1.6;">
+    <div>DEBUG <span id="debug-toggle" style="cursor:pointer;float:right;">[-]</span></div>
+    <div id="debug-body">
+      <div>dataEdges: <span id="dbg-de">-</span> | domEdges: <span id="dbg-dm">-</span> | match: <span id="dbg-mt">-</span></div>
+      <div>gEdges: <span id="dbg-ge">-</span> | svgKids: <span id="dbg-sk">-</span></div>
+      <div>view: <span id="dbg-vw">-</span> | cid: <span id="dbg-ci">-</span> | last: <span id="dbg-ac">init</span></div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div id="graph-container">
   <svg id="graph-svg"></svg>
-  <div id="cv"><span class="back" onclick="hcv()">← 返回图谱</span><div id="cvb"></div></div>
   <button id="canvas-back-btn" onclick="goHome()" style="display:none;position:absolute;top:16px;left:16px;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--accent);cursor:pointer;font-size:13px;z-index:5;">← 返回</button>
   <div id="zoom-hint">🖱️ 点击知识团钻取 &nbsp;|&nbsp; 滚轮缩放 &nbsp;|&nbsp; 拖拽平移 &nbsp;|&nbsp; Backspace 返回</div>
   <div id="zoom-controls">
@@ -753,14 +724,6 @@ if (typeof d3 === 'undefined') {
   b.style.display=b.style.display==='none'?'block':'none';
   this.textContent=b.style.display==='none'?'[+]':'[-]';
 });
-
-function tr(id){var sub=document.getElementById('ts-'+id);if(sub){sub.classList.toggle('open');var row=document.querySelector('.tree-row[onclick*="tr(''+id+'')"]');var arr=row?row.querySelector('.arr'):null;if(arr)arr.classList.toggle('open',sub.classList.contains('open'));}if(id==='schema'){cv('schema');}else if(id==='log'){cv('log');}}
-function goOverview(){hcv();document.querySelectorAll('.tree-row').forEach(function(r){r.classList.remove('on');});document.querySelector('.tree-row[onclick*="goOverview"]').classList.add('on');}
-function cv(id){var c=document.getElementById('cv');var b=document.getElementById('cvb');c.classList.add('on');if(id==='schema'){fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/AGENTS.md').then(function(r){return r.text()}).then(function(t){b.innerHTML='<h2>📋 Schema</h2><pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">'+t.replace(/</g,'&lt;')+'</pre>';}).catch(function(){b.innerHTML='<p>加载失败</p>';});}else if(id==='log'){fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/log.md').then(function(r){return r.text()}).then(function(t){b.innerHTML='<h2>📝 Log</h2><pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">'+t.replace(/</g,'&lt;')+'</pre>';}).catch(function(){b.innerHTML='<p>加载失败</p>';});}else{b.innerHTML='<h2>'+id+'</h2><p style="color:var(--text-dim);">API连接中...</p>';}}
-function hcv(){document.getElementById('cv').classList.remove('on');}
-function pi(){var c=document.getElementById('ts-index');if(!graphData||!graphData.clusters){setTimeout(pi,500);return;}var h='';for(var i=0;i<graphData.clusters.length;i++){var cl=graphData.clusters[i];var cn=graphData.nodes.filter(function(n){return n.cluster===cl.id});h+='<li><div class="tree-sub-row" onclick="showClusterDetail(''+cl.id+'');hcv();" style="cursor:pointer;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+cl.color+';margin-right:6px;"></span><span class="lbl">'+cl.label+'</span> <span class="cnt">'+cn.length+'</span></div></li>';}c.innerHTML=h;}
-setTimeout(pi,1000);
-
 loadGraph();
 }
 </script>
