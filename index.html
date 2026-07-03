@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LLM Wiki · 知识图谱</title>
-<script src="d3.v7.min.js"></script>
+<title>LLM Wiki · 知识图谱</title><!-- v4.3: 89N92E Godot fix 2026-07-02 -->
+<script src="d3.v7.min.js?v=20260702153005"></script>
 <style>
   :root {
     --bg: #1a1b26; --surface: #24283b; --text: #c0caf5;
@@ -709,7 +709,7 @@ window.addEventListener('error', function(e) {
     gc.innerHTML = '<div class="load-error" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;gap:8px;">' +
       '<div>❌ 脚本错误</div>' +
       '<div style="font-size:12px;max-width:500px;text-align:center;">' + e.message + '</div>' +
-      '<div style="font-size:11px;">检查 D3.js 是否加载成功 (d3.v7.min.js)</div>' +
+      '<div style="font-size:11px;">检查 D3.js 是否加载成功 (d3.v7.min.js?v=20260702153005)</div>' +
       '</div>';
   }
 });
@@ -717,7 +717,7 @@ window.addEventListener('error', function(e) {
 // Check D3 availability
 if (typeof d3 === 'undefined') {
   document.getElementById('graph-container').innerHTML =
-    '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;">❌ D3.js 加载失败 — 检查 d3.v7.min.js 是否存在</div>';
+    '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;">❌ D3.js 加载失败 — 检查 d3.v7.min.js?v=20260702153005 是否存在</div>';
 } else {
   document.getElementById('debug-toggle').addEventListener('click',function(){
   var b=document.getElementById('debug-body');
