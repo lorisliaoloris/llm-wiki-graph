@@ -1,162 +1,89 @@
 {
   "meta": {
     "title": "知识图谱 · 全量",
-    "description": "从Gbrain自动生成 — 89节点 92连线",
-    "lastUpdated": "2026-07-02T16:00:00",
-    "version": "4.3-godot",
-    "source": "gbrain-auto-export"
+    "description": "Gbrain导出 — 100N 10C 7E",
+    "lastUpdated": "2026-07-04",
+    "version": "5.1-auto"
   },
   "clusters": [
     {
-      "id": "llm-wiki-知识图谱",
-      "label": "LLM Wiki 知识图谱",
-      "summary": "17个页面",
+      "id": "DDIA 读书笔记",
+      "label": "DDIA 读书笔记",
+      "summary": "35个页面",
       "color": "#4fc3f7"
+    },
+    {
+      "id": "Redis 剖析",
+      "label": "Redis 剖析",
+      "summary": "19个页面",
+      "color": "#ffb74d"
+    },
+    {
+      "id": "Godot 引擎",
+      "label": "Godot 引擎",
+      "summary": "16个页面",
+      "color": "#9ccc65"
+    },
+    {
+      "id": "美术与技术",
+      "label": "美术与技术",
+      "summary": "11个页面",
+      "color": "#b39ddb"
     },
     {
       "id": "游戏设计",
       "label": "游戏设计",
-      "summary": "17个页面",
-      "color": "#ffb74d"
-    },
-    {
-      "id": "逆向工程",
-      "label": "逆向工程",
-      "summary": "9个页面",
-      "color": "#9ccc65"
-    },
-    {
-      "id": "技能与工具",
-      "label": "技能与工具",
-      "summary": "8个页面",
-      "color": "#b39ddb"
-    },
-    {
-      "id": "soccer-no.1",
-      "label": "Soccer NO.1",
-      "summary": "5个页面",
+      "summary": "7个页面",
       "color": "#ef5350"
     },
     {
-      "id": "参考资料",
-      "label": "参考资料",
-      "summary": "4个页面",
+      "id": "JavaScript 前端工程化",
+      "label": "JavaScript 前端工程化",
+      "summary": "6个页面",
       "color": "#26c6da"
     },
     {
-      "id": "cf8-开发",
-      "label": "CF8 开发",
+      "id": "LLM Wiki 知识图谱",
+      "label": "LLM Wiki 知识图谱",
       "summary": "2个页面",
       "color": "#ab47bc"
     },
     {
-      "id": "其他",
-      "label": "其他",
+      "id": "CF8 开发",
+      "label": "CF8 开发",
       "summary": "2个页面",
       "color": "#66bb6a"
     },
     {
-      "id": "hermes-技巧",
+      "id": "Hermes 技巧",
       "label": "Hermes 技巧",
       "summary": "1个页面",
       "color": "#ff7043"
     },
     {
-      "id": "情报与报告",
-      "label": "情报与报告",
-      "summary": "跨领域情报研判、技术调研、趋势报告",
-      "color": "#ec407a"
-    },
-    {
-      "id": "godot-引擎",
-      "label": "Godot 引擎",
-      "color": "#4fc3f7",
-      "summary": "Godot 4.x 游戏引擎编程书籍、设计模式、架构知识"
+      "id": "故障记录",
+      "label": "故障记录",
+      "summary": "1个页面",
+      "color": "#42a5f5"
     }
   ],
   "nodes": [
     {
-      "id": "karpathy",
-      "label": "Karpathy",
+      "id": "agents-diabetes-trio",
+      "label": "糖尿病管理\"三师合一\"智能体 — 糖御医 · MaiLa",
       "type": "entity",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[entity] karpathy",
+      "cluster": "Hermes 技巧",
+      "summary": "[agent] agents/diabetes-trio",
       "status": "active",
       "tags": [
-        "entity"
-      ]
-    },
-    {
-      "id": "reverse-engineering-methodology",
-      "label": "逆向工程方法论",
-      "type": "concept",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[concept] reverse-engineering-methodology",
-      "status": "active",
-      "tags": [
-        "concept"
-      ]
-    },
-    {
-      "id": "graph-json-schema",
-      "label": "graph.json Schema",
-      "type": "concept",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[concept] graph-json-schema",
-      "status": "active",
-      "tags": [
-        "concept"
-      ]
-    },
-    {
-      "id": "hermes-agent",
-      "label": "Hermes Agent",
-      "type": "entity",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[entity] hermes-agent",
-      "status": "active",
-      "tags": [
-        "entity"
-      ]
-    },
-    {
-      "id": "obsidian",
-      "label": "Obsidian",
-      "type": "entity",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[entity] obsidian",
-      "status": "active",
-      "tags": [
-        "entity"
-      ]
-    },
-    {
-      "id": "gbrain",
-      "label": "Gbrain",
-      "type": "entity",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[entity] gbrain",
-      "status": "active",
-      "tags": [
-        "entity"
-      ]
-    },
-    {
-      "id": "llm-wiki-graph-project",
-      "label": "llm-wiki-graph",
-      "type": "entity",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[entity] llm-wiki-graph-project",
-      "status": "active",
-      "tags": [
-        "entity"
+        "agent"
       ]
     },
     {
       "id": "ai-vs-anti-bloat",
-      "label": "AI信息膨胀问题",
+      "label": "Ai Vs Anti Bloat",
       "type": "question",
-      "cluster": "llm-wiki-知识图谱",
+      "cluster": "LLM Wiki 知识图谱",
       "summary": "[question] ai-vs-anti-bloat",
       "status": "active",
       "tags": [
@@ -164,76 +91,736 @@
       ]
     },
     {
-      "id": "lint-workflow",
-      "label": "Lint修剪工作流",
+      "id": "anatomy_of_a_redis_web_application-database_row_caching",
+      "label": "Database row caching",
       "type": "concept",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[concept] lint-workflow",
+      "cluster": "Redis 剖析",
+      "summary": "[note] anatomy_of_a_redis_web_application/database_row_caching",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "anatomy_of_a_redis_web_application-login_and_cookie_caching",
+      "label": "登录和cookie缓存",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] anatomy_of_a_redis_web_application/login_and_cookie_caching",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "anatomy_of_a_redis_web_application-readme",
+      "label": "剖析一个Redis web应用",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] anatomy_of_a_redis_web_application/readme",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "anatomy_of_a_redis_web_application-shopping_carts_in_redis",
+      "label": "Shopping carts in Redis",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] anatomy_of_a_redis_web_application/shopping_carts_in_redis",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "anatomy_of_a_redis_web_application-summary",
+      "label": "Summary",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] anatomy_of_a_redis_web_application/summary",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "anatomy_of_a_redis_web_application-web_page_analytics",
+      "label": "Web page analytics",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] anatomy_of_a_redis_web_application/web_page_analytics",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "anatomy_of_a_redis_web_application-web_page_caching",
+      "label": "Web page caching",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] anatomy_of_a_redis_web_application/web_page_caching",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "art-tech-9-slice-scaling",
+      "label": "9 Slice Scaling",
+      "type": "concept",
+      "cluster": "美术与技术",
+      "summary": "[concept] art-tech/9-slice-scaling",
       "status": "active",
       "tags": [
         "concept"
       ]
     },
     {
-      "id": "ingest-workflow",
-      "label": "Ingest摄取工作流",
+      "id": "art-tech-ortho-cargo-spec",
+      "label": "Ortho Cargo Spec",
       "type": "concept",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[concept] ingest-workflow",
+      "cluster": "美术与技术",
+      "summary": "[concept] art-tech/ortho-cargo-spec",
       "status": "active",
       "tags": [
         "concept"
       ]
     },
     {
-      "id": "query-reflux",
-      "label": "查询结果回流",
+      "id": "art-tech-svg-technology",
+      "label": "Svg Technology",
       "type": "concept",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[concept] query-reflux",
+      "cluster": "美术与技术",
+      "summary": "[concept] art-tech/svg-technology",
       "status": "active",
       "tags": [
         "concept"
       ]
     },
     {
-      "id": "update-over-create",
-      "label": "更新优先于新建",
+      "id": "art-9-slice-scaling",
+      "label": "9 Slice Scaling",
+      "type": "entity",
+      "cluster": "美术与技术",
+      "summary": "[reference] art/9-slice-scaling",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "art-football-color-domain",
+      "label": "Football RPG Color Domain Se",
+      "type": "entity",
+      "cluster": "美术与技术",
+      "summary": "[reference] art/football-color-domain",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "art-game-ui-concepts",
+      "label": "Game Ui Concepts",
       "type": "concept",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[concept] update-over-create",
+      "cluster": "美术与技术",
+      "summary": "[concept] art/game-ui-concepts",
       "status": "active",
       "tags": [
         "concept"
       ]
     },
     {
-      "id": "source-immutability",
-      "label": "原始资料不可侵犯",
+      "id": "art-hud-benchmarks",
+      "label": "Hud Benchmarks",
       "type": "concept",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[concept] source-immutability",
+      "cluster": "美术与技术",
+      "summary": "[concept] art/hud-benchmarks",
       "status": "active",
       "tags": [
         "concept"
       ]
     },
     {
-      "id": "three-layers",
-      "label": "三层架构",
+      "id": "art-ring-of-elysium-ui-case-study",
+      "label": "Ring Of Elysium Ui Case Stud",
       "type": "concept",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[concept] three-layers",
+      "cluster": "美术与技术",
+      "summary": "[concept] art/ring-of-elysium-ui-case-study",
       "status": "active",
       "tags": [
         "concept"
+      ]
+    },
+    {
+      "id": "art-ui-booklist",
+      "label": "Ui Booklist",
+      "type": "concept",
+      "cluster": "美术与技术",
+      "summary": "[concept] art/ui-booklist",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "art-ui-design-heuristics",
+      "label": "Ui Design Heuristics",
+      "type": "concept",
+      "cluster": "美术与技术",
+      "summary": "[concept] art/ui-design-heuristics",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "art-ui-visualization-taxonomy",
+      "label": "Ui Visualization Taxonomy",
+      "type": "concept",
+      "cluster": "美术与技术",
+      "summary": "[concept] art/ui-visualization-taxonomy",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "books-book-of-shaders",
+      "label": "Book of Shaders",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[concept] books/book-of-shaders",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "books-design-patterns-gof",
+      "label": "Design Patterns: Elements of",
+      "type": "entity",
+      "cluster": "JavaScript 前端工程化",
+      "summary": "[book] books/design-patterns-gof",
+      "status": "active",
+      "tags": [
+        "book"
+      ]
+    },
+    {
+      "id": "books-full-game-development-patterns-with-godot",
+      "label": "Game Development Patterns wi",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/game-development-patterns-with-godot",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-game-development-patterns-with-godot4",
+      "label": "Game Development Patterns Wi",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/game-development-patterns-with-godot4",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-game-development-patterns-with-godot4-cont",
+      "label": "Game Development Patterns Wi",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/game-development-patterns-with-godot4-cont",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-game-development-with-godot-4-and-csharp",
+      "label": "Game Development with Godot ",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/game-development-with-godot-4-and-csharp",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-game-development-with-godot-4-and-csharp-cont",
+      "label": "Game Development with Godot ",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/game-development-with-godot-4-and-csharp-cont",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-game-engine-architecture-volume-i",
+      "label": "Game Engine Architecture Vol",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/game-engine-architecture-volume-i",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-game-engine-architecture-volume-i-cont",
+      "label": "Game Engine Architecture Vol",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/game-engine-architecture-volume-i-cont",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-game-programming-patterns-robert-nystrom-著",
+      "label": "Game Programming Patterns (R",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/game-programming-patterns-robert-nystrom-著",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-godot-engine-game-development-projects",
+      "label": "Godot Engine Game Developmen",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/godot-engine-game-development-projects",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-godot4-游戏开发项目",
+      "label": "Godot4 游戏开发项目",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/godot4-游戏开发项目",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-procedural-generation-in-godot",
+      "label": "Procedural Generation in God",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/procedural-generation-in-godot",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-full-the-book-of-shaders",
+      "label": "The Book of Shaders",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[note] books/full/the-book-of-shaders",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "books-game-architecture",
+      "label": "Game Engine Architecture",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[concept] books/game-architecture",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "books-game-programming-patterns",
+      "label": "Game Programming Patterns",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[concept] books/game-programming-patterns",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "books-javascript-computer-networking-top-down",
+      "label": "Computer Networking: A Top-D",
+      "type": "entity",
+      "cluster": "JavaScript 前端工程化",
+      "summary": "[book] books/javascript-computer-networking-top-down",
+      "status": "active",
+      "tags": [
+        "book"
+      ]
+    },
+    {
+      "id": "books-javascript-library-index",
+      "label": "JavaScript 前端工程化书库",
+      "type": "entity",
+      "cluster": "JavaScript 前端工程化",
+      "summary": "[reference] books/javascript-library-index",
+      "status": "active",
+      "tags": [
+        "reference"
+      ]
+    },
+    {
+      "id": "books-javascript-professional-js-4th",
+      "label": "Professional JavaScript for ",
+      "type": "entity",
+      "cluster": "JavaScript 前端工程化",
+      "summary": "[book] books/javascript-professional-js-4th",
+      "status": "active",
+      "tags": [
+        "book"
+      ]
+    },
+    {
+      "id": "books-javascript-you-dont-know-js",
+      "label": "You Don't Know JS Yet: Get S",
+      "type": "entity",
+      "cluster": "JavaScript 前端工程化",
+      "summary": "[book] books/javascript-you-dont-know-js",
+      "status": "active",
+      "tags": [
+        "book"
+      ]
+    },
+    {
+      "id": "books-procedural-generation-godot",
+      "label": "PCG in Godot",
+      "type": "concept",
+      "cluster": "Godot 引擎",
+      "summary": "[concept] books/procedural-generation-godot",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "books-refactoring-martin-fowler",
+      "label": "Refactoring: Improving the D",
+      "type": "entity",
+      "cluster": "JavaScript 前端工程化",
+      "summary": "[book] books/refactoring-martin-fowler",
+      "status": "active",
+      "tags": [
+        "book"
+      ]
+    },
+    {
+      "id": "bug-cron-scheduler-total-outage-2026-06-20",
+      "label": "Cron Scheduler Total Outage ",
+      "type": "concept",
+      "cluster": "故障记录",
+      "summary": "[concept] bug/cron-scheduler-total-outage-2026-06-20",
+      "status": "active",
+      "tags": [
+        "concept"
+      ]
+    },
+    {
+      "id": "cf8-db-csv-sync-lessons",
+      "label": "Db Csv Sync Lessons",
+      "type": "concept",
+      "cluster": "CF8 开发",
+      "summary": "[note] cf8/db-csv-sync-lessons",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "cf8-db-csv-sync-workflow",
+      "label": "Db Csv Sync Workflow",
+      "type": "concept",
+      "cluster": "CF8 开发",
+      "summary": "[note] cf8/db-csv-sync-workflow",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter10_exceptions-exceptions",
+      "label": "Chapter 10. Exceptions",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter10_exceptions/exceptions",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter11_concurrency-concurrency",
+      "label": "Chapter 11. Concurrency",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter11_concurrency/concurrency",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter12_serialization-serialization",
+      "label": "Chapter 12. Serialization",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter12_serialization/serialization",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter2_creating_and_destroying_objects-creating_and_destroying_objects",
+      "label": "Chapter 2. Creating and Dest",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter2_creating_and_destroying_objects/creating_and_destroying_objects",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter3_methods_common_to_all_objects-methods_common_to_all_objects",
+      "label": "Chapter 3. Methods Common to",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter3_methods_common_to_all_objects/methods_common_to_all_objects",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter4_classes_and_interfaces-classes_and_interfaces",
+      "label": "Classes and Interfaces",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter4_classes_and_interfaces/classes_and_interfaces",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter5_generics-generics",
+      "label": "Generics",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter5_generics/generics",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter6_enums_and_annotations-enums_and_annotations",
+      "label": "Enums and Annotations",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter6_enums_and_annotations/enums_and_annotations",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter7_lambdas_and_streams-lambdas_and_streams",
+      "label": "Lambdas and Streams",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter7_lambdas_and_streams/lambdas_and_streams",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter8_methods-methods",
+      "label": "Chapter 8. Methods",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter8_methods/methods",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "chapter9_general_programming-general_programming",
+      "label": "Chapter 9. General Programmi",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] chapter9_general_programming/general_programming",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-basic_redis_transactions",
+      "label": "Redis基本事务",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/basic_redis_transactions",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-expiring_keys",
+      "label": "使keys过期",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/expiring_keys",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-hashes",
+      "label": "Hashes",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/hashes",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-lists",
+      "label": "Lists",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/lists",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-other_commands",
+      "label": "其他命令",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/other_commands",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-publishsubcribe",
+      "label": "Publish/subcribe(发布/订阅)",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/publishsubcribe",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-readme",
+      "label": "Redis命令行",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/readme",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-sets",
+      "label": "Sets",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/sets",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-sorted_sets",
+      "label": "Sorted sets",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/sorted_sets",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-sorting",
+      "label": "Sorting",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/sorting",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-strings",
+      "label": "Strings",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/strings",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "commands_in_redis-summary",
+      "label": "Summary",
+      "type": "concept",
+      "cluster": "Redis 剖析",
+      "summary": "[note] commands_in_redis/summary",
+      "status": "active",
+      "tags": [
+        "note"
       ]
     },
     {
       "id": "compounding-artifact",
-      "label": "复利型知识",
+      "label": "Compounding Artifact",
       "type": "concept",
-      "cluster": "llm-wiki-知识图谱",
+      "cluster": "LLM Wiki 知识图谱",
       "summary": "[concept] compounding-artifact",
       "status": "active",
       "tags": [
@@ -241,118 +828,294 @@
       ]
     },
     {
-      "id": "llm-wiki-philosophy",
-      "label": "LLM Wiki理念约束",
+      "id": "ddia-chapter-10-batch-processing",
+      "label": "Chapter 10 Batch Processing",
       "type": "concept",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[concept] llm-wiki-philosophy",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-10-batch-processing",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-11-streams",
+      "label": "Streams",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-11-streams",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-2-data-models",
+      "label": "Chapter 2 Data Models",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-2-data-models",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-2.1-traildb",
+      "label": "TrailDB",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-2.1-traildb",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-2.2-janusgraph",
+      "label": "JanusGraph",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-2.2-janusgraph",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-2.3-gremlin-graph-queries",
+      "label": "Chapter 2.3 Gremlin Graph Qu",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-2.3-gremlin-graph-queries",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-2.4-mapreduce",
+      "label": "Chapter 2.4 MapReduce",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-2.4-mapreduce",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-3-storage-and-retrieval",
+      "label": "Chapter 3 Storage and Retrie",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-3-storage-and-retrieval",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-3.1-memcached",
+      "label": "Memcached",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-3.1-memcached",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-3.2-redis",
+      "label": "Redis",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-3.2-redis",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-3.3-cassandra",
+      "label": "Chapter 3.3 Cassandra",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-3.3-cassandra",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-3.4-hbase",
+      "label": "Chapter 3.4 HBase",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-3.4-hbase",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-3.5-red-black-trees",
+      "label": "Red-black trees",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-3.5-red-black-trees",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-3.6-gfs",
+      "label": "Google File System",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-3.6-gfs",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-3.7-b-trees",
+      "label": "Chapter 3.7 B trees",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-3.7-b-trees",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-4-encoding-and-evolution",
+      "label": "Encoding and Evolution",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-4-encoding-and-evolution",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-5-replication",
+      "label": "Chapter 5 Replication",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-5-replication",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-6-partitioning",
+      "label": "Partitioning",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-6-partitioning",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-7-transactions",
+      "label": "Transactions",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-7-transactions",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-7.1-jepsen",
+      "label": "Jepsen",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-7.1-jepsen",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-8-distributed-failures",
+      "label": "Distributed Failures",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-8-distributed-failures",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-9-consistency-and-consensus",
+      "label": "Consistency and consensus",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-9-consistency-and-consensus",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-chapter-9.1-chubby-lock-service",
+      "label": "Chubby lock service",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/chapter-9.1-chubby-lock-service",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "ddia-databases-talk-notes",
+      "label": "Part 1",
+      "type": "concept",
+      "cluster": "DDIA 读书笔记",
+      "summary": "[note] ddia/databases-talk-notes",
+      "status": "active",
+      "tags": [
+        "note"
+      ]
+    },
+    {
+      "id": "design-theory-art-of-game-design-full",
+      "label": "Art Of Game Design Full",
+      "type": "concept",
+      "cluster": "游戏设计",
+      "summary": "[concept] design-theory/art-of-game-design-full",
       "status": "active",
       "tags": [
         "concept"
       ]
     },
     {
-      "id": "reference-karpathy-claude-md",
-      "label": "Karpathy Claude MD",
-      "type": "entity",
-      "cluster": "llm-wiki-知识图谱",
-      "summary": "[reference] reference/karpathy-claude-md",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-thinking-cf8",
-      "label": "CF8设计思考",
+      "id": "design-theory-art-of-game-design-lenses-soccer",
+      "label": "Art Of Game Design Lenses So",
       "type": "concept",
       "cluster": "游戏设计",
-      "summary": "[design-thinking] design-thinking/cf8",
+      "summary": "[concept] design-theory/art-of-game-design-lenses-soccer",
       "status": "active",
       "tags": [
-        "design-thinking"
-      ]
-    },
-    {
-      "id": "game-design-cf8-beat-top-v2",
-      "label": "CF8 Beat Top v2",
-      "type": "concept",
-      "cluster": "游戏设计",
-      "summary": "[game-design] game-design/cf8-beat-top-v2",
-      "status": "active",
-      "tags": [
-        "game-design"
-      ]
-    },
-    {
-      "id": "design-theory-book-index",
-      "label": "设计理论书单索引",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/book-index",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-theory-universal-principles-design-lidwell",
-      "label": "通用设计法则(Lidwell)",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/universal-principles-design-lidwell",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-theory-living-with-complexity-norman",
-      "label": "与复杂共存(Norman)",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/living-with-complexity-norman",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-theory-designing-interfaces-tidwell",
-      "label": "界面设计(Tidwell)",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/designing-interfaces-tidwell",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-theory-gamers-brain-hodent",
-      "label": "玩家大脑(Hodent)",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/gamers-brain-hodent",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-theory-game-feel-swink",
-      "label": "游戏手感(Swink)",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/game-feel-swink",
-      "status": "active",
-      "tags": [
-        "reference"
+        "concept"
       ]
     },
     {
       "id": "design-theory-art-of-game-design-schell",
-      "label": "游戏设计艺术(Schell)",
+      "label": "Art Of Game Design Schell",
       "type": "entity",
       "cluster": "游戏设计",
       "summary": "[reference] design-theory/art-of-game-design-schell",
@@ -362,1095 +1125,92 @@
       ]
     },
     {
-      "id": "design-theory-football-soccer-iq",
-      "label": "足球智商",
+      "id": "design-theory-book-index",
+      "label": "Book Index",
       "type": "entity",
       "cluster": "游戏设计",
-      "summary": "[reference] design-theory/football-soccer-iq",
+      "summary": "[reference] design-theory/book-index",
       "status": "active",
       "tags": [
         "reference"
       ]
     },
     {
-      "id": "design-theory-statistics-concepts",
-      "label": "统计学概念",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/statistics-concepts",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-theory-simulation-modeling",
-      "label": "模拟建模",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/simulation-modeling",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-theory-feedback-control",
-      "label": "反馈控制",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/feedback-control",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-theory-psychology-gambling",
-      "label": "赌博心理学",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/psychology-gambling",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-theory-game-characteristics",
-      "label": "游戏特性",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/game-characteristics",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-theory-game-mechanics-patterns",
-      "label": "游戏机制模式",
-      "type": "entity",
-      "cluster": "游戏设计",
-      "summary": "[reference] design-theory/game-mechanics-patterns",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "design-thinking-project-soccer-no1",
-      "label": "Soccer NO.1项目",
+      "id": "design-theory-characteristics-of-games",
+      "label": "Characteristics Of Games",
       "type": "concept",
       "cluster": "游戏设计",
-      "summary": "[design-thinking] design-thinking/project-soccer-no1",
-      "status": "active",
-      "tags": [
-        "design-thinking"
-      ]
-    },
-    {
-      "id": "reverse-engineering-cm4-commentary-system",
-      "label": "CM4解说系统",
-      "type": "entity",
-      "cluster": "逆向工程",
-      "summary": "[reference] reverse-engineering/cm4-commentary-system",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "reverse-engineering-cm4-hardcoded-constants",
-      "label": "CM4硬编码常量",
-      "type": "entity",
-      "cluster": "逆向工程",
-      "summary": "[reference] reverse-engineering/cm4-hardcoded-constants",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "reverse-engineering-cm4-ghidra-output",
-      "label": "CM4 Ghidra产出",
-      "type": "entity",
-      "cluster": "逆向工程",
-      "summary": "[reference] reverse-engineering/cm4-ghidra-output",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "reverse-engineering-cm4-gaps-urgency-constraints-roles",
-      "label": "CM4补缺分析",
-      "type": "entity",
-      "cluster": "逆向工程",
-      "summary": "[reference] reverse-engineering/cm4-gaps-urgency-constraints-roles",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "reverse-engineering-cm4-formation-impact",
-      "label": "CM4阵型影响",
-      "type": "entity",
-      "cluster": "逆向工程",
-      "summary": "[reference] reverse-engineering/cm4-formation-impact",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "reverse-engineering-cm4-engine-godot-implementation",
-      "label": "CM4引擎Godot实现",
-      "type": "entity",
-      "cluster": "逆向工程",
-      "summary": "[reference] reverse-engineering/cm4-engine-godot-implementation",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "reverse-engineering-cm4-match-engine-full-analysis",
-      "label": "CM4引擎完整分析",
-      "type": "entity",
-      "cluster": "逆向工程",
-      "summary": "[reference] reverse-engineering/cm4-match-engine-full-analysis",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "reverse-engineering-book-cloud-index",
-      "label": "逆向书籍云索引",
-      "type": "entity",
-      "cluster": "逆向工程",
-      "summary": "[reference] reverse-engineering/book-cloud-index",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "reverse-engineering-reading-list",
-      "label": "逆向核心书单",
-      "type": "entity",
-      "cluster": "逆向工程",
-      "summary": "[reference] reverse-engineering/reading-list",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "skills-github-auth",
-      "label": "GitHub认证",
-      "type": "concept",
-      "cluster": "技能与工具",
-      "summary": "[concept] skills/github-auth",
+      "summary": "[concept] design-theory/characteristics-of-games",
       "status": "active",
       "tags": [
         "concept"
       ]
     },
     {
-      "id": "reference-godot-automation",
-      "label": "Godot自动化",
+      "id": "design-theory-design-patterns-systems",
+      "label": "Design Patterns Systems",
       "type": "concept",
-      "cluster": "godot-引擎",
-      "summary": "[skill] reference/godot-automation",
-      "status": "active",
-      "tags": [
-        "skill"
-      ]
-    },
-    {
-      "id": "skills-github-issue-first-search",
-      "label": "GitHub Issue优先搜索",
-      "type": "concept",
-      "cluster": "技能与工具",
-      "summary": "[concept] skills/github-issue-first-search",
+      "cluster": "游戏设计",
+      "summary": "[concept] design-theory/design-patterns-systems",
       "status": "active",
       "tags": [
         "concept"
       ]
     },
     {
-      "id": "skills-ps-exec-cross-session-gui",
-      "label": "跨会话GUI执行",
-      "type": "concept",
-      "cluster": "技能与工具",
-      "summary": "[concept] skills/ps-exec-cross-session-gui",
-      "status": "active",
-      "tags": [
-        "concept"
-      ]
-    },
-    {
-      "id": "skills-grill-me",
-      "label": "Grill Me",
-      "type": "concept",
-      "cluster": "技能与工具",
-      "summary": "[skill] skills/grill-me",
-      "status": "active",
-      "tags": [
-        "skill"
-      ]
-    },
-    {
-      "id": "skills-deep-intelligence",
-      "label": "Deep Intelligence",
-      "type": "concept",
-      "cluster": "技能与工具",
-      "summary": "[skill] skills/deep-intelligence",
-      "status": "active",
-      "tags": [
-        "skill"
-      ]
-    },
-    {
-      "id": "skills-game-designer-grill",
-      "label": "游戏设计师盘问",
-      "type": "concept",
-      "cluster": "技能与工具",
-      "summary": "[skill] skills/game-designer-grill",
-      "status": "active",
-      "tags": [
-        "skill"
-      ]
-    },
-    {
-      "id": "inventory-toolchain",
-      "label": "工具链清单",
-      "type": "concept",
-      "cluster": "技能与工具",
-      "summary": "[note] inventory/toolchain",
-      "status": "active",
-      "tags": [
-        "note"
-      ]
-    },
-    {
-      "id": "projects-soccer-no1-prototype-v2-design",
-      "label": "Soccer v2设计文档",
-      "type": "concept",
-      "cluster": "soccer-no.1",
-      "summary": "[note] projects/soccer-no1-prototype-v2-design",
-      "status": "active",
-      "tags": [
-        "note"
-      ]
-    },
-    {
-      "id": "projects-soccer-no1-step2-multi-vector-delivered",
-      "label": "Soccer Step2已交付",
-      "type": "concept",
-      "cluster": "soccer-no.1",
-      "summary": "[plan] projects/soccer-no1-step2-multi-vector-delivered",
-      "status": "active",
-      "tags": [
-        "plan"
-      ]
-    },
-    {
-      "id": "projects-soccer-no1-distillation-multi-vector",
-      "label": "Soccer蒸馏结果",
-      "type": "concept",
-      "cluster": "soccer-no.1",
-      "summary": "[note] projects/soccer-no1-distillation-multi-vector",
-      "status": "active",
-      "tags": [
-        "note"
-      ]
-    },
-    {
-      "id": "projects-soccer-no1-step1-match-generator",
-      "label": "Soccer Step1计划",
-      "type": "concept",
-      "cluster": "soccer-no.1",
-      "summary": "[plan] projects/soccer-no1-step1-match-generator",
-      "status": "active",
-      "tags": [
-        "plan"
-      ]
-    },
-    {
-      "id": "projects-soccer-no1-puzzle-engine-plan",
-      "label": "Soccer Puzzle引擎计划",
-      "type": "concept",
-      "cluster": "soccer-no.1",
-      "summary": "[plan] projects/soccer-no1-puzzle-engine-plan",
-      "status": "active",
-      "tags": [
-        "plan"
-      ]
-    },
-    {
-      "id": "reference-gdd-standard",
-      "label": "GDD标准",
+      "id": "design-theory-design-techniques",
+      "label": "Design Techniques",
       "type": "entity",
-      "cluster": "参考资料",
-      "summary": "[reference] reference/gdd-standard",
+      "cluster": "游戏设计",
+      "summary": "[reference] design-theory/design-techniques",
       "status": "active",
       "tags": [
         "reference"
       ]
-    },
-    {
-      "id": "reference-codebase-memory-mcp",
-      "label": "Codebase Memory MCP",
-      "type": "entity",
-      "cluster": "参考资料",
-      "summary": "[reference] reference/codebase-memory-mcp",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "reference-awesome-claude-md",
-      "label": "Awesome Claude MD",
-      "type": "entity",
-      "cluster": "参考资料",
-      "summary": "[reference] reference/awesome-claude-md",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "reference-github-spec-kit",
-      "label": "GitHub Spec Kit",
-      "type": "entity",
-      "cluster": "参考资料",
-      "summary": "[reference] reference/github-spec-kit",
-      "status": "active",
-      "tags": [
-        "reference"
-      ]
-    },
-    {
-      "id": "cf8-db-csv-sync-workflow",
-      "label": "DB CSV同步工作流",
-      "type": "concept",
-      "cluster": "cf8-开发",
-      "summary": "[note] cf8/db-csv-sync-workflow",
-      "status": "active",
-      "tags": [
-        "note"
-      ]
-    },
-    {
-      "id": "cf8-db-csv-sync-lessons",
-      "label": "DB CSV同步教训",
-      "type": "concept",
-      "cluster": "cf8-开发",
-      "summary": "[note] cf8/db-csv-sync-lessons",
-      "status": "active",
-      "tags": [
-        "note"
-      ]
-    },
-    {
-      "id": "specs-demo-spec",
-      "label": "Demo规格",
-      "type": "concept",
-      "cluster": "其他",
-      "summary": "[spec] specs/demo-spec",
-      "status": "active",
-      "tags": [
-        "spec"
-      ]
-    },
-    {
-      "id": "test-w26-upload",
-      "label": "GitHub Trending W26",
-      "type": "concept",
-      "cluster": "其他",
-      "summary": "[note] test-w26-upload",
-      "status": "active",
-      "tags": [
-        "note"
-      ]
-    },
-    {
-      "id": "hermes-tips-session-unlock",
-      "label": "会话解锁",
-      "type": "concept",
-      "cluster": "hermes-技巧",
-      "summary": "[concept] hermes-tips/session-unlock",
-      "status": "active",
-      "tags": [
-        "concept"
-      ]
-    },
-    {
-      "id": "soul/shadow-node-ovin",
-      "label": "Shadow Node Ovin",
-      "type": "entity",
-      "cluster": "情报与报告",
-      "summary": "跨领域情报总监",
-      "status": "active",
-      "tags": [
-        "soul"
-      ]
-    },
-    {
-      "id": "research/ai-agent-scheduling-alternatives-survey",
-      "label": "AI Agent Scheduling",
-      "type": "concept",
-      "cluster": "情报与报告",
-      "summary": "Agent调度方案调研",
-      "status": "active",
-      "tags": [
-        "research"
-      ]
-    },
-    {
-      "id": "research/sysak-comprehensive-report",
-      "label": "SysAK报告",
-      "type": "concept",
-      "cluster": "情报与报告",
-      "summary": "SysAK全面研究",
-      "status": "active",
-      "tags": [
-        "research"
-      ]
-    },
-    {
-      "id": "books-full-game-development-with-godot-4-and-csharp",
-      "label": "Godot 4 + C#",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-game-development-with-godot-4-and-csharp-cont",
-      "label": "Godot 4 + C# (续)",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-game-development-patterns-with-godot4",
-      "label": "Godot 4 设计模式",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-game-development-patterns-with-godot4-cont",
-      "label": "Godot 4 设计模式(续)",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-game-development-patterns-with-godot",
-      "label": "Godot 3 设计模式",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-godot-engine-game-development-projects",
-      "label": "Godot 3 项目实战",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-godot4-游戏开发项目",
-      "label": "Godot 4 项目实战",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-procedural-generation-in-godot",
-      "label": "Godot 程序化生成",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-game-engine-architecture-volume-i",
-      "label": "游戏引擎架构 Vol.I",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-game-engine-architecture-volume-i-cont",
-      "label": "游戏引擎架构(续)",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-game-programming-patterns-robert-nystrom-著",
-      "label": "游戏编程模式 Nystrom",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "books-full-the-book-of-shaders",
-      "label": "The Book of Shaders",
-      "type": "entity",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "game-patterns-introduction",
-      "label": "设计模式再探",
-      "type": "concept",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "game-patterns-command_pattern",
-      "label": "Command 模式",
-      "type": "concept",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "game-patterns-flyweight_pattern",
-      "label": "Flyweight 享元",
-      "type": "concept",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "game-patterns-event_queue",
-      "label": "Event Queue",
-      "type": "concept",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "game-patterns-component",
-      "label": "Component 组件",
-      "type": "concept",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "game-patterns-game_loop",
-      "label": "Game Loop",
-      "type": "concept",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "game-patterns-data_locality",
-      "label": "Data Locality",
-      "type": "concept",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "game-patterns-double_buffer",
-      "label": "Double Buffer",
-      "type": "concept",
-      "cluster": "godot-引擎"
-    },
-    {
-      "id": "game-patterns-dirty_flag",
-      "label": "Dirty Flag",
-      "type": "concept",
-      "cluster": "godot-引擎"
     }
   ],
   "edges": [
     {
-      "source": "llm-wiki-philosophy",
-      "target": "compounding-artifact",
-      "type": "defines",
-      "label": "核心主张"
-    },
-    {
-      "source": "llm-wiki-philosophy",
-      "target": "three-layers",
-      "type": "defines",
-      "label": "架构定义"
-    },
-    {
-      "source": "llm-wiki-philosophy",
-      "target": "source-immutability",
-      "type": "defines",
-      "label": "原则一"
-    },
-    {
-      "source": "llm-wiki-philosophy",
-      "target": "update-over-create",
-      "type": "defines",
-      "label": "原则二"
-    },
-    {
-      "source": "llm-wiki-philosophy",
-      "target": "query-reflux",
-      "type": "defines",
-      "label": "原则三"
-    },
-    {
-      "source": "llm-wiki-philosophy",
-      "target": "ai-vs-anti-bloat",
-      "type": "raises",
-      "label": "引出问题"
-    },
-    {
-      "source": "llm-wiki-philosophy",
-      "target": "karpathy",
-      "type": "references",
-      "label": "提出者"
-    },
-    {
-      "source": "design-thinking-cf8",
-      "target": "design-theory-living-with-complexity-norman",
-      "type": "references",
-      "label": "复杂性管理"
-    },
-    {
-      "source": "design-thinking-cf8",
-      "target": "design-theory-gamers-brain-hodent",
-      "type": "references",
-      "label": "玩家认知"
-    },
-    {
-      "source": "design-thinking-cf8",
-      "target": "design-theory-game-feel-swink",
-      "type": "references",
-      "label": "操作手感"
-    },
-    {
-      "source": "design-thinking-cf8",
-      "target": "game-design-cf8-beat-top-v2",
+      "source": "books-javascript-computer-networking-top-down",
+      "target": "books-javascript-library-index",
       "type": "relates",
-      "label": "CF8设计迭代"
+      "label": ""
     },
     {
-      "source": "design-thinking-cf8",
-      "target": "cf8-db-csv-sync-workflow",
-      "type": "relates",
-      "label": "开发管线"
+      "source": "books-javascript-library-index",
+      "target": "books-javascript-computer-networking-top-down",
+      "type": "indexes",
+      "label": ""
     },
     {
-      "source": "design-thinking-cf8",
-      "target": "cf8-db-csv-sync-lessons",
-      "type": "relates",
-      "label": "开发教训"
+      "source": "books-javascript-library-index",
+      "target": "books-javascript-you-dont-know-js",
+      "type": "indexes",
+      "label": ""
     },
     {
-      "source": "game-design-cf8-beat-top-v2",
-      "target": "design-thinking-cf8",
-      "type": "builds",
-      "label": "CF8实现"
+      "source": "books-javascript-library-index",
+      "target": "books-javascript-professional-js-4th",
+      "type": "indexes",
+      "label": ""
+    },
+    {
+      "source": "books-javascript-library-index",
+      "target": "books-refactoring-martin-fowler",
+      "type": "indexes",
+      "label": ""
+    },
+    {
+      "source": "books-javascript-library-index",
+      "target": "books-design-patterns-gof",
+      "type": "indexes",
+      "label": ""
     },
     {
       "source": "design-theory-book-index",
       "target": "design-theory-art-of-game-design-schell",
       "type": "indexes",
-      "label": "Schell"
-    },
-    {
-      "source": "design-theory-book-index",
-      "target": "design-theory-game-feel-swink",
-      "type": "indexes",
-      "label": "Swink"
-    },
-    {
-      "source": "design-theory-book-index",
-      "target": "design-theory-gamers-brain-hodent",
-      "type": "indexes",
-      "label": "Hodent"
-    },
-    {
-      "source": "design-theory-book-index",
-      "target": "design-theory-designing-interfaces-tidwell",
-      "type": "indexes",
-      "label": "Tidwell"
-    },
-    {
-      "source": "design-theory-book-index",
-      "target": "design-theory-living-with-complexity-norman",
-      "type": "indexes",
-      "label": "Norman"
-    },
-    {
-      "source": "design-theory-book-index",
-      "target": "design-theory-universal-principles-design-lidwell",
-      "type": "indexes",
-      "label": "Lidwell"
-    },
-    {
-      "source": "design-theory-book-index",
-      "target": "design-theory-game-characteristics",
-      "type": "indexes",
-      "label": "游戏特性"
-    },
-    {
-      "source": "design-theory-book-index",
-      "target": "design-theory-game-mechanics-patterns",
-      "type": "indexes",
-      "label": "游戏机制"
-    },
-    {
-      "source": "design-theory-art-of-game-design-schell",
-      "target": "design-theory-game-feel-swink",
-      "type": "complements",
-      "label": "设计+手感"
-    },
-    {
-      "source": "design-theory-gamers-brain-hodent",
-      "target": "design-theory-game-feel-swink",
-      "type": "complements",
-      "label": "认知+手感"
-    },
-    {
-      "source": "design-thinking-project-soccer-no1",
-      "target": "projects-soccer-no1-puzzle-engine-plan",
-      "type": "defines",
-      "label": "总计划"
-    },
-    {
-      "source": "design-thinking-project-soccer-no1",
-      "target": "projects-soccer-no1-prototype-v2-design",
-      "type": "defines",
-      "label": "原型"
-    },
-    {
-      "source": "projects-soccer-no1-puzzle-engine-plan",
-      "target": "projects-soccer-no1-step1-match-generator",
-      "type": "defines",
-      "label": "步骤1"
-    },
-    {
-      "source": "projects-soccer-no1-puzzle-engine-plan",
-      "target": "projects-soccer-no1-step2-multi-vector-delivered",
-      "type": "defines",
-      "label": "步骤2"
-    },
-    {
-      "source": "projects-soccer-no1-prototype-v2-design",
-      "target": "projects-soccer-no1-distillation-multi-vector",
-      "type": "builds",
-      "label": "蒸馏"
-    },
-    {
-      "source": "projects-soccer-no1-step2-multi-vector-delivered",
-      "target": "projects-soccer-no1-distillation-multi-vector",
-      "type": "builds",
-      "label": "蒸馏"
-    },
-    {
-      "source": "reverse-engineering-reading-list",
-      "target": "reverse-engineering-book-cloud-index",
-      "type": "indexes",
-      "label": "书单"
-    },
-    {
-      "source": "reverse-engineering-cm4-match-engine-full-analysis",
-      "target": "reverse-engineering-cm4-engine-godot-implementation",
-      "type": "builds",
-      "label": "Godot实现"
-    },
-    {
-      "source": "reverse-engineering-cm4-match-engine-full-analysis",
-      "target": "reverse-engineering-cm4-ghidra-output",
-      "type": "builds",
-      "label": "Ghidra"
-    },
-    {
-      "source": "reverse-engineering-cm4-match-engine-full-analysis",
-      "target": "reverse-engineering-cm4-hardcoded-constants",
-      "type": "builds",
-      "label": "常量"
-    },
-    {
-      "source": "reverse-engineering-cm4-match-engine-full-analysis",
-      "target": "reverse-engineering-cm4-formation-impact",
-      "type": "builds",
-      "label": "阵型"
-    },
-    {
-      "source": "reverse-engineering-cm4-match-engine-full-analysis",
-      "target": "reverse-engineering-cm4-commentary-system",
-      "type": "builds",
-      "label": "解说"
-    },
-    {
-      "source": "reverse-engineering-cm4-match-engine-full-analysis",
-      "target": "reverse-engineering-cm4-gaps-urgency-constraints-roles",
-      "type": "builds",
-      "label": "补缺"
-    },
-    {
-      "source": "skills-grill-me",
-      "target": "skills-game-designer-grill",
-      "type": "relates",
-      "label": "盘问"
-    },
-    {
-      "source": "skills-deep-intelligence",
-      "target": "skills-grill-me",
-      "type": "complements",
-      "label": "情报+盘问"
-    },
-    {
-      "source": "inventory-toolchain",
-      "target": "reference-godot-automation",
-      "type": "references",
-      "label": "Godot"
-    },
-    {
-      "source": "skills-game-designer-grill",
-      "target": "design-theory-art-of-game-design-schell",
-      "type": "references",
-      "label": "盘问Schell"
-    },
-    {
-      "source": "compounding-artifact",
-      "target": "llm-wiki-philosophy",
-      "type": "references"
-    },
-    {
-      "source": "compounding-artifact",
-      "target": "ingest-workflow",
-      "type": "enables"
-    },
-    {
-      "source": "source-immutability",
-      "target": "llm-wiki-philosophy",
-      "type": "references"
-    },
-    {
-      "source": "source-immutability",
-      "target": "three-layers",
-      "type": "references"
-    },
-    {
-      "source": "update-over-create",
-      "target": "llm-wiki-philosophy",
-      "type": "references"
-    },
-    {
-      "source": "update-over-create",
-      "target": "lint-workflow",
-      "type": "enables"
-    },
-    {
-      "source": "query-reflux",
-      "target": "llm-wiki-philosophy",
-      "type": "references"
-    },
-    {
-      "source": "query-reflux",
-      "target": "compounding-artifact",
-      "type": "enables"
-    },
-    {
-      "source": "ai-vs-anti-bloat",
-      "target": "lint-workflow",
-      "type": "addresses"
-    },
-    {
-      "source": "ai-vs-anti-bloat",
-      "target": "update-over-create",
-      "type": "addresses"
-    },
-    {
-      "source": "ingest-workflow",
-      "target": "llm-wiki-philosophy",
-      "type": "references"
-    },
-    {
-      "source": "ingest-workflow",
-      "target": "gbrain",
-      "type": "uses"
-    },
-    {
-      "source": "lint-workflow",
-      "target": "llm-wiki-philosophy",
-      "type": "references"
-    },
-    {
-      "source": "lint-workflow",
-      "target": "update-over-create",
-      "type": "implements"
-    },
-    {
-      "source": "gbrain",
-      "target": "hermes-agent",
-      "type": "uses"
-    },
-    {
-      "source": "gbrain",
-      "target": "llm-wiki-graph-project",
-      "type": "enables"
-    },
-    {
-      "source": "hermes-agent",
-      "target": "gbrain",
-      "type": "uses"
-    },
-    {
-      "source": "hermes-agent",
-      "target": "llm-wiki-graph-project",
-      "type": "maintains"
-    },
-    {
-      "source": "obsidian",
-      "target": "gbrain",
-      "type": "complements"
-    },
-    {
-      "source": "obsidian",
-      "target": "three-layers",
-      "type": "implements"
-    },
-    {
-      "source": "llm-wiki-graph-project",
-      "target": "gbrain",
-      "type": "uses"
-    },
-    {
-      "source": "llm-wiki-graph-project",
-      "target": "graph-json-schema",
-      "type": "uses"
-    },
-    {
-      "source": "graph-json-schema",
-      "target": "llm-wiki-graph-project",
-      "type": "implements"
-    },
-    {
-      "source": "graph-json-schema",
-      "target": "llm-wiki-philosophy",
-      "type": "references"
-    },
-    {
-      "source": "karpathy",
-      "target": "llm-wiki-philosophy",
-      "type": "references"
-    },
-    {
-      "source": "karpathy",
-      "target": "three-layers",
-      "type": "proposes"
-    },
-    {
-      "source": "three-layers",
-      "target": "llm-wiki-philosophy",
-      "type": "references"
-    },
-    {
-      "source": "books-full-game-programming-patterns-robert-nystrom-著",
-      "target": "game-patterns-introduction",
-      "type": "references"
-    },
-    {
-      "source": "books-full-game-development-patterns-with-godot4",
-      "target": "game-patterns-command_pattern",
-      "type": "implements"
-    },
-    {
-      "source": "books-full-game-development-patterns-with-godot4",
-      "target": "game-patterns-component",
-      "type": "implements"
-    },
-    {
-      "source": "books-full-game-development-patterns-with-godot4-cont",
-      "target": "game-patterns-event_queue",
-      "type": "implements"
-    },
-    {
-      "source": "books-full-game-development-patterns-with-godot4-cont",
-      "target": "game-patterns-data_locality",
-      "type": "implements"
-    },
-    {
-      "source": "books-full-game-development-patterns-with-godot4",
-      "target": "books-full-game-programming-patterns-robert-nystrom-著",
-      "type": "references"
-    },
-    {
-      "source": "books-full-game-development-patterns-with-godot4-cont",
-      "target": "books-full-game-development-patterns-with-godot4",
-      "type": "builds"
-    },
-    {
-      "source": "books-full-game-development-with-godot-4-and-csharp",
-      "target": "books-full-godot4-游戏开发项目",
-      "type": "complements"
-    },
-    {
-      "source": "books-full-game-development-with-godot-4-and-csharp-cont",
-      "target": "books-full-game-development-with-godot-4-and-csharp",
-      "type": "builds"
-    },
-    {
-      "source": "books-full-game-engine-architecture-volume-i",
-      "target": "books-full-game-programming-patterns-robert-nystrom-著",
-      "type": "references"
-    },
-    {
-      "source": "books-full-game-engine-architecture-volume-i",
-      "target": "game-patterns-data_locality",
-      "type": "references"
-    },
-    {
-      "source": "books-full-game-engine-architecture-volume-i-cont",
-      "target": "books-full-game-engine-architecture-volume-i",
-      "type": "builds"
-    },
-    {
-      "source": "books-full-the-book-of-shaders",
-      "target": "books-full-procedural-generation-in-godot",
-      "type": "complements"
-    },
-    {
-      "source": "books-full-procedural-generation-in-godot",
-      "target": "books-full-godot4-游戏开发项目",
-      "type": "complements"
-    },
-    {
-      "source": "books-full-procedural-generation-in-godot",
-      "target": "game-patterns-dirty_flag",
-      "type": "uses"
-    },
-    {
-      "source": "reference-godot-automation",
-      "target": "books-full-godot4-游戏开发项目",
-      "type": "uses"
-    },
-    {
-      "source": "reference-godot-automation",
-      "target": "books-full-game-development-patterns-with-godot4",
-      "type": "uses"
-    },
-    {
-      "source": "books-full-godot-engine-game-development-projects",
-      "target": "books-full-godot4-游戏开发项目",
-      "type": "builds"
-    },
-    {
-      "source": "books-full-game-development-patterns-with-godot",
-      "target": "books-full-game-development-patterns-with-godot4",
-      "type": "builds"
-    },
-    {
-      "source": "reference-godot-automation",
-      "target": "gbrain",
-      "type": "uses"
-    },
-    {
-      "source": "game-patterns-command_pattern",
-      "target": "game-patterns-event_queue",
-      "type": "complements"
-    },
-    {
-      "source": "game-patterns-component",
-      "target": "game-patterns-flyweight_pattern",
-      "type": "complements"
-    },
-    {
-      "source": "game-patterns-game_loop",
-      "target": "game-patterns-double_buffer",
-      "type": "uses"
-    },
-    {
-      "source": "game-patterns-data_locality",
-      "target": "game-patterns-dirty_flag",
-      "type": "complements"
+      "label": ""
     }
   ]
 }
