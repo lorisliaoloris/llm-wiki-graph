@@ -433,7 +433,7 @@ function rebuildGraph() {
   });
 }
 
-function compareState(a) {
+function compareState(a) { if(!document.getElementById("dbg-de"))return;
   var de=document.getElementById('dbg-de'),dm=document.getElementById('dbg-dm'),mt=document.getElementById('dbg-mt');
   if(!de)return;
   de.textContent=currentEdges.length;
@@ -758,7 +758,7 @@ if (typeof d3 === 'undefined') {
   document.getElementById('graph-container').innerHTML =
     '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;">❌ D3.js 加载失败 — 检查 d3.v7.min.js 是否存在</div>';
 } else {
-  document.getElementById('debug-toggle').addEventListener('click',function(){
+  (document.getElementById('debug-toggle')||{}).addEventListener('click',function(){
   var b=document.getElementById('debug-body');
   b.style.display=b.style.display==='none'?'block':'none';
   this.textContent=b.style.display==='none'?'[+]':'[-]';
