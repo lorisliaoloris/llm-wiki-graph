@@ -162,11 +162,8 @@
         <div class="tree-item" data-node="sources" onclick="toggleTreeNode('sources')">
           <span class="arrow">▶</span><span class="icon">📦</span><span class="label">Sources</span>
         </div>
-        <ul class="tree-children" data-parent="sources">
-          <li><div class="tree-child-item" onclick="showContentView('sources','books')"><span class="label">书籍</span> <span class="count" id="src-books">-</span></div></li>
-          <li><div class="tree-child-item" onclick="showContentView('sources','github')"><span class="label">GitHub</span> <span class="count" id="src-github">-</span></div></li>
-          <li><div class="tree-child-item" onclick="showContentView('sources','web')"><span class="label">网站</span> <span class="count" id="src-web">-</span></div></li>
-          <li><div class="tree-child-item" onclick="showContentView('sources','lessons')"><span class="label">经验教训</span> <span class="count" id="src-lessons">-</span></div></li>
+        <ul class="tree-children" data-parent="sources" id="sources-tree">
+          <li><div style="padding:2px 24px 2px 50px;font-size:10px;color:var(--text-dim);">加载中...</div></li>
         </ul>
       </li>
       <li>
@@ -1132,6 +1129,133 @@ async function loadRecentData() {
 
 // Call on load
 setTimeout(() => { loadLintData(); loadRecentData(); }, 1000);
+
+
+// ── Recursive tree builder ──
+function buildSourceTree() {
+  const container = document.getElementById('sources-tree');
+  if (!container) return;
+  
+  // Fetch from Gbrain API
+  fetch('http://100.85.182.75:9885/api/nodes?limit=500').then(r=>r.json()).then(pages => {
+    if (!Array.isArray(pages)) return;
+    
+    const taxonomy = {
+      '📚 书籍与文献': {
+        _match: p => p.type === 'reference' || p.type === 'wiki/book',
+        children: {
+          '游戏设计': { _match: p => (p.slug||'').includes('design-theory') || (p.slug||'').includes('game-design'),
+            children: {
+              '经典教材': { _match: p => ['schell','swink','hodent','tidwell','norman','lidwell'].some(k => (p.slug||'').includes(k)), _leaf: true },
+              '足球': { _match: p => (p.slug||'').includes('football') || (p.slug||'').includes('soccer'), _leaf: true },
+              '其他': { _leaf: true }
+            }
+          },
+          '运维与云': { _match: p => (p.slug||'').includes('aliyun') || (p.slug||'').includes('linux-ops'), _leaf: true },
+          '其他书籍': { _leaf: true }
+        }
+      },
+      '🔬 研究与调研': {
+        _match: p => p.type === 'research',
+        _leaf: true
+      },
+      '📄 技术文档与计划': {
+        _match: p => ['plan','spec','wiki/spec'].includes(p.type),
+        _leaf: true
+      },
+      '🛠️ 技能与工具': {
+        _match: p => p.type === 'skill',
+        _leaf: true
+      },
+      '🧠 Agent 记忆': {
+        _match: p => ['soul','agent'].includes(p.type),
+        _leaf: true
+      },
+      '💡 经验教训': {
+        _match: p => (p.slug||'').includes('lessons') || (p.slug||'').includes('pitfalls') || (p.slug||'').includes('bug'),
+        children: {
+          'CF8 项目': { _match: p => (p.slug||'').includes('cf8'), _leaf: true },
+          '通用': { _leaf: true }
+        }
+      },
+      '📅 日志与记录': {
+        _match: p => p.type === 'daily',
+        _leaf: true
+      }
+    };
+    
+    container.innerHTML = buildTreeHTML(taxonomy, pages, 1) || '<li><div style="padding:2px 24px 2px 50px;font-size:10px;color:var(--text-dim);">无匹配来源</div></li>';
+  }).catch(() => {
+    container.innerHTML = '<li><div style="padding:2px 24px 2px 50px;font-size:10px;color:var(--text-dim);">API 未连接</div></li>';
+  });
+}
+
+function buildTreeHTML(node, allPages, depth) {
+  if (node._leaf) {
+    // Leaf: match all remaining unfiltered pages
+    return '';
+  }
+  
+  let html = '';
+  for (const [label, spec] of Object.entries(node)) {
+    if (label.startsWith('_')) continue;
+    
+    const matched = allPages.filter(spec._match);
+    const count = matched.length;
+    if (count === 0 && !spec.children) continue;
+    
+    const indent = 50 + (depth - 1) * 16;
+    const hasChildren = spec.children && !spec._leaf;
+    
+    if (hasChildren) {
+      // Non-leaf: show expandable
+      html += '<li><div class="tree-child-item" onclick="toggleSubtree(event)" style="padding-left:' + indent + 'px;">'
+        + '<span class="arrow" style="font-size:9px;width:14px;">▶</span>'
+        + '<span class="label">' + label + '</span> <span class="count">' + count + '</span>'
+        + '</div>';
+      html += '<ul class="tree-children" style="display:none;">';
+      html += buildTreeHTML(spec.children, matched, depth + 1);
+      html += '</ul></li>';
+    } else {
+      // Leaf: clickable to show content
+      html += '<li><div class="tree-child-item" onclick="showSourceLeaf(event, \'' + label + '\', ' + JSON.stringify(matched.map(p => ({slug:p.slug,title:p.title,type:p.type,source:p.source})).slice(0,50)) + ')" style="padding-left:' + indent + 'px;">'
+        + '<span class="label">' + label + '</span> <span class="count">' + count + '</span>'
+        + '</div></li>';
+    }
+  }
+  return html;
+}
+
+function toggleSubtree(event) {
+  const item = event.currentTarget;
+  const ul = item.nextElementSibling;
+  const arrow = item.querySelector('.arrow');
+  if (ul && ul.tagName === 'UL') {
+    const isOpen = ul.style.display !== 'none';
+    ul.style.display = isOpen ? 'none' : 'block';
+    if (arrow) arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
+  }
+}
+
+function showSourceLeaf(event, label, pages) {
+  event.stopPropagation();
+  const cv = document.getElementById('content-view');
+  const body = document.getElementById('content-view-body');
+  cv.classList.add('visible');
+  
+  let h = '<h2>📦 ' + label + '</h2><div class="meta">' + pages.length + ' 条来源 · 从 Gbrain API</div>';
+  for (const p of pages.slice(0, 50)) {
+    h += '<div style="margin:4px 0;padding:4px 0;border-bottom:1px solid var(--border);">'
+      + '<b>' + (p.title || p.slug) + '</b>'
+      + ' <span style="font-size:10px;color:var(--text-dim);">[' + p.type + ']</span>'
+      + (p.source ? '<div style="font-size:10px;color:var(--text-dim);">📎 ' + p.source + '</div>' : '')
+      + '</div>';
+  }
+  body.innerHTML = h;
+}
+
+// Build on load
+setTimeout(buildSourceTree, 2000);
 
 loadGraph();
 // ── Auto-refresh from Gbrain ──
