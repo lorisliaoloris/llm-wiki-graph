@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LLM Wiki · 知识图谱</title><!-- v4.3: 89N92E Godot fix 2026-07-02 -->
+<link rel="stylesheet" href="sidebar.css">
 <script src="d3.v7.min.js?v=20260702153005"></script>
 <style>
   :root {
@@ -95,6 +96,15 @@
     <h1>🧠 LLM Wiki · 知识图谱</h1>
     <div class="subtitle">点击知识团钻取查看内部关系 | LLM 维护 · 人定方向</div>
   </div>
+  <div id="nav-tab-bar">
+    <button class="nav-tab active" data-tab="index">📑 Index</button>
+    <button class="nav-tab" data-tab="log">📝 Log</button>
+    <button class="nav-tab" data-tab="schema">📋 Schema</button>
+    <button class="nav-tab" data-tab="lint">🔍 Lint</button>
+    <button class="nav-tab" data-tab="sources">📂 Sources</button>
+    <button class="nav-tab-refresh" title="触发 GitHub Pages 重新部署">🔄 刷新</button>
+  </div>
+  <div id="nav-tab-content"></div>
   <div id="search-box">
     <input type="text" id="search-input" placeholder="搜索节点...">
   </div>
@@ -240,6 +250,8 @@ async function loadGraph() {
     const text = await resp.text();
     try {
       graphData = JSON.parse(text);
+      window.graphData = graphData;
+      window.dispatchEvent(new CustomEvent('graphDataLoaded', { detail: graphData }));
     } catch(pe) {
       throw new Error(`JSON parse error: ${pe.message} (first 100 chars: ${text.substring(0,100)})`);
     }
@@ -727,5 +739,6 @@ if (typeof d3 === 'undefined') {
 loadGraph();
 }
 </script>
+<script src="sidebar.js"></script>
 </body>
 </html>
