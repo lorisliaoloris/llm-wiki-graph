@@ -78,3 +78,102 @@ GitHub Pages 特有约束：
   scripts/ (export-graph.py / gbrain-api.py / deploy guide)
   templates/ (AGENT_POLICY.md)
   .github/workflows/ (deploy.yml)
+
+
+---
+
+# llm-wiki 侧边栏可视化层：全景架构设计说明书
+
+> 高阶设计书 (HLD)，可直接交付 AI 工程师执行。基于 SPEC v1.1 扩展。
+
+## 1. 系统拓扑与网络边界解决方案
+
+由于宿主环境在 GitHub Pages（强制 HTTPS），而真相源在 ECS 内网（Tailscale HTTP IP），直接发起 fetch 会触发浏览器的 Mixed Content（混合内容拦截）与 CORS（跨域限制）。
+
+### 核心解法：Tailscale HTTPS 隧道方案
+
+为了不破坏纯静态站点的轻量化，严禁引入复杂的公共反向代理。启用 Tailscale Serve and Cert：
+- 在 ECS 上执行 tailscale cert，为该节点申请 Tailscale 官方授信的合法域名
+- 使用 tailscale serve 将 9885 端口映射至该 HTTPS 域名的 443 端口
+- 前端策略：侧边栏统一配置抽象的 BASE_URL
+
+## 2. 前端软件架构分层
+
+三层解耦架构：
+- View Layer (UI 渲染层)：SchemaView / LogView / SourcesView / IndexView / LintView
+- Store Layer (状态管理层)：全局单一状态机 + 异步 Action 编排中心
+- Repository Layer (数据访问层)：HttpAdapter + StorageAdapter
+
+## 3. UI 设计核心原则
+
+- 交互一致性：侧边栏固定悬浮布局，Tab 切换时仅内部内容区滚动，主框架保持静止
+- 消除视觉噪音：过滤不必要动效，严禁未加载完成导致布局塌陷
+
+## 4. 数据链路与状态机设计
+
+全局状态数据结构 (Store Schema)：
+
+window.WikiSidebarStore = {
+  state: {
+    sidebarVisible: false,
+    currentTab: "index",
+    loading: false,
+    error: null,
+    workflowStatus: "idle",
+    data: { schema: null, log: null, sources: null, index: null, lint: null }
+  },
+  listeners: [],
+  setState(newState) { },
+  async dispatch(action, payload) { }
+}
+
+### 模块运行机制与防御策略
+
+| 模块 | 数据源 | 防御策略 |
+|------|--------|---------|
+| Schema | fetch AGENTS.md | Markdown 解析异常时回退纯文本 |
+| Log | fetch log.md | 仅解析前 100 行，提供查看全部按钮 |
+| Sources | ECS API /api/sources | MAX_DEPTH=5 递归安全阀，防止栈溢出 |
+| Index | graphData.clusters | 等待 window.graphLoaded 信号 |
+| Lint | ECS API /api/lint | 字段缺失填充 default unknown，不中断渲染 |
+
+## 5. 开发指令
+
+核心约束：
+1. 模块化隔离：新建 sidebar.js + sidebar.css，严禁改动 d3.v7.min.js
+2. 防御性编程：所有 DOM 操作包裹安全检查，JSON 字段存在性检查
+3. 交互一致性：侧边栏固定定位，宽度固定，Tab 切换时内容区独立滚动
+4. 网络适配器：统一 Repository 对象，timeout 5000ms，失败统一 catch
+
+### 骨架代码
+
+// sidebar.js
+const SIDEBAR_CONFIG = { API_BASE: "https://gbrain.your-tailnet.ts.net", TIMEOUT: 5000 };
+
+const WikiRepository = {
+    async fetchWithTimeout(url, options = {}) {
+        const ctrl = new AbortController();
+        const id = setTimeout(() => ctrl.abort(), SIDEBAR_CONFIG.TIMEOUT);
+        try { const r = await fetch(url, {...options, signal: ctrl.signal}); clearTimeout(id); if(!r.ok) throw new Error(r.status); return r; }
+        catch(e) { clearTimeout(id); throw e; }
+    },
+    async getRemoteLint() {
+        try { const r = await this.fetchWithTimeout(SIDEBAR_CONFIG.API_BASE + "/api/lint"); return await r.json(); }
+        catch(e) { return { status: "error", msg: "无法连接到 Gbrain 服务" }; }
+    }
+};
+
+function renderTreeNodes(nodes, depth = 0) {
+    if (!nodes || depth > 5) return "";
+    return nodes.map(n =>
+        n.title + (n.children ? renderTreeNodes(n.children, depth + 1) : "")
+    ).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => { initSidebarComponent(); });
+
+## 6. 架构优势
+
+1. 彻底规避 Mixed Content：Tailscale Serve + Cert 内网 TLS，无需公网中转
+2. 彻底消灭前端崩溃：MAX_DEPTH 限制 + catch 降级 + 状态机 DOM 控制
+3. 完美对齐使用习惯：固定定位无抖动，视觉噪音最小化
