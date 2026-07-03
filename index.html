@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LLM Wiki · 知识图谱</title><!-- v4.3: 89N92E Godot fix 2026-07-02 -->
-<script src="d3.v7.min.js?v=20260702153005">
-</script>
+<title>LLM Wiki · 知识图谱</title>
+<script src="d3.v7.min.js"></script>
 <style>
   :root {
     --bg: #1a1b26; --surface: #24283b; --text: #c0caf5;
@@ -88,37 +87,25 @@
     line-height: 1.5;
   }
 
-  .nav-link {
-    padding:3px 8px;border-radius:4px;font-size:11px;cursor:pointer;
-    color:var(--text-dim);text-decoration:none;display:inline-block;
-  }
-  .nav-link:hover { color:var(--accent);background:var(--bg); }
-  .nav-link.active { color:var(--accent);background:var(--bg);font-weight:600; }
-
   .tree { padding:0; margin:0; list-style:none; }
   .tree li { padding:0; margin:0; }
-  .tree-item { display:flex; align-items:center; padding:3px 24px; cursor:pointer; font-size:12px; color:var(--text-dim); }
-  .tree-item:hover { color:var(--accent); background:rgba(122,162,247,0.08); }
-  .tree-item .arrow { width:14px; font-size:9px; flex-shrink:0; transition:transform 0.15s; }
-  .tree-item .arrow.open { transform:rotate(90deg); }
-  .tree-item .icon { width:16px; text-align:center; flex-shrink:0; margin-right:6px; }
-  .tree-item .label { flex:1; }
-  .tree-item .count { font-size:9px; color:var(--text-dim); margin-left:4px; }
-  .tree-item.active { color:var(--accent); background:rgba(122,162,247,0.12); }
-  .tree-children { display:none; }
-  .tree-children.open { display:block; }
-  .tree-child-item { padding:2px 24px 2px 50px; display:flex;align-items:center; cursor:pointer; font-size:11px; color:var(--text-dim); }
-  .tree-child-item:hover { color:var(--accent); background:rgba(122,162,247,0.06); }
-  .tree-child-item .count { font-size:9px; color:var(--text-dim); margin-left:4px; }
-  #content-view { display:none; position:absolute; inset:0; overflow-y:auto; padding:24px 32px; color:var(--text); line-height:1.8; font-size:13px; z-index:2; background:var(--bg); }
-  #content-view.visible { display:block; }
-  #content-view h2 { font-size:16px; margin-bottom:12px; color:var(--accent); }
-  #content-view h3 { font-size:13px; margin:16px 0 8px; color:var(--text); }
-  #content-view a { color:var(--accent); }
-  #content-view .meta { font-size:11px; color:var(--text-dim); margin-bottom:16px; }
-  #content-view .back-btn { display:inline-block; margin-bottom:12px; padding:3px 10px; border-radius:4px; border:1px solid var(--border); color:var(--accent); cursor:pointer; font-size:11px; }
-  #content-view .back-btn:hover { background:var(--bg); }
-
+  .tree-row { display:flex; align-items:center; padding:3px 24px; cursor:pointer; font-size:12px; color:var(--text-dim); }
+  .tree-row:hover { color:var(--accent); background:rgba(122,162,247,0.08); }
+  .tree-row .arr { width:14px; font-size:9px; flex-shrink:0; }
+  .tree-row .arr.open { transform:rotate(90deg); }
+  .tree-row .icn { width:16px; text-align:center; flex-shrink:0; margin-right:6px; }
+  .tree-row .lbl { flex:1; }
+  .tree-row .cnt { font-size:9px; color:var(--text-dim); margin-left:4px; }
+  .tree-row.on { color:var(--accent); background:rgba(122,162,247,0.12); }
+  .tree-sub { display:none; }
+  .tree-sub.open { display:block; }
+  .tree-sub-row { padding:2px 24px 2px 50px; display:flex; align-items:center; cursor:pointer; font-size:11px; color:var(--text-dim); }
+  .tree-sub-row:hover { color:var(--accent); background:rgba(122,162,247,0.06); }
+  #cv { display:none; position:absolute; inset:0; overflow-y:auto; padding:24px 32px; color:var(--text); line-height:1.8; font-size:13px; z-index:2; background:var(--bg); }
+  #cv.on { display:block; }
+  #cv h2 { font-size:16px; margin-bottom:12px; color:var(--accent); }
+  #cv a { color:var(--accent); }
+  #cv .back { display:inline-block; margin-bottom:12px; padding:3px 10px; border-radius:4px; border:1px solid var(--border); color:var(--accent); cursor:pointer; font-size:11px; }
 </style>
 </head>
 <body>
@@ -131,82 +118,45 @@
   <div id="search-box">
     <input type="text" id="search-input" placeholder="搜索节点...">
   </div>
-  <div style="padding:6px 24px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border);">
-    <button id="refresh-btn" onclick="refreshFromGbrain()" title="从 Gbrain 刷新" style="padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:var(--bg);color:var(--accent);cursor:pointer;font-size:10px;">🔄</button>
-    <span id="refresh-status" style="font-size:10px;color:var(--text-dim);display:none;"></span>
-    <span style="font-size:10px;color:var(--text-dim);">71节点 · 92边</span>
-    <span style="font-size:9px;color:var(--text-dim);margin-left:auto;">v5.0</span>
+  <div id="breadcrumb" style="display:flex;align-items:center;gap:6px;padding:6px 24px;border-bottom:1px solid var(--border);">
+    <button id="back-btn" onclick="goHome()" style="display:none;padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:var(--bg);color:var(--accent);cursor:pointer;font-size:11px;">←</button>
+    <span id="breadcrumb-text"><span style="color:var(--accent);font-weight:600;">图谱总览</span></span>
+    <span id="refresh-status" style="font-size:10px;color:var(--text-dim);margin-left:auto;display:none;"></span>
   </div>
   <div style="flex:1;overflow-y:auto;padding:4px 0;">
-    <ul class="tree" id="main-tree">
+    <ul class="tree" id="t">
+      <li><div class="tree-row on" onclick="tv('graph')"><span class="icn">📊</span><span class="lbl">图谱总览</span></div></li>
       <li>
-        <div class="tree-item active" data-node="graph" onclick="toggleTreeNode('graph')">
-          <span class="icon">📊</span><span class="label">图谱总览</span>
-        </div>
+        <div class="tree-row" onclick="tv('schema')"><span class="arr">▶</span><span class="icn">📋</span><span class="lbl">Schema</span></div>
+        <ul class="tree-sub" id="ts-schema"></ul>
       </li>
       <li>
-        <div class="tree-item" data-node="schema" onclick="toggleTreeNode('schema')">
-          <span class="arrow">▶</span><span class="icon">📋</span><span class="label">Schema</span>
-        </div>
-        <ul class="tree-children" data-parent="schema"></ul>
+        <div class="tree-row" onclick="tv('log')"><span class="arr">▶</span><span class="icn">📝</span><span class="lbl">Log</span></div>
+        <ul class="tree-sub" id="ts-log"></ul>
       </li>
       <li>
-        <div class="tree-item" data-node="log" onclick="toggleTreeNode('log')">
-          <span class="arrow">▶</span><span class="icon">📝</span><span class="label">Log</span>
-        </div>
-        <ul class="tree-children" data-parent="log">
-          <li><div class="tree-child-item" onclick="showContentView('log', '2026-07-02')"><span class="label">2026-07-02</span> <span class="count">4条</span></div></li>
-          <li><div class="tree-child-item" onclick="showContentView('log', '2026-07-01')"><span class="label">2026-07-01</span> <span class="count">12条</span></div></li>
-        </ul>
+        <div class="tree-row" onclick="tv('sources')"><span class="arr">▶</span><span class="icn">📦</span><span class="lbl">Sources</span></div>
+        <ul class="tree-sub" id="ts-sources"><li><div class="tree-sub-row" style="font-size:10px;">加载中...</div></li></ul>
       </li>
       <li>
-        <div class="tree-item" data-node="sources" onclick="toggleTreeNode('sources')">
-          <span class="arrow">▶</span><span class="icon">📦</span><span class="label">Sources</span>
-        </div>
-        <ul class="tree-children" data-parent="sources" id="sources-tree">
-          <li><div style="padding:2px 24px 2px 50px;font-size:10px;color:var(--text-dim);">加载中...</div></li>
-        </ul>
+        <div class="tree-row" onclick="tv('index')"><span class="arr">▶</span><span class="icn">📚</span><span class="lbl">Index</span></div>
+        <ul class="tree-sub" id="ts-index"><li><div class="tree-sub-row" style="font-size:10px;">加载中...</div></li></ul>
       </li>
       <li>
-        <div class="tree-item" data-node="index" onclick="toggleTreeNode('index')">
-          <span class="arrow">▶</span><span class="icon">📚</span><span class="label">Index</span>
-        </div>
-        <ul class="tree-children" data-parent="index" id="index-children">
-          <li><div style="padding:2px 24px 2px 50px;font-size:10px;color:var(--text-dim);">加载中...</div></li>
-        </ul>
-      </li>
-      <li>
-        <div class="tree-item" data-node="lint" onclick="toggleTreeNode('lint')">
-          <span class="arrow">▶</span><span class="icon">📋</span><span class="label">Lint 诊断</span>
-        </div>
-        <ul class="tree-children" data-parent="lint">
-          <li><div class="tree-child-item"><span class="label">🟡 过期</span> <span class="count" id="lint-stale">-</span></div></li>
-          <li><div class="tree-child-item" onclick="showContentView('lint','3d')"><span class="label">  └ 3天内</span> <span class="count">-</span></div></li>
-          <li><div class="tree-child-item" onclick="showContentView('lint','7d')"><span class="label">  └ 7天内</span> <span class="count">-</span></div></li>
-          <li><div class="tree-child-item" onclick="showContentView('lint','30d')"><span class="label">  └ 30天内</span> <span class="count">-</span></div></li>
-          <li><div class="tree-child-item" onclick="showContentView('lint','90d')"><span class="label">  └ 3月内</span> <span class="count">-</span></div></li>
-          <li><div class="tree-child-item"><span class="label">🔴 矛盾</span> <span class="count" id="lint-contested">-</span></div></li>
-          <li><div class="tree-child-item"><span class="label">👻 孤立</span> <span class="count" id="lint-orphan">-</span></div></li>
+        <div class="tree-row" onclick="tv('lint')"><span class="arr">▶</span><span class="icn">📋</span><span class="lbl">Lint 诊断</span></div>
+        <ul class="tree-sub" id="ts-lint">
+          <li><div class="tree-sub-row"><span class="lbl">🟡 过期</span> <span class="cnt" id="li-st">-</span></div></li>
+          <li><div class="tree-sub-row"><span class="lbl">🔴 矛盾</span> <span class="cnt" id="li-ct">-</span></div></li>
+          <li><div class="tree-sub-row"><span class="lbl">👻 孤立</span> <span class="cnt" id="li-or">-</span></div></li>
         </ul>
       </li>
     </ul>
   </div>
-  <div id="stats-bar" style="border-top:1px solid var(--border);">
+  <div id="node-detail"><div class="empty-state">👆 点击节点查看详情</div></div>
+  <div id="stats-bar">
     <span id="node-count">—</span>
-    <span id="edge-count">—</span>
-  <div id="debug-panel" style="padding:8px 24px;border-top:1px solid var(--border);font-size:10px;color:var(--text-dim);font-family:monospace;line-height:1.6;">
-    <div>DEBUG <span id="debug-toggle" style="cursor:pointer;float:right;">[-]</span></div>
-    <div id="debug-body">
-      <div>dataEdges: <span id="dbg-de">-</span> | domEdges: <span id="dbg-dm">-</span> | match: <span id="dbg-mt">-</span></div>
-      <div>gEdges: <span id="dbg-ge">-</span> | svgKids: <span id="dbg-sk">-</span></div>
-      <div>view: <span id="dbg-vw">-</span> | cid: <span id="dbg-ci">-</span> | last: <span id="dbg-ac">init</span></div>
-    </div>
-  </div>
-  </div>
-</div>
-
-<div id="graph-container">
-  <div id="content-view"><span class="back-btn" onclick="hideContentView()">← 返回图谱</span><div id="content-view-body"></div></div>
+    <span id="edge-count">—</span><div id="graph-container">
+  <div id="cv"><span class="back" onclick="hcv()">← 返回图谱</span><div id="cvb"></div></div>
   <svg id="graph-svg"></svg>
   <button id="canvas-back-btn" onclick="goHome()" style="display:none;position:absolute;top:16px;left:16px;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--accent);cursor:pointer;font-size:13px;z-index:5;">← 返回</button>
   <div id="zoom-hint">🖱️ 点击知识团钻取 &nbsp;|&nbsp; 滚轮缩放 &nbsp;|&nbsp; 拖拽平移 &nbsp;|&nbsp; Backspace 返回</div>
@@ -798,7 +748,7 @@ window.addEventListener('error', function(e) {
     gc.innerHTML = '<div class="load-error" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;gap:8px;">' +
       '<div>❌ 脚本错误</div>' +
       '<div style="font-size:12px;max-width:500px;text-align:center;">' + e.message + '</div>' +
-      '<div style="font-size:11px;">检查 D3.js 是否加载成功 (d3.v7.min.js?v=20260702153005)</div>' +
+      '<div style="font-size:11px;">检查 D3.js 是否加载成功 (d3.v7.min.js)</div>' +
       '</div>';
   }
 });
@@ -806,7 +756,7 @@ window.addEventListener('error', function(e) {
 // Check D3 availability
 if (typeof d3 === 'undefined') {
   document.getElementById('graph-container').innerHTML =
-    '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;">❌ D3.js 加载失败 — 检查 d3.v7.min.js?v=20260702153005 是否存在</div>';
+    '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;">❌ D3.js 加载失败 — 检查 d3.v7.min.js 是否存在</div>';
 } else {
   document.getElementById('debug-toggle').addEventListener('click',function(){
   var b=document.getElementById('debug-body');
@@ -814,522 +764,32 @@ if (typeof d3 === 'undefined') {
   this.textContent=b.style.display==='none'?'[+]':'[-]';
 });
 
-
-// ── Tree toggle ──
-function toggleTreeNode(nodeId) {
-  const item = document.querySelector('[data-node="'+nodeId+'"]');
-  const children = document.querySelector('[data-parent="'+nodeId+'"]');
-  const arrow = item?.querySelector('.arrow');
-  
-  if (!children) {
-    // Leaf node — show content in right panel
-    if (nodeId === 'graph') { hideContentView(); return; }
-    if (nodeId === 'schema') showContentView('schema');
-    return;
-  }
-  
-  const isOpen = children.classList.toggle('open');
-  if (arrow) arrow.classList.toggle('open', isOpen);
-  
-  // Activate styling
-  document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
-  item?.classList.add('active');
+function tv(id) {
+  if (id === 'graph') { hcv(); return; }
+  var sub = document.getElementById('ts-' + id);
+  if (!sub) { cv(id); return; }
+  var row = document.querySelector('.tree-row[onclick*="tv(\'' + id + '\')"]');
+  var arr = row?.querySelector('.arr');
+  sub.classList.toggle('open');
+  if (arr) arr.classList.toggle('open', sub.classList.contains('open'));
+  document.querySelectorAll('.tree-row').forEach(function(r) { r.classList.remove('on'); });
+  row?.classList.add('on');
 }
-
-function showContentView(type, sub) {
-  const cv = document.getElementById('content-view');
-  const body = document.getElementById('content-view-body');
-  cv.classList.add('visible');
-  
-  if (type === 'schema') {
-    body.innerHTML = '<h2>📋 Schema — AGENTS.md</h2><div class="meta">LLM Wiki 维护规则 · 所有 Agent 必读</div>'
-      + '<p>加载中...</p>';
-    fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/AGENTS.md')
-      .then(r=>r.text()).then(t=>{
-        body.innerHTML = '<h2>📋 Schema — AGENTS.md</h2>'
-          + '<div class="meta"><a href="https://github.com/lorisliaoloris/llm-wiki-graph/blob/main/AGENTS.md" target="_blank">查看源文件 →</a></div>'
-          + '<pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">' + t.replace(/</g,'&lt;') + '</pre>';
-      }).catch(()=>{ body.innerHTML += '<p style="color:var(--text-dim);">无法加载</p>'; });
-  }
-  
-  if (type === 'log') {
-    body.innerHTML = '<h2>📝 Log — ' + (sub||'维护日志') + '</h2><div class="meta">操作记录</div>'
-      + '<p>加载中...</p>';
-    fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/log.md')
-      .then(r=>r.text()).then(t=>{
-        body.innerHTML = '<h2>📝 Log — 维护日志</h2>'
-          + '<div class="meta"><a href="https://github.com/lorisliaoloris/llm-wiki-graph/blob/main/log.md" target="_blank">查看源文件 →</a></div>'
-          + '<pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">' + t.replace(/</g,'&lt;') + '</pre>';
-      }).catch(()=>{ body.innerHTML += '<p style="color:var(--text-dim);">无法加载</p>'; });
-  }
-  
-  if (type === 'sources') {
-    body.innerHTML = '<h2>📦 Sources — ' + (sub||'来源清单') + '</h2><div class="meta">从 Gbrain 自动生成</div><p style="color:var(--text-dim);">加载中...</p>';
-    loadSourcesContent(sub, body);
-  }
-  
-  if (type === 'lint') {
-    body.innerHTML = '<h2>📋 Lint — 过期页面 (' + (sub||'全部') + ')</h2><div class="meta">从 Gbrain API 获取</div><p style="color:var(--text-dim);">加载中...</p>';
-    loadLintContent(sub, body);
-  }
+function cv(id, sub) {
+  var c = document.getElementById('cv'); var b = document.getElementById('cvb');
+  c.classList.add('on');
+  if (id === 'schema') { fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/AGENTS.md').then(function(r){return r.text()}).then(function(t){b.innerHTML='<h2>📋 Schema — AGENTS.md</h2><pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">'+t.replace(/</g,'&lt;')+'</pre>';}).catch(function(){b.innerHTML='<p>加载失败</p>';}); }
+  else if (id === 'log') { fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/log.md').then(function(r){return r.text()}).then(function(t){b.innerHTML='<h2>📝 Log</h2><pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">'+t.replace(/</g,'&lt;')+'</pre>';}).catch(function(){b.innerHTML='<p>加载失败</p>';}); }
+  else { b.innerHTML = '<h2>'+id+'</h2><p style="color:var(--text-dim);">从 Gbrain API 获取中...</p>'; }
 }
-
-function hideContentView() {
-  document.getElementById('content-view').classList.remove('visible');
-  document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
-  document.querySelector('[data-node="graph"]')?.classList.add('active');
-}
-
-// ── Sources from Gbrain API ──
-async function loadSourcesContent(sub, body) {
-  try {
-    const resp = await fetch('http://100.85.182.75:9885/api/nodes?limit=300');
-    if (!resp.ok) throw new Error('API unavailable');
-    const pages = await resp.json();
-    
-    // Categorize
-    const books = pages.filter(p => p.type === 'reference' || (p.tags||'').includes('book'));
-    const github = pages.filter(p => (p.source||'').includes('github.com'));
-    const web = pages.filter(p => (p.source||'').includes('http') && !p.source.includes('github.com'));
-    
-    if (sub === 'books') {
-      let h = '<h2>📚 书籍</h2>';
-      for (const b of books.slice(0,30)) {
-        h += '<div style="margin:4px 0;padding:4px 0;border-bottom:1px solid var(--border);">'
-          + '<b>' + (b.title||b.slug) + '</b>'
-          + '<div style="font-size:11px;color:var(--text-dim);">' + (b.summary||'') + '</div>'
-          + '<div style="font-size:10px;color:var(--text-dim);">📎 ' + (b.source||b.slug) + '</div>'
-          + '</div>';
-      }
-      body.innerHTML = h;
-    } else if (sub === 'github') {
-      let h = '<h2>🔗 GitHub 仓库</h2>';
-      for (const g of github.slice(0,20)) {
-        h += '<div style="margin:4px 0;"><a href="' + g.source + '" target="_blank">' + g.source + '</a> → ' + (g.title||g.slug) + '</div>';
-      }
-      body.innerHTML = h || '<p style="color:var(--text-dim);">暂无</p>';
-    } else if (sub === 'web') {
-      let h = '<h2>🌐 网站来源</h2>';
-      for (const w of web.slice(0,20)) {
-        h += '<div style="margin:4px 0;"><a href="' + w.source + '" target="_blank">' + w.source + '</a> → ' + (w.title||w.slug) + '</div>';
-      }
-      body.innerHTML = h || '<p style="color:var(--text-dim);">暂无</p>';
-    } else {
-      // Overview
-      body.innerHTML = '<h2>📦 Sources 概览</h2>'
-        + '<p>📚 书籍: ' + books.length + '</p>'
-        + '<p>🔗 GitHub: ' + github.length + '</p>'
-        + '<p>🌐 网站: ' + web.length + '</p>'
-        + '<p style="font-size:10px;color:var(--text-dim);margin-top:12px;">数据来源: Gbrain API · 自动更新</p>';
-    }
-  } catch(e) {
-    body.innerHTML = '<p style="color:var(--text-dim);">API 未连接 (' + e.message + ')</p>';
-  }
-}
-
-// ── Lint content ──
-async function loadLintContent(sub, body) {
-  try {
-    const resp = await fetch('http://100.85.182.75:9885/api/lint');
-    if (!resp.ok) throw new Error('unavailable');
-    const data = await resp.json();
-    
-    if (sub) {
-      body.innerHTML = '<h2>📋 过期页面 — ' + sub + '</h2><p style="color:var(--text-dim);">从 Gbrain API 获取</p>'
-        + '<p>🟡 过期总计: ' + (data.stale_count||0) + '</p>'
-        + '<p>👻 孤儿页面: ' + (data.orphan_count||0) + '</p>';
-    } else {
-      body.innerHTML = '<h2>📋 Lint 诊断报告</h2>'
-        + '<p>🟡 过期: ' + (data.stale_count||0) + '</p>'
-        + '<p>👻 孤立: ' + (data.orphan_count||0) + '</p>'
-        + '<p style="font-size:10px;color:var(--text-dim);margin-top:12px;">数据来源: Gbrain API · 实时</p>';
-    }
-  } catch(e) {
-    body.innerHTML = '<p style="color:var(--text-dim);">API 未连接 (' + e.message + ')</p>';
-  }
-}
-
-// ── Populate Index from graph.json ──
-function populateIndex() {
-  if (!graphData || !graphData.clusters) return;
-  const container = document.getElementById('index-children');
-  let h = '';
-  for (const c of graphData.clusters) {
-    const nodes = graphData.nodes.filter(n => n.cluster === c.id);
-    h += '<li><div class="tree-child-item" onclick="showClusterDetail(\'' + c.id + '\');hideContentView();">'
-      + '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + c.color + ';margin-right:6px;"></span>'
-      + '<span class="label">' + c.label + '</span> <span class="count">' + nodes.length + '</span>'
-      + '</div></li>';
-  }
-  container.innerHTML = h;
-}
-
-// ── Populate Lint counts ──
-async function populateLintCounts() {
-  try {
-    const resp = await fetch('http://100.85.182.75:9885/api/lint');
-    if (resp.ok) {
-      const data = await resp.json();
-      document.getElementById('lint-stale').textContent = data.stale_count || 0;
-      document.getElementById('lint-contested').textContent = data.contested_count || '?';
-      document.getElementById('lint-orphan').textContent = data.orphan_count || 0;
-      return;
-    }
-  } catch(e) {}
-  document.getElementById('lint-stale').textContent = '?';
-  document.getElementById('lint-contested').textContent = '?';
-  document.getElementById('lint-orphan').textContent = '?';
-}
-
-// Populate on graph load
-setTimeout(() => { populateIndex(); populateLintCounts(); }, 1500);
-
-const navItems = {
-  schema: {
-    title: '📋 Schema — AGENTS.md',
-    content: () => {
-      const rules = [
-        '铁律：Gbrain 是真相源，graph.json 是导出物',
-        'Slug 映射：Gbrain 路径式 → graph.json 扁平式(/→-)',
-        'D3 污染：force 改写 edge，读前 typeof 兜底',
-        '写入保护：追加不覆盖，废弃用 <!-- deprecated -->',
-        '反向链接强制：add_link 后自动建 backlink',
-        '信息分类：state/fact/event/opinion/correction',
-        '衰减规则：state 1-3月/fact 1-3年/event 不衰减',
-        'Lint：矛盾检测 + 过期标记 + 孤页清理',
-      ];
-      return `<div style="line-height:1.8;">${rules.map(r => `<div style="margin-bottom:4px;">• ${r}</div>`).join('')}</div>
-        <div style="margin-top:12px;font-size:10px;color:var(--text-dim);">👉 <a href="https://github.com/lorisliaoloris/llm-wiki-graph/blob/main/AGENTS.md" target="_blank" style="color:var(--accent);">查看完整 AGENTS.md</a></div>`;
-    }
-  },
-  log: {
-    title: '📝 Log — 维护日志',
-    content: () => {
-      const entries = [
-        ['2026-07-02', 'create', 'LLM Wiki Graph v5.0：情报与报告知识团'],
-        ['2026-07-02', 'fix', 'Pages 部署超时：.nojekyll + peaceiris/actions-gh-pages'],
-        ['2026-07-02', 'create', 'AGENTS.md + 导出脚本 + cross-linker + llm-wiki skill v4'],
-        ['2026-07-01', 'create', 'LLM Wiki 基础架构：graph.json + D3 可视化'],
-      ];
-      return `<div style="line-height:1.8;">${entries.map(e => 
-        `<div style="margin-bottom:3px;"><span style="color:var(--text-dim);">${e[0]}</span> <span style="color:var(--accent);font-size:10px;">[${e[1]}]</span> ${e[2]}</div>`
-      ).join('')}</div>
-        <div style="margin-top:8px;font-size:10px;color:var(--text-dim);">👉 <a href="https://github.com/lorisliaoloris/llm-wiki-graph/blob/main/log.md" target="_blank" style="color:var(--accent);">查看完整 log.md</a></div>`;
-    }
-  },
-  sources: {
-    title: '📦 Sources — 来源清单',
-    content: () => {
-      const sources = [
-        ['Karpathy LLM Wiki Gist', 'article', '2026-07-01', 'llm-wiki-philosophy'],
-        ['Ar9av/obsidian-wiki', 'repo', '2026-07-02', 'cross-linker'],
-        ['atomicstrata/llm-wiki-compiler', 'repo', '2026-07-02', 'export script'],
-        ['garrytan/gbrain', 'repo', '2026-07-02', 'Gbrain Backend'],
-        ['Desiging Interfaces (Tidwell)', 'book', '2026-07-01', 'design-theory/designing-interfaces-tidwell'],
-        ['Art of Game Design (Schell)', 'book', '2026-07-01', 'design-theory/art-of-game-design-schell'],
-      ];
-      return `<div style="line-height:1.8;">${sources.map(s => 
-        `<div style="margin-bottom:3px;">📎 <b>${s[0]}</b> <span style="font-size:10px;color:var(--text-dim);">[${s[1]}]</span> → ${s[3]}</div>`
-      ).join('')}</div>
-        <div style="margin-top:8px;font-size:10px;color:var(--text-dim);">每次 Ingest 时 Agent 自动更新此清单</div>`;
-    }
-  },
-  index: {
-    title: '📚 Index — 页面索引',
-    content: () => {
-      if (!graphData || !graphData.clusters) return '<div style="color:var(--text-dim);">加载中...</div>';
-      let html = '';
-      for (const c of graphData.clusters) {
-        const nodes = graphData.nodes.filter(n => n.cluster === c.id);
-        html += `<div style="margin-bottom:8px;"><b style="color:${c.color};">${c.label}</b> (${nodes.length})</div>`;
-        if (nodes.length <= 20) {
-          for (const n of nodes) {
-            html += `<div style="margin-left:8px;margin-bottom:2px;font-size:10px;cursor:pointer;color:var(--text-dim);" onclick="navigateToNodeById('${n.id}')">• ${n.label}</div>`;
-          }
-        }
-      }
-      return html || '<div style="color:var(--text-dim);">暂无页面</div>';
-    }
-  }
-};
-
-let currentNav = null;
-
-function showNav(section) {
-  if (currentNav === section) { currentNav = null; document.getElementById('nav-content').style.display = 'none'; return; }
-  currentNav = section;
-  const item = navItems[section];
-  if (!item) return;
-  
-  // Update active state
-  document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
-  document.getElementById('nav-' + section)?.classList.add('active');
-  
-  // Show content
-  const contentEl = document.getElementById('nav-content');
-  const content = typeof item.content === 'function' ? item.content() : item.content;
-  contentEl.innerHTML = `<div style="font-size:13px;font-weight:600;margin-bottom:10px;">${item.title}</div>${content}`;
-  contentEl.style.display = 'block';
-  document.getElementById('node-detail').classList.remove('visible');
-}
-
-function navigateToNodeById(id) {
-  const n = graphData?.nodes?.find(x => x.id === id);
-  if (n) {
-    document.getElementById('nav-content').style.display = 'none';
-    currentNav = null;
-    document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
-    document.getElementById('nav-overview').classList.add('active');
-    // Find cluster and drill
-    const cluster = graphData.clusters.find(c => c.id === n.cluster);
-    if (cluster) {
-      showClusterDetail(cluster.id);
-      setTimeout(() => selectNode({id: n.id}), 500);
-    }
-  }
-}
-
-// ── Lint panel ──
-async function loadLintData() {
-  try {
-    const resp = await fetch('http://100.85.182.75:9885/api/lint');
-    if (resp.ok) {
-      const data = await resp.json();
-      document.getElementById('lint-stale').textContent = data.stale_count || 0;
-      document.getElementById('lint-contested').textContent = data.contested_count || '?';
-      document.getElementById('lint-orphan').textContent = data.orphan_count || 0;
-      return;
-    }
-  } catch(e) {}
-  // Fallback: use graph.json status fields
-  if (graphData?.nodes) {
-    const stale = graphData.nodes.filter(n => n.status === 'stale').length;
-    document.getElementById('lint-stale').textContent = stale;
-    document.getElementById('lint-contested').textContent = '?';
-    document.getElementById('lint-orphan').textContent = '?';
-  }
-}
-
-// ── Recent panel ──
-async function loadRecentData() {
-  try {
-    const resp = await fetch('http://100.85.182.75:9885/api/recent');
-    if (resp.ok) {
-      const data = await resp.json();
-      if (Array.isArray(data)) {
-        const items = data.slice(0, 8);
-        document.getElementById('recent-content').innerHTML = items.map(p => 
-          `<div style="margin-bottom:2px;font-size:10px;">• <span style="cursor:pointer;color:var(--text-dim);" onclick="navigateToNodeById('${(p.slug||'').replace(/\//g,'-')}')">${p.title || p.slug}</span></div>`
-        ).join('');
-        return;
-      }
-    }
-  } catch(e) {}
-  document.getElementById('recent-content').textContent = '(API 未连接)';
-}
-
-// Call on load
-setTimeout(() => { loadLintData(); loadRecentData(); }, 1000);
-
-
-// ── Recursive tree builder ──
-function buildSourceTree() {
-  const container = document.getElementById('sources-tree');
-  if (!container) return;
-  
-  // Fetch from Gbrain API
-  fetch('http://100.85.182.75:9885/api/nodes?limit=500').then(r=>r.json()).then(pages => {
-    if (!Array.isArray(pages)) return;
-    
-    const taxonomy = {
-      '📚 书籍与文献': {
-        _match: p => p.type === 'reference' || p.type === 'wiki/book',
-        children: {
-          '游戏设计': { _match: p => (p.slug||'').includes('design-theory') || (p.slug||'').includes('game-design'),
-            children: {
-              '经典教材': { _match: p => ['schell','swink','hodent','tidwell','norman','lidwell'].some(k => (p.slug||'').includes(k)), _leaf: true },
-              '足球': { _match: p => (p.slug||'').includes('football') || (p.slug||'').includes('soccer'), _leaf: true },
-              '其他': { _leaf: true }
-            }
-          },
-          '运维与云': { _match: p => (p.slug||'').includes('aliyun') || (p.slug||'').includes('linux-ops'), _leaf: true },
-          '其他书籍': { _leaf: true }
-        }
-      },
-      '🔬 研究与调研': {
-        _match: p => p.type === 'research',
-        _leaf: true
-      },
-      '📄 技术文档与计划': {
-        _match: p => ['plan','spec','wiki/spec'].includes(p.type),
-        _leaf: true
-      },
-      '🛠️ 技能与工具': {
-        _match: p => p.type === 'skill',
-        _leaf: true
-      },
-      '🧠 Agent 记忆': {
-        _match: p => ['soul','agent'].includes(p.type),
-        _leaf: true
-      },
-      '💡 经验教训': {
-        _match: p => (p.slug||'').includes('lessons') || (p.slug||'').includes('pitfalls') || (p.slug||'').includes('bug'),
-        children: {
-          'CF8 项目': { _match: p => (p.slug||'').includes('cf8'), _leaf: true },
-          '通用': { _leaf: true }
-        }
-      },
-      '📅 日志与记录': {
-        _match: p => p.type === 'daily',
-        _leaf: true
-      }
-    };
-    
-    container.innerHTML = buildTreeHTML(taxonomy, pages, 1) || '<li><div style="padding:2px 24px 2px 50px;font-size:10px;color:var(--text-dim);">无匹配来源</div></li>';
-  }).catch(() => {
-    container.innerHTML = '<li><div style="padding:2px 24px 2px 50px;font-size:10px;color:var(--text-dim);">API 未连接</div></li>';
-  });
-}
-
-function buildTreeHTML(node, allPages, depth) {
-  if (node._leaf) {
-    // Leaf: match all remaining unfiltered pages
-    return '';
-  }
-  
-  let html = '';
-  for (const [label, spec] of Object.entries(node)) {
-    if (label.startsWith('_')) continue;
-    
-    const matched = allPages.filter(spec._match);
-    const count = matched.length;
-    if (count === 0 && !spec.children) continue;
-    
-    const indent = 50 + (depth - 1) * 16;
-    const hasChildren = spec.children && !spec._leaf;
-    
-    if (hasChildren) {
-      // Non-leaf: show expandable
-      html += '<li><div class="tree-child-item" onclick="toggleSubtree(event)" style="padding-left:' + indent + 'px;">'
-        + '<span class="arrow" style="font-size:9px;width:14px;">▶</span>'
-        + '<span class="label">' + label + '</span> <span class="count">' + count + '</span>'
-        + '</div>';
-      html += '<ul class="tree-children" style="display:none;">';
-      html += buildTreeHTML(spec.children, matched, depth + 1);
-      html += '</ul></li>';
-    } else {
-      // Leaf: clickable to show content
-      html += '<li><div class="tree-child-item" onclick="showSourceLeaf(event, \'' + label + '\', ' + JSON.stringify(matched.map(p => ({slug:p.slug,title:p.title,type:p.type,source:p.source})).slice(0,50)) + ')" style="padding-left:' + indent + 'px;">'
-        + '<span class="label">' + label + '</span> <span class="count">' + count + '</span>'
-        + '</div></li>';
-    }
-  }
-  return html;
-}
-
-function toggleSubtree(event) {
-  const item = event.currentTarget;
-  const ul = item.nextElementSibling;
-  const arrow = item.querySelector('.arrow');
-  if (ul && ul.tagName === 'UL') {
-    const isOpen = ul.style.display !== 'none';
-    ul.style.display = isOpen ? 'none' : 'block';
-    if (arrow) arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
-  }
-}
-
-function showSourceLeaf(event, label, pages) {
-  event.stopPropagation();
-  const cv = document.getElementById('content-view');
-  const body = document.getElementById('content-view-body');
-  cv.classList.add('visible');
-  
-  let h = '<h2>📦 ' + label + '</h2><div class="meta">' + pages.length + ' 条来源 · 从 Gbrain API</div>';
-  for (const p of pages.slice(0, 50)) {
-    h += '<div style="margin:4px 0;padding:4px 0;border-bottom:1px solid var(--border);">'
-      + '<b>' + (p.title || p.slug) + '</b>'
-      + ' <span style="font-size:10px;color:var(--text-dim);">[' + p.type + ']</span>'
-      + (p.source ? '<div style="font-size:10px;color:var(--text-dim);">📎 ' + p.source + '</div>' : '')
-      + '</div>';
-  }
-  body.innerHTML = h;
-}
-
-// Build on load
-setTimeout(buildSourceTree, 2000);
-
-
-// ── Auto-refresh from Gbrain ──
-let lastVisitTime = Date.now();
-const REFRESH_COOLDOWN = 5 * 60 * 1000; // 5 minutes
-
-async function refreshFromGbrain() {
-  const statusEl = document.getElementById('refresh-status');
-  statusEl.style.display = 'inline';
-  statusEl.textContent = '刷新中...';
-  
-  try {
-    // Try local API first (ECS), fallback to GitHub Actions
-    const resp = await fetch('http://100.85.182.75:9885/api/nodes?limit=300');
-    if (resp.ok) {
-      const pages = await resp.json();
-      if (Array.isArray(pages) && pages.length > 0) {
-        statusEl.textContent = `✅ ${pages.length}页`;
-        // Store pages for processing
-        window._gbrainPages = pages;
-        // Auto-reload graph data
-        setTimeout(() => location.reload(), 1000);
-      } else {
-        statusEl.textContent = '⚠️ 无数据';
-      }
-    } else {
-      throw new Error('API unavailable');
-    }
-  } catch(e) {
-    // Fallback: trigger GitHub Actions rebuild
-    statusEl.textContent = '触发构建...';
-    try {
-      await fetch('https://api.github.com/repos/lorisliaoloris/llm-wiki-graph/actions/workflows/deploy.yml/dispatches', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/vnd.github+json',
-          'Authorization': 'Bearer ' + (window._ghToken || ''),
-        },
-        body: JSON.stringify({ref: 'main'})
-      });
-      statusEl.textContent = '✅ 已触发, 1分钟后刷新';
-      setTimeout(() => location.reload(), 60000);
-    } catch(ge) {
-      statusEl.textContent = '❌ 刷新失败';
-    }
-  }
-}
-
-// Auto-refresh when returning to the page
-document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && Date.now() - lastVisitTime > REFRESH_COOLDOWN) {
-    refreshFromGbrain();
-  }
-  lastVisitTime = Date.now();
-});
-
-// Auto-refresh on first load if data is stale (>1 hour)
-window.addEventListener('load', () => {
-  const stored = localStorage.getItem('llm-wiki-last-refresh');
-  const now = Date.now();
-  if (!stored || now - parseInt(stored) > 3600000) {
-    // Data is stale, trigger background refresh
-    refreshFromGbrain();
-  }
-  localStorage.setItem('llm-wiki-last-refresh', String(now));
-  lastVisitTime = now;
-});
-
-
-}
-
+function hcv() { document.getElementById('cv').classList.remove('on'); }
+function pi() { var c=document.getElementById('ts-index'); if(!graphData||!graphData.clusters){c.innerHTML='<li><div class="tree-sub-row" style="font-size:10px;">等待图谱加载...</div></li>';return;} var h='';for(var i=0;i<graphData.clusters.length;i++){var cl=graphData.clusters[i];var cn=graphData.nodes.filter(function(n){return n.cluster===cl.id});h+='<li><div class="tree-sub-row" onclick="showClusterDetail(\''+cl.id+'\')" style="cursor:pointer;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+cl.color+';margin-right:6px;"></span><span class="lbl">'+cl.label+'</span> <span class="cnt">'+cn.length+'</span></div></li>';} c.innerHTML=h; }
+function pl() { fetch('http://100.85.182.75:9885/api/lint').then(function(r){return r.json()}).then(function(d){document.getElementById('li-st').textContent=d.stale_count||0;document.getElementById('li-ct').textContent=d.contested_count||'?';document.getElementById('li-or').textContent=d.orphan_count||0;}).catch(function(){}); }
+function bs() { fetch('http://100.85.182.75:9885/api/nodes?limit=500').then(function(r){return r.json()}).then(function(ps){if(!Array.isArray(ps))return;var books=ps.filter(function(p){return p.type==='reference'||p.type==='wiki/book'});var research=ps.filter(function(p){return p.type==='research'});var plans=ps.filter(function(p){return['plan','spec','wiki/spec'].indexOf(p.type)>=0});var skills=ps.filter(function(p){return p.type==='skill'});var agents=ps.filter(function(p){return['soul','agent'].indexOf(p.type)>=0});var lessons=ps.filter(function(p){return(p.slug||'').indexOf('lessons')>=0||(p.slug||'').indexOf('pitfall')>=0||(p.slug||'').indexOf('bug')>=0});var h='';[{l:'📚 书籍与文献',c:books.length},{l:'🔬 研究与调研',c:research.length},{l:'📄 技术文档',c:plans.length},{l:'🛠️ 技能与工具',c:skills.length},{l:'🧠 Agent 记忆',c:agents.length},{l:'💡 经验教训',c:lessons.length}].forEach(function(s){h+='<li><div class="tree-sub-row"><span class="lbl">'+s.l+'</span> <span class="cnt">'+s.c+'</span></div></li>';});document.getElementById('ts-sources').innerHTML=h||'<li><div class="tree-sub-row">无来源</div></li>';}).catch(function(){document.getElementById('ts-sources').innerHTML='<li><div class="tree-sub-row" style="font-size:10px;">API 未连接</div></li>';}); }
+setTimeout(function(){ pi(); pl(); bs(); }, 1500);
 
 loadGraph();
+}
 </script>
 </body>
 </html>
