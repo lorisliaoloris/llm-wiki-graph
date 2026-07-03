@@ -93,6 +93,31 @@
   }
   .nav-link:hover { color:var(--accent);background:var(--bg); }
   .nav-link.active { color:var(--accent);background:var(--bg);font-weight:600; }
+
+  .tree { padding:0; margin:0; list-style:none; }
+  .tree li { padding:0; margin:0; }
+  .tree-item { display:flex; align-items:center; padding:3px 24px; cursor:pointer; font-size:12px; color:var(--text-dim); }
+  .tree-item:hover { color:var(--accent); background:rgba(122,162,247,0.08); }
+  .tree-item .arrow { width:14px; font-size:9px; flex-shrink:0; transition:transform 0.15s; }
+  .tree-item .arrow.open { transform:rotate(90deg); }
+  .tree-item .icon { width:16px; text-align:center; flex-shrink:0; margin-right:6px; }
+  .tree-item .label { flex:1; }
+  .tree-item .count { font-size:9px; color:var(--text-dim); margin-left:4px; }
+  .tree-item.active { color:var(--accent); background:rgba(122,162,247,0.12); }
+  .tree-children { display:none; }
+  .tree-children.open { display:block; }
+  .tree-child-item { padding:2px 24px 2px 50px; display:flex;align-items:center; cursor:pointer; font-size:11px; color:var(--text-dim); }
+  .tree-child-item:hover { color:var(--accent); background:rgba(122,162,247,0.06); }
+  .tree-child-item .count { font-size:9px; color:var(--text-dim); margin-left:4px; }
+  #content-view { display:none; position:absolute; inset:0; overflow-y:auto; padding:24px 32px; color:var(--text); line-height:1.8; font-size:13px; z-index:2; background:var(--bg); }
+  #content-view.visible { display:block; }
+  #content-view h2 { font-size:16px; margin-bottom:12px; color:var(--accent); }
+  #content-view h3 { font-size:13px; margin:16px 0 8px; color:var(--text); }
+  #content-view a { color:var(--accent); }
+  #content-view .meta { font-size:11px; color:var(--text-dim); margin-bottom:16px; }
+  #content-view .back-btn { display:inline-block; margin-bottom:12px; padding:3px 10px; border-radius:4px; border:1px solid var(--border); color:var(--accent); cursor:pointer; font-size:11px; }
+  #content-view .back-btn:hover { background:var(--bg); }
+
 </style>
 </head>
 <body>
@@ -105,36 +130,68 @@
   <div id="search-box">
     <input type="text" id="search-input" placeholder="搜索节点...">
   </div>
-  <div id="breadcrumb" style="display:flex;align-items:center;gap:6px;">
-    <button id="back-btn" onclick="goHome()" style="display:none;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--accent);cursor:pointer;font-size:12px;">← 返回总览</button>
-    
-    <button id="refresh-btn" onclick="refreshFromGbrain()" title="从 Gbrain 刷新数据" style="padding:3px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--accent);cursor:pointer;font-size:11px;margin-left:8px;">🔄 刷新</button>
-    <span id="refresh-status" style="font-size:10px;color:var(--text-dim);margin-left:4px;display:none;"></span>
-<span id="breadcrumb-text"><a id="breadcrumb-home" onclick="goHome()" style="color:var(--accent);font-weight:600;">图谱总览</a></span>
+  <div style="padding:6px 24px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border);">
+    <button id="refresh-btn" onclick="refreshFromGbrain()" title="从 Gbrain 刷新" style="padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:var(--bg);color:var(--accent);cursor:pointer;font-size:10px;">🔄</button>
+    <span id="refresh-status" style="font-size:10px;color:var(--text-dim);display:none;"></span>
+    <span style="font-size:10px;color:var(--text-dim);">71节点 · 92边</span>
+    <span style="font-size:9px;color:var(--text-dim);margin-left:auto;">v5.0</span>
   </div>
-  <div id="nav-menu" style="padding:8px 24px;border-bottom:1px solid var(--border);">
-    <div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">导航</div>
-    <div style="display:flex;flex-wrap:wrap;gap:4px;">
-      <a onclick="showClusters()" class="nav-link active" id="nav-overview">图谱</a>
-      <a onclick="showNav('schema')" class="nav-link" id="nav-schema">Schema</a>
-      <a onclick="showNav('log')" class="nav-link" id="nav-log">Log</a>
-      <a onclick="showNav('sources')" class="nav-link" id="nav-sources">Sources</a>
-      <a onclick="showNav('index')" class="nav-link" id="nav-index">Index</a>
-    </div>
-  </div>
-  <div id="nav-content" style="flex:1;overflow-y:auto;padding:16px 24px;display:none;"></div>
-  <div id="node-detail"><div class="empty-state">👆 点击节点查看详情</div></div>
-  <div id="lint-panel" style="padding:8px 24px;border-top:1px solid var(--border);font-size:11px;line-height:1.6;">
-    <div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">📋 Lint 诊断</div>
-    <div id="lint-content" style="color:var(--text-dim);">
-      <div>🟡 过期: <span id="lint-stale">-</span></div>
-      <div>🔴 矛盾: <span id="lint-contested">-</span></div>
-      <div>👻 孤立: <span id="lint-orphan">-</span></div>
-    </div>
-  </div>
-  <div id="recent-panel" style="padding:8px 24px;border-top:1px solid var(--border);font-size:11px;line-height:1.6;">
-    <div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">🔥 最近更新</div>
-    <div id="recent-content" style="color:var(--text-dim);">加载中...</div>
+  <div style="flex:1;overflow-y:auto;padding:4px 0;">
+    <ul class="tree" id="main-tree">
+      <li>
+        <div class="tree-item active" data-node="graph" onclick="toggleTreeNode('graph')">
+          <span class="icon">📊</span><span class="label">图谱总览</span>
+        </div>
+      </li>
+      <li>
+        <div class="tree-item" data-node="schema" onclick="toggleTreeNode('schema')">
+          <span class="arrow">▶</span><span class="icon">📋</span><span class="label">Schema</span>
+        </div>
+        <ul class="tree-children" data-parent="schema"></ul>
+      </li>
+      <li>
+        <div class="tree-item" data-node="log" onclick="toggleTreeNode('log')">
+          <span class="arrow">▶</span><span class="icon">📝</span><span class="label">Log</span>
+        </div>
+        <ul class="tree-children" data-parent="log">
+          <li><div class="tree-child-item" onclick="showContentView('log', '2026-07-02')"><span class="label">2026-07-02</span> <span class="count">4条</span></div></li>
+          <li><div class="tree-child-item" onclick="showContentView('log', '2026-07-01')"><span class="label">2026-07-01</span> <span class="count">12条</span></div></li>
+        </ul>
+      </li>
+      <li>
+        <div class="tree-item" data-node="sources" onclick="toggleTreeNode('sources')">
+          <span class="arrow">▶</span><span class="icon">📦</span><span class="label">Sources</span>
+        </div>
+        <ul class="tree-children" data-parent="sources">
+          <li><div class="tree-child-item" onclick="showContentView('sources','books')"><span class="label">书籍</span> <span class="count" id="src-books">-</span></div></li>
+          <li><div class="tree-child-item" onclick="showContentView('sources','github')"><span class="label">GitHub</span> <span class="count" id="src-github">-</span></div></li>
+          <li><div class="tree-child-item" onclick="showContentView('sources','web')"><span class="label">网站</span> <span class="count" id="src-web">-</span></div></li>
+          <li><div class="tree-child-item" onclick="showContentView('sources','lessons')"><span class="label">经验教训</span> <span class="count" id="src-lessons">-</span></div></li>
+        </ul>
+      </li>
+      <li>
+        <div class="tree-item" data-node="index" onclick="toggleTreeNode('index')">
+          <span class="arrow">▶</span><span class="icon">📚</span><span class="label">Index</span>
+        </div>
+        <ul class="tree-children" data-parent="index" id="index-children">
+          <li><div style="padding:2px 24px 2px 50px;font-size:10px;color:var(--text-dim);">加载中...</div></li>
+        </ul>
+      </li>
+      <li>
+        <div class="tree-item" data-node="lint" onclick="toggleTreeNode('lint')">
+          <span class="arrow">▶</span><span class="icon">📋</span><span class="label">Lint 诊断</span>
+        </div>
+        <ul class="tree-children" data-parent="lint">
+          <li><div class="tree-child-item"><span class="label">🟡 过期</span> <span class="count" id="lint-stale">-</span></div></li>
+          <li><div class="tree-child-item" onclick="showContentView('lint','3d')"><span class="label">  └ 3天内</span> <span class="count">-</span></div></li>
+          <li><div class="tree-child-item" onclick="showContentView('lint','7d')"><span class="label">  └ 7天内</span> <span class="count">-</span></div></li>
+          <li><div class="tree-child-item" onclick="showContentView('lint','30d')"><span class="label">  └ 30天内</span> <span class="count">-</span></div></li>
+          <li><div class="tree-child-item" onclick="showContentView('lint','90d')"><span class="label">  └ 3月内</span> <span class="count">-</span></div></li>
+          <li><div class="tree-child-item"><span class="label">🔴 矛盾</span> <span class="count" id="lint-contested">-</span></div></li>
+          <li><div class="tree-child-item"><span class="label">👻 孤立</span> <span class="count" id="lint-orphan">-</span></div></li>
+        </ul>
+      </li>
+    </ul>
   </div>
   <div id="stats-bar" style="border-top:1px solid var(--border);">
     <span id="node-count">—</span>
@@ -151,6 +208,7 @@
 </div>
 
 <div id="graph-container">
+  <div id="content-view"><span class="back-btn" onclick="hideContentView()">← 返回图谱</span><div id="content-view-body"></div></div>
   <svg id="graph-svg"></svg>
   <button id="canvas-back-btn" onclick="goHome()" style="display:none;position:absolute;top:16px;left:16px;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--accent);cursor:pointer;font-size:13px;z-index:5;">← 返回</button>
   <div id="zoom-hint">🖱️ 点击知识团钻取 &nbsp;|&nbsp; 滚轮缩放 &nbsp;|&nbsp; 拖拽平移 &nbsp;|&nbsp; Backspace 返回</div>
@@ -758,7 +816,176 @@ if (typeof d3 === 'undefined') {
   this.textContent=b.style.display==='none'?'[+]':'[-]';
 });
 
-// ── Nav menu ──
+
+// ── Tree toggle ──
+function toggleTreeNode(nodeId) {
+  const item = document.querySelector('[data-node="'+nodeId+'"]');
+  const children = document.querySelector('[data-parent="'+nodeId+'"]');
+  const arrow = item?.querySelector('.arrow');
+  
+  if (!children) {
+    // Leaf node — show content in right panel
+    if (nodeId === 'graph') { hideContentView(); return; }
+    if (nodeId === 'schema') showContentView('schema');
+    return;
+  }
+  
+  const isOpen = children.classList.toggle('open');
+  if (arrow) arrow.classList.toggle('open', isOpen);
+  
+  // Activate styling
+  document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
+  item?.classList.add('active');
+}
+
+function showContentView(type, sub) {
+  const cv = document.getElementById('content-view');
+  const body = document.getElementById('content-view-body');
+  cv.classList.add('visible');
+  
+  if (type === 'schema') {
+    body.innerHTML = '<h2>📋 Schema — AGENTS.md</h2><div class="meta">LLM Wiki 维护规则 · 所有 Agent 必读</div>'
+      + '<p>加载中...</p>';
+    fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/AGENTS.md')
+      .then(r=>r.text()).then(t=>{
+        body.innerHTML = '<h2>📋 Schema — AGENTS.md</h2>'
+          + '<div class="meta"><a href="https://github.com/lorisliaoloris/llm-wiki-graph/blob/main/AGENTS.md" target="_blank">查看源文件 →</a></div>'
+          + '<pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">' + t.replace(/</g,'&lt;') + '</pre>';
+      }).catch(()=>{ body.innerHTML += '<p style="color:var(--text-dim);">无法加载</p>'; });
+  }
+  
+  if (type === 'log') {
+    body.innerHTML = '<h2>📝 Log — ' + (sub||'维护日志') + '</h2><div class="meta">操作记录</div>'
+      + '<p>加载中...</p>';
+    fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/log.md')
+      .then(r=>r.text()).then(t=>{
+        body.innerHTML = '<h2>📝 Log — 维护日志</h2>'
+          + '<div class="meta"><a href="https://github.com/lorisliaoloris/llm-wiki-graph/blob/main/log.md" target="_blank">查看源文件 →</a></div>'
+          + '<pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">' + t.replace(/</g,'&lt;') + '</pre>';
+      }).catch(()=>{ body.innerHTML += '<p style="color:var(--text-dim);">无法加载</p>'; });
+  }
+  
+  if (type === 'sources') {
+    body.innerHTML = '<h2>📦 Sources — ' + (sub||'来源清单') + '</h2><div class="meta">从 Gbrain 自动生成</div><p style="color:var(--text-dim);">加载中...</p>';
+    loadSourcesContent(sub, body);
+  }
+  
+  if (type === 'lint') {
+    body.innerHTML = '<h2>📋 Lint — 过期页面 (' + (sub||'全部') + ')</h2><div class="meta">从 Gbrain API 获取</div><p style="color:var(--text-dim);">加载中...</p>';
+    loadLintContent(sub, body);
+  }
+}
+
+function hideContentView() {
+  document.getElementById('content-view').classList.remove('visible');
+  document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
+  document.querySelector('[data-node="graph"]')?.classList.add('active');
+}
+
+// ── Sources from Gbrain API ──
+async function loadSourcesContent(sub, body) {
+  try {
+    const resp = await fetch('http://100.85.182.75:9885/api/nodes?limit=300');
+    if (!resp.ok) throw new Error('API unavailable');
+    const pages = await resp.json();
+    
+    // Categorize
+    const books = pages.filter(p => p.type === 'reference' || (p.tags||'').includes('book'));
+    const github = pages.filter(p => (p.source||'').includes('github.com'));
+    const web = pages.filter(p => (p.source||'').includes('http') && !p.source.includes('github.com'));
+    
+    if (sub === 'books') {
+      let h = '<h2>📚 书籍</h2>';
+      for (const b of books.slice(0,30)) {
+        h += '<div style="margin:4px 0;padding:4px 0;border-bottom:1px solid var(--border);">'
+          + '<b>' + (b.title||b.slug) + '</b>'
+          + '<div style="font-size:11px;color:var(--text-dim);">' + (b.summary||'') + '</div>'
+          + '<div style="font-size:10px;color:var(--text-dim);">📎 ' + (b.source||b.slug) + '</div>'
+          + '</div>';
+      }
+      body.innerHTML = h;
+    } else if (sub === 'github') {
+      let h = '<h2>🔗 GitHub 仓库</h2>';
+      for (const g of github.slice(0,20)) {
+        h += '<div style="margin:4px 0;"><a href="' + g.source + '" target="_blank">' + g.source + '</a> → ' + (g.title||g.slug) + '</div>';
+      }
+      body.innerHTML = h || '<p style="color:var(--text-dim);">暂无</p>';
+    } else if (sub === 'web') {
+      let h = '<h2>🌐 网站来源</h2>';
+      for (const w of web.slice(0,20)) {
+        h += '<div style="margin:4px 0;"><a href="' + w.source + '" target="_blank">' + w.source + '</a> → ' + (w.title||w.slug) + '</div>';
+      }
+      body.innerHTML = h || '<p style="color:var(--text-dim);">暂无</p>';
+    } else {
+      // Overview
+      body.innerHTML = '<h2>📦 Sources 概览</h2>'
+        + '<p>📚 书籍: ' + books.length + '</p>'
+        + '<p>🔗 GitHub: ' + github.length + '</p>'
+        + '<p>🌐 网站: ' + web.length + '</p>'
+        + '<p style="font-size:10px;color:var(--text-dim);margin-top:12px;">数据来源: Gbrain API · 自动更新</p>';
+    }
+  } catch(e) {
+    body.innerHTML = '<p style="color:var(--text-dim);">API 未连接 (' + e.message + ')</p>';
+  }
+}
+
+// ── Lint content ──
+async function loadLintContent(sub, body) {
+  try {
+    const resp = await fetch('http://100.85.182.75:9885/api/lint');
+    if (!resp.ok) throw new Error('unavailable');
+    const data = await resp.json();
+    
+    if (sub) {
+      body.innerHTML = '<h2>📋 过期页面 — ' + sub + '</h2><p style="color:var(--text-dim);">从 Gbrain API 获取</p>'
+        + '<p>🟡 过期总计: ' + (data.stale_count||0) + '</p>'
+        + '<p>👻 孤儿页面: ' + (data.orphan_count||0) + '</p>';
+    } else {
+      body.innerHTML = '<h2>📋 Lint 诊断报告</h2>'
+        + '<p>🟡 过期: ' + (data.stale_count||0) + '</p>'
+        + '<p>👻 孤立: ' + (data.orphan_count||0) + '</p>'
+        + '<p style="font-size:10px;color:var(--text-dim);margin-top:12px;">数据来源: Gbrain API · 实时</p>';
+    }
+  } catch(e) {
+    body.innerHTML = '<p style="color:var(--text-dim);">API 未连接 (' + e.message + ')</p>';
+  }
+}
+
+// ── Populate Index from graph.json ──
+function populateIndex() {
+  if (!graphData || !graphData.clusters) return;
+  const container = document.getElementById('index-children');
+  let h = '';
+  for (const c of graphData.clusters) {
+    const nodes = graphData.nodes.filter(n => n.cluster === c.id);
+    h += '<li><div class="tree-child-item" onclick="showClusterDetail(\'' + c.id + '\');hideContentView();">'
+      + '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + c.color + ';margin-right:6px;"></span>'
+      + '<span class="label">' + c.label + '</span> <span class="count">' + nodes.length + '</span>'
+      + '</div></li>';
+  }
+  container.innerHTML = h;
+}
+
+// ── Populate Lint counts ──
+async function populateLintCounts() {
+  try {
+    const resp = await fetch('http://100.85.182.75:9885/api/lint');
+    if (resp.ok) {
+      const data = await resp.json();
+      document.getElementById('lint-stale').textContent = data.stale_count || 0;
+      document.getElementById('lint-contested').textContent = data.contested_count || '?';
+      document.getElementById('lint-orphan').textContent = data.orphan_count || 0;
+      return;
+    }
+  } catch(e) {}
+  document.getElementById('lint-stale').textContent = '?';
+  document.getElementById('lint-contested').textContent = '?';
+  document.getElementById('lint-orphan').textContent = '?';
+}
+
+// Populate on graph load
+setTimeout(() => { populateIndex(); populateLintCounts(); }, 1500);
+
 const navItems = {
   schema: {
     title: '📋 Schema — AGENTS.md',
