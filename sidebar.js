@@ -435,6 +435,35 @@
       }
     });
 
+    // Drag-to-scroll for tab bar (horizontal overflow)
+    var tabBar = document.getElementById('nav-tab-bar');
+    if (tabBar) {
+      var isDown = false, startX = 0, scrollLeft = 0;
+      tabBar.addEventListener('mousedown', function (e) {
+        // Don't capture clicks on buttons
+        if (e.target.tagName === 'BUTTON') return;
+        isDown = true;
+        tabBar.style.cursor = 'grabbing';
+        startX = e.pageX - tabBar.offsetLeft;
+        scrollLeft = tabBar.scrollLeft;
+      });
+      tabBar.addEventListener('mouseleave', function () {
+        isDown = false;
+        tabBar.style.cursor = '';
+      });
+      tabBar.addEventListener('mouseup', function () {
+        isDown = false;
+        tabBar.style.cursor = '';
+      });
+      tabBar.addEventListener('mousemove', function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        var x = e.pageX - tabBar.offsetLeft;
+        var walk = (x - startX) * 1.5;
+        tabBar.scrollLeft = scrollLeft - walk;
+      });
+    }
+
     // Hook into existing node selection: when node detail shows, hide tab content
     var observer = new MutationObserver(function () {
       if (nodeDetail && nodeDetail.classList.contains('visible') && tabContent) {

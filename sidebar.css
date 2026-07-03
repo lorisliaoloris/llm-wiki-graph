@@ -4,17 +4,19 @@
 #nav-tab-bar {
   display: flex;
   align-items: center;
-  gap: 2px;
-  padding: 0 16px;
+  gap: 1px;
+  padding: 0 12px;
   border-bottom: 1px solid var(--border);
   background: var(--surface);
   min-height: 42px;
   overflow-x: auto;
+  cursor: grab;
+  user-select: none;
 }
 #nav-tab-bar::-webkit-scrollbar { height: 0; }
 
 .nav-tab {
-  padding: 10px 12px;
+  padding: 10px 10px;
   font-size: 12px;
   font-weight: 500;
   color: var(--text-dim);
