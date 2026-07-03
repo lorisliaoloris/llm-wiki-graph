@@ -94,9 +94,8 @@
 
     triggerRefresh: function () {
       if (!API_BASE) { return Promise.reject(new Error('offline')); }
-      // GitHub Actions workflow_dispatch requires a PAT
-      // This is fire-and-forget; token should be set via env or config
-      return Promise.reject(new Error('Refresh trigger requires PAT configuration'));
+      return this._fetch(API_BASE + '/api/refresh', { method: 'POST' })
+        .then(function (r) { return r.json(); });
     }
   };
 
@@ -391,12 +390,17 @@
     btn.textContent = '⏳ 触发中...';
 
     WikiRepository.triggerRefresh()
-      .then(function () {
-        btn.textContent = '✅ 已触发';
-        setTimeout(function () { btn.textContent = '🔄 刷新'; btn.disabled = false; }, 10000);
+      .then(function (data) {
+        if (data && data.status === 'ok') {
+          btn.textContent = '✅ 已触发';
+          setTimeout(function () { btn.textContent = '🔄 刷新'; btn.disabled = false; }, 3000);
+        } else {
+          btn.textContent = '❌ 失败';
+          setTimeout(function () { btn.textContent = '🔄 刷新'; btn.disabled = false; }, 3000);
+        }
       })
       .catch(function () {
-        btn.textContent = '🔒 需 PAT';
+        btn.textContent = '❌ 离线';
         setTimeout(function () { btn.textContent = '🔄 刷新'; btn.disabled = false; }, 3000);
       });
   }
