@@ -58,3 +58,23 @@ Gbrain (ECS, Tailscale IP 100.85.182.75) 是知识内容的真相源：
 ror 截断脚本
 5|
 6|
+### 项目托管：GitHub Pages 静态站点
+
+本项目是纯静态网站，托管在 GitHub Pages：
+- 仓库：github.com/lorisliaoloris/llm-wiki-graph
+- 站点：https://lorisliaoloris.github.io/llm-wiki-graph/
+- 部署：git push main -> GitHub Action -> gh-pages 分支 -> Pages CDN
+
+GitHub Pages 特有约束：
+- 纯静态：不能跑后端/调 MCP -> ECS API 做桥梁
+- HTTPS only：HTTP API 被拦截 -> 前端 protocol 判断降级
+- Jekyll 默认：.py/scripts/ 导致构建失败 -> .nojekyll 文件
+- CDN 缓存 10min：推送后不立即更新 -> workflow_dispatch + 自动刷新
+- deploy 超时：大文件推送超时 -> peaceiris/actions-gh-pages + timeout-minutes:30
+
+仓库文件结构：
+  index.html / graph.json / d3.v7.min.js / .nojekyll
+  AGENTS.md / SPEC.md / log.md / README.md
+  scripts/ (export-graph.py / gbrain-api.py / deploy guide)
+  templates/ (AGENT_POLICY.md)
+  .github/workflows/ (deploy.yml)
