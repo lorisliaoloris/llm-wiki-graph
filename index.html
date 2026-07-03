@@ -87,25 +87,25 @@
     line-height: 1.5;
   }
 
-  .tree { padding:0; margin:0; list-style:none; }
-  .tree li { padding:0; margin:0; }
-  .tree-row { display:flex; align-items:center; padding:3px 24px; cursor:pointer; font-size:12px; color:var(--text-dim); }
-  .tree-row:hover { color:var(--accent); background:rgba(122,162,247,0.08); }
-  .tree-row .arr { width:14px; font-size:9px; flex-shrink:0; }
-  .tree-row .arr.open { transform:rotate(90deg); }
-  .tree-row .icn { width:16px; text-align:center; flex-shrink:0; margin-right:6px; }
-  .tree-row .lbl { flex:1; }
-  .tree-row .cnt { font-size:9px; color:var(--text-dim); margin-left:4px; }
-  .tree-row.on { color:var(--accent); background:rgba(122,162,247,0.12); }
-  .tree-sub { display:none; }
-  .tree-sub.open { display:block; }
-  .tree-sub-row { padding:2px 24px 2px 50px; display:flex; align-items:center; cursor:pointer; font-size:11px; color:var(--text-dim); }
-  .tree-sub-row:hover { color:var(--accent); background:rgba(122,162,247,0.06); }
-  #cv { display:none; position:absolute; inset:0; overflow-y:auto; padding:24px 32px; color:var(--text); line-height:1.8; font-size:13px; z-index:2; background:var(--bg); }
-  #cv.on { display:block; }
-  #cv h2 { font-size:16px; margin-bottom:12px; color:var(--accent); }
-  #cv a { color:var(--accent); }
-  #cv .back { display:inline-block; margin-bottom:12px; padding:3px 10px; border-radius:4px; border:1px solid var(--border); color:var(--accent); cursor:pointer; font-size:11px; }
+.tree { padding:0;margin:0;list-style:none; }
+.tree li{padding:0;margin:0;}
+.tree-row{display:flex;align-items:center;padding:3px 24px;cursor:pointer;font-size:12px;color:var(--text-dim);}
+.tree-row:hover{color:var(--accent);background:rgba(122,162,247,0.08);}
+.tree-row.on{color:var(--accent);background:rgba(122,162,247,0.12);}
+.tree-row .arr{width:14px;font-size:9px;flex-shrink:0;}
+.tree-row .arr.open{transform:rotate(90deg);}
+.tree-row .icn{width:18px;text-align:center;flex-shrink:0;}
+.tree-row .lbl{flex:1;}
+.tree-row .cnt{font-size:9px;color:var(--text-dim);margin-left:4px;}
+.tree-sub{display:none;}
+.tree-sub.open{display:block;}
+.tree-sub-row{padding:2px 24px 2px 50px;display:flex;align-items:center;cursor:pointer;font-size:11px;color:var(--text-dim);}
+.tree-sub-row:hover{color:var(--accent);background:rgba(122,162,247,0.06);}
+#cv{display:none;position:absolute;inset:0;overflow-y:auto;padding:24px 32px;color:var(--text);line-height:1.8;font-size:13px;z-index:2;background:var(--bg);}
+#cv.on{display:block;}
+#cv h2{font-size:16px;margin-bottom:12px;color:var(--accent);}
+#cv a{color:var(--accent);}
+#cv .back{display:inline-block;margin-bottom:12px;padding:3px 10px;border-radius:4px;border:1px solid var(--border);color:var(--accent);cursor:pointer;font-size:11px;}
 </style>
 </head>
 <body>
@@ -121,29 +121,19 @@
   <div id="breadcrumb" style="display:flex;align-items:center;gap:6px;padding:6px 24px;border-bottom:1px solid var(--border);">
     <button id="back-btn" onclick="goHome()" style="display:none;padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:var(--bg);color:var(--accent);cursor:pointer;font-size:11px;">←</button>
     <span id="breadcrumb-text"><span style="color:var(--accent);font-weight:600;">图谱总览</span></span>
-    <span id="refresh-status" style="font-size:10px;color:var(--text-dim);margin-left:auto;display:none;"></span>
   </div>
   <div style="flex:1;overflow-y:auto;padding:4px 0;">
-    <ul class="tree" id="t">
-      <li><div class="tree-row on" onclick="tv('graph')"><span class="icn">📊</span><span class="lbl">图谱总览</span></div></li>
-      <li>
-        <div class="tree-row" onclick="tv('schema')"><span class="arr">▶</span><span class="icn">📋</span><span class="lbl">Schema</span></div>
-        <ul class="tree-sub" id="ts-schema"></ul>
+    <ul class="tree">
+      <li><div class="tree-row on" onclick="goOverview()"><span class="icn">📊</span><span class="lbl">图谱总览</span></div></li>
+      <li><div class="tree-row" onclick="tr('schema')"><span class="arr">▶</span><span class="icn">📋</span><span class="lbl">Schema</span></div></li>
+      <li><div class="tree-row" onclick="tr('log')"><span class="arr">▶</span><span class="icn">📝</span><span class="lbl">Log</span></div></li>
+      <li><div class="tree-row" onclick="tr('sources')"><span class="arr">▶</span><span class="icn">📦</span><span class="lbl">Sources</span></div>
+        <ul class="tree-sub" id="ts-sources"><li><div class="tree-sub-row" style="font-size:10px;color:var(--text-dim);">加载中...</div></li></ul>
       </li>
-      <li>
-        <div class="tree-row" onclick="tv('log')"><span class="arr">▶</span><span class="icn">📝</span><span class="lbl">Log</span></div>
-        <ul class="tree-sub" id="ts-log"></ul>
+      <li><div class="tree-row" onclick="tr('index')"><span class="arr">▶</span><span class="icn">📚</span><span class="lbl">Index</span></div>
+        <ul class="tree-sub" id="ts-index"><li><div class="tree-sub-row" style="font-size:10px;color:var(--text-dim);">加载中...</div></li></ul>
       </li>
-      <li>
-        <div class="tree-row" onclick="tv('sources')"><span class="arr">▶</span><span class="icn">📦</span><span class="lbl">Sources</span></div>
-        <ul class="tree-sub" id="ts-sources"><li><div class="tree-sub-row" style="font-size:10px;">加载中...</div></li></ul>
-      </li>
-      <li>
-        <div class="tree-row" onclick="tv('index')"><span class="arr">▶</span><span class="icn">📚</span><span class="lbl">Index</span></div>
-        <ul class="tree-sub" id="ts-index"><li><div class="tree-sub-row" style="font-size:10px;">加载中...</div></li></ul>
-      </li>
-      <li>
-        <div class="tree-row" onclick="tv('lint')"><span class="arr">▶</span><span class="icn">📋</span><span class="lbl">Lint 诊断</span></div>
+      <li><div class="tree-row" onclick="tr('lint')"><span class="arr">▶</span><span class="icn">📋</span><span class="lbl">Lint</span></div>
         <ul class="tree-sub" id="ts-lint">
           <li><div class="tree-sub-row"><span class="lbl">🟡 过期</span> <span class="cnt" id="li-st">-</span></div></li>
           <li><div class="tree-sub-row"><span class="lbl">🔴 矛盾</span> <span class="cnt" id="li-ct">-</span></div></li>
@@ -433,7 +423,7 @@ function rebuildGraph() {
   });
 }
 
-function compareState(a) { if(!document.getElementById("dbg-de"))return;
+function compareState(a) {
   var de=document.getElementById('dbg-de'),dm=document.getElementById('dbg-dm'),mt=document.getElementById('dbg-mt');
   if(!de)return;
   de.textContent=currentEdges.length;
@@ -758,38 +748,21 @@ if (typeof d3 === 'undefined') {
   document.getElementById('graph-container').innerHTML =
     '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-size:14px;">❌ D3.js 加载失败 — 检查 d3.v7.min.js 是否存在</div>';
 } else {
-  (function(){var d=document.getElementById('debug-toggle');if(d)d.addEventListener('click',function(){
+  document.getElementById('debug-toggle').addEventListener('click',function(){
   var b=document.getElementById('debug-body');
-  if(b)b.style.display=b.style.display==='none'?'block':'none';
+  b.style.display=b.style.display==='none'?'block':'none';
   this.textContent=b.style.display==='none'?'[+]':'[-]';
 });
 
-function tv(id) {
-  if (id === 'graph') { hcv(); return; }
-  var sub = document.getElementById('ts-' + id);
-  if (!sub) { cv(id); return; }
-  var row = document.querySelector('.tree-row[onclick*="tv(\'' + id + '\')"]');
-  var arr = row?.querySelector('.arr');
-  sub.classList.toggle('open');
-  if (arr) arr.classList.toggle('open', sub.classList.contains('open'));
-  document.querySelectorAll('.tree-row').forEach(function(r) { r.classList.remove('on'); });
-  row?.classList.add('on');
-}
-function cv(id, sub) {
-  var c = document.getElementById('cv'); var b = document.getElementById('cvb');
-  c.classList.add('on');
-  if (id === 'schema') { fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/AGENTS.md').then(function(r){return r.text()}).then(function(t){b.innerHTML='<h2>📋 Schema — AGENTS.md</h2><pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">'+t.replace(/</g,'&lt;')+'</pre>';}).catch(function(){b.innerHTML='<p>加载失败</p>';}); }
-  else if (id === 'log') { fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/log.md').then(function(r){return r.text()}).then(function(t){b.innerHTML='<h2>📝 Log</h2><pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">'+t.replace(/</g,'&lt;')+'</pre>';}).catch(function(){b.innerHTML='<p>加载失败</p>';}); }
-  else { b.innerHTML = '<h2>'+id+'</h2><p style="color:var(--text-dim);">从 Gbrain API 获取中...</p>'; }
-}
-function hcv() { document.getElementById('cv').classList.remove('on'); }
-function pi() { var c=document.getElementById('ts-index'); if(!graphData||!graphData.clusters){c.innerHTML='<li><div class="tree-sub-row" style="font-size:10px;">等待图谱加载...</div></li>';return;} var h='';for(var i=0;i<graphData.clusters.length;i++){var cl=graphData.clusters[i];var cn=graphData.nodes.filter(function(n){return n.cluster===cl.id});h+='<li><div class="tree-sub-row" onclick="showClusterDetail(\''+cl.id+'\')" style="cursor:pointer;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+cl.color+';margin-right:6px;"></span><span class="lbl">'+cl.label+'</span> <span class="cnt">'+cn.length+'</span></div></li>';} c.innerHTML=h; }
-function pl() { (location.protocol==='https:'?Promise.reject('HTTPS'):fetch('http://100.85.182.75:9885/api/lint')).then(function(r){return r.json()}).then(function(d){document.getElementById('li-st').textContent=d.stale_count||0;document.getElementById('li-ct').textContent=d.contested_count||'?';document.getElementById('li-or').textContent=d.orphan_count||0;}).catch(function(){}); }
-function bs() { (location.protocol==='https:'?Promise.reject('HTTPS'):fetch('http://100.85.182.75:9885/api/nodes?limit=500')).then(function(r){return r.json()}).then(function(ps){if(!Array.isArray(ps))return;var books=ps.filter(function(p){return p.type==='reference'||p.type==='wiki/book'});var research=ps.filter(function(p){return p.type==='research'});var plans=ps.filter(function(p){return['plan','spec','wiki/spec'].indexOf(p.type)>=0});var skills=ps.filter(function(p){return p.type==='skill'});var agents=ps.filter(function(p){return['soul','agent'].indexOf(p.type)>=0});var lessons=ps.filter(function(p){return(p.slug||'').indexOf('lessons')>=0||(p.slug||'').indexOf('pitfall')>=0||(p.slug||'').indexOf('bug')>=0});var h='';[{l:'📚 书籍与文献',c:books.length},{l:'🔬 研究与调研',c:research.length},{l:'📄 技术文档',c:plans.length},{l:'🛠️ 技能与工具',c:skills.length},{l:'🧠 Agent 记忆',c:agents.length},{l:'💡 经验教训',c:lessons.length}].forEach(function(s){h+='<li><div class="tree-sub-row"><span class="lbl">'+s.l+'</span> <span class="cnt">'+s.c+'</span></div></li>';});document.getElementById('ts-sources').innerHTML=h||'<li><div class="tree-sub-row">无来源</div></li>';}).catch(function(){document.getElementById('ts-sources').innerHTML='<li><div class="tree-sub-row" style="font-size:10px;">API 未连接</div></li>';}); }
-setTimeout(function(){ pi(); pl(); bs(); }, 1500);
+function tr(id){var sub=document.getElementById('ts-'+id);if(sub){sub.classList.toggle('open');var row=document.querySelector('.tree-row[onclick*="tr(''+id+'')"]');var arr=row?row.querySelector('.arr'):null;if(arr)arr.classList.toggle('open',sub.classList.contains('open'));}if(id==='schema'){cv('schema');}else if(id==='log'){cv('log');}}
+function goOverview(){hcv();document.querySelectorAll('.tree-row').forEach(function(r){r.classList.remove('on');});document.querySelector('.tree-row[onclick*="goOverview"]').classList.add('on');}
+function cv(id){var c=document.getElementById('cv');var b=document.getElementById('cvb');c.classList.add('on');if(id==='schema'){fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/AGENTS.md').then(function(r){return r.text()}).then(function(t){b.innerHTML='<h2>📋 Schema</h2><pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">'+t.replace(/</g,'&lt;')+'</pre>';}).catch(function(){b.innerHTML='<p>加载失败</p>';});}else if(id==='log'){fetch('https://raw.githubusercontent.com/lorisliaoloris/llm-wiki-graph/main/log.md').then(function(r){return r.text()}).then(function(t){b.innerHTML='<h2>📝 Log</h2><pre style="white-space:pre-wrap;font-size:12px;line-height:1.6;">'+t.replace(/</g,'&lt;')+'</pre>';}).catch(function(){b.innerHTML='<p>加载失败</p>';});}else{b.innerHTML='<h2>'+id+'</h2><p style="color:var(--text-dim);">API连接中...</p>';}}
+function hcv(){document.getElementById('cv').classList.remove('on');}
+function pi(){var c=document.getElementById('ts-index');if(!graphData||!graphData.clusters){setTimeout(pi,500);return;}var h='';for(var i=0;i<graphData.clusters.length;i++){var cl=graphData.clusters[i];var cn=graphData.nodes.filter(function(n){return n.cluster===cl.id});h+='<li><div class="tree-sub-row" onclick="showClusterDetail(''+cl.id+'');hcv();" style="cursor:pointer;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+cl.color+';margin-right:6px;"></span><span class="lbl">'+cl.label+'</span> <span class="cnt">'+cn.length+'</span></div></li>';}c.innerHTML=h;}
+setTimeout(pi,1000);
 
 loadGraph();
 }
-)}</script>
+</script>
 </body>
 </html>
