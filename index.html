@@ -100,7 +100,10 @@
   </div>
   <div id="breadcrumb" style="display:flex;align-items:center;gap:6px;">
     <button id="back-btn" onclick="goHome()" style="display:none;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--accent);cursor:pointer;font-size:12px;">← 返回总览</button>
-    <span id="breadcrumb-text"><a id="breadcrumb-home" onclick="goHome()" style="color:var(--accent);font-weight:600;">图谱总览</a></span>
+    
+    <button id="refresh-btn" onclick="refreshFromGbrain()" title="从 Gbrain 刷新数据" style="padding:3px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--accent);cursor:pointer;font-size:11px;margin-left:8px;">🔄 刷新</button>
+    <span id="refresh-status" style="font-size:10px;color:var(--text-dim);margin-left:4px;display:none;"></span>
+<span id="breadcrumb-text"><a id="breadcrumb-home" onclick="goHome()" style="color:var(--accent);font-weight:600;">图谱总览</a></span>
   </div>
   <div id="node-detail"><div class="empty-state">👆 点击节点查看详情</div></div>
   <div id="stats-bar">
@@ -725,6 +728,73 @@ if (typeof d3 === 'undefined') {
   this.textContent=b.style.display==='none'?'[+]':'[-]';
 });
 loadGraph();
+// ── Auto-refresh from Gbrain ──
+let lastVisitTime = Date.now();
+const REFRESH_COOLDOWN = 5 * 60 * 1000; // 5 minutes
+
+async function refreshFromGbrain() {
+  const statusEl = document.getElementById('refresh-status');
+  statusEl.style.display = 'inline';
+  statusEl.textContent = '刷新中...';
+  
+  try {
+    // Try local API first (ECS), fallback to GitHub Actions
+    const resp = await fetch('http://100.85.182.75:9885/api/nodes?limit=300');
+    if (resp.ok) {
+      const pages = await resp.json();
+      if (Array.isArray(pages) && pages.length > 0) {
+        statusEl.textContent = `✅ ${pages.length}页`;
+        // Store pages for processing
+        window._gbrainPages = pages;
+        // Auto-reload graph data
+        setTimeout(() => location.reload(), 1000);
+      } else {
+        statusEl.textContent = '⚠️ 无数据';
+      }
+    } else {
+      throw new Error('API unavailable');
+    }
+  } catch(e) {
+    // Fallback: trigger GitHub Actions rebuild
+    statusEl.textContent = '触发构建...';
+    try {
+      await fetch('https://api.github.com/repos/lorisliaoloris/llm-wiki-graph/actions/workflows/deploy.yml/dispatches', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/vnd.github+json',
+          'Authorization': 'Bearer ' + (window._ghToken || ''),
+        },
+        body: JSON.stringify({ref: 'main'})
+      });
+      statusEl.textContent = '✅ 已触发, 1分钟后刷新';
+      setTimeout(() => location.reload(), 60000);
+    } catch(ge) {
+      statusEl.textContent = '❌ 刷新失败';
+    }
+  }
+}
+
+// Auto-refresh when returning to the page
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && Date.now() - lastVisitTime > REFRESH_COOLDOWN) {
+    refreshFromGbrain();
+  }
+  lastVisitTime = Date.now();
+});
+
+// Auto-refresh on first load if data is stale (>1 hour)
+window.addEventListener('load', () => {
+  const stored = localStorage.getItem('llm-wiki-last-refresh');
+  const now = Date.now();
+  if (!stored || now - parseInt(stored) > 3600000) {
+    // Data is stale, trigger background refresh
+    refreshFromGbrain();
+  }
+  localStorage.setItem('llm-wiki-last-refresh', String(now));
+  lastVisitTime = now;
+});
+
+
 }
 </script>
 </body>

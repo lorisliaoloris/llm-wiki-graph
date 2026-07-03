@@ -1,0 +1,17 @@
+[Unit]
+Description=Gbrain API — lightweight HTTP JSON API for llm-wiki-graph
+After=network.target gbrain-mcp-proxy.service
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /root/gbrain-api.py
+WorkingDirectory=/root
+Environment="PORT=9885"
+Environment="GBRAIN_BIN=/root/.bun/bin/bun /root/.bun/bin/gbrain"
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target
