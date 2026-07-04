@@ -190,3 +190,4 @@ computer_use 不可用时,CDP 是降级方案。
 
 - Gbrain Ingest 规则：加载 Hermes skill `llm-wiki` → Gbrain Backend 章节
 - 完整理念：https://gist.github.com/Karpathy/442a6bf555914893e9891c11519de94f
+- **OKF (Open Knowledge Format)**：本项目页面格式与 [Google OKF v0.1](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) 兼容——Markdown + YAML frontmatter + 标准链接。GBrain 同时支持 `[[wikilink]]` 和 `[text](path.md)` 两种链接语法。
