@@ -590,7 +590,7 @@ function highlightAndShowDetail(nodeId) {
   if (d.source) h += `<div class="detail-meta"><span class="detail-tag">📎 ${d.source}</span></div>`;
   if (d.status) h += `<div class="detail-meta"><span class="detail-tag">● ${st[d.status] || d.status}</span></div>`;
   if (d._ghost) h += `<div class="detail-meta"><span class="detail-tag" style="border-color:#ffb74d;color:#ffb74d;">⤤ 来自其他知识团</span></div>`;
-  if (d.slug) h += `<div class="detail-section"><a href="https://izwz92eih9oi6zh7ekxfy5z.tailba2386.ts.net:8443/api/page?slug=${encodeURIComponent(d.slug)}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-size:13px;">📖 在 GBrain 中打开 →</a></div>`;
+  if (d.slug) h += `<div class="detail-section"><a href="http://100.85.182.75:9885/api/page?slug=${encodeURIComponent(d.slug)}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-size:13px;">📖 在 GBrain 中打开 →</a></div>`;
 
   if (conns.length) {
     h += '<div class="detail-section"><h3>关联节点</h3>';
