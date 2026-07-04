@@ -1,27 +1,27 @@
 {
   "meta": {
     "title": "知识图谱 · 全量",
-    "description": "Gbrain导出(tag优先) — 280N 17C 65E",
+    "description": "Gbrain导出 — 283N 18C 65E",
     "lastUpdated": "2026-07-04",
-    "version": "5.3"
+    "version": "5.4"
   },
   "clusters": [
     {
       "id": "其他",
       "label": "其他",
-      "summary": "65个页面",
+      "summary": "45个页面",
       "color": "#4fc3f7"
-    },
-    {
-      "id": "游戏设计",
-      "label": "游戏设计",
-      "summary": "41个页面",
-      "color": "#ffb74d"
     },
     {
       "id": "DDIA 读书笔记",
       "label": "DDIA 读书笔记",
       "summary": "35个页面",
+      "color": "#ffb74d"
+    },
+    {
+      "id": "游戏设计",
+      "label": "游戏设计",
+      "summary": "33个页面",
       "color": "#9ccc65"
     },
     {
@@ -33,80 +33,86 @@
     {
       "id": "Godot 引擎",
       "label": "Godot 引擎",
-      "summary": "26个页面",
+      "summary": "28个页面",
       "color": "#ef5350"
     },
     {
       "id": "美术与技术",
       "label": "美术与技术",
-      "summary": "23个页面",
+      "summary": "24个页面",
       "color": "#26c6da"
     },
     {
       "id": "Hermes 技巧",
       "label": "Hermes 技巧",
-      "summary": "15个页面",
+      "summary": "22个页面",
       "color": "#ab47bc"
+    },
+    {
+      "id": "参考资料",
+      "label": "参考资料",
+      "summary": "14个页面",
+      "color": "#66bb6a"
     },
     {
       "id": "Linux 运维",
       "label": "Linux 运维",
-      "summary": "8个页面",
-      "color": "#66bb6a"
+      "summary": "9个页面",
+      "color": "#ff7043"
+    },
+    {
+      "id": "逆向工程",
+      "label": "逆向工程",
+      "summary": "9个页面",
+      "color": "#42a5f5"
     },
     {
       "id": "LLM Wiki 知识图谱",
       "label": "LLM Wiki 知识图谱",
       "summary": "7个页面",
-      "color": "#ff7043"
+      "color": "#ec407a"
     },
     {
       "id": "Java 并发",
       "label": "Java 并发",
       "summary": "7个页面",
-      "color": "#42a5f5"
+      "color": "#8d6e63"
     },
     {
       "id": "Soccer NO.1",
       "label": "Soccer NO.1",
-      "summary": "6个页面",
-      "color": "#ec407a"
-    },
-    {
-      "id": "逆向工程",
-      "label": "逆向工程",
       "summary": "5个页面",
-      "color": "#8d6e63"
+      "color": "#78909c"
     },
     {
       "id": "JavaScript 前端工程化",
       "label": "JavaScript 前端工程化",
-      "summary": "3个页面",
-      "color": "#78909c"
-    },
-    {
-      "id": "参考资料",
-      "label": "参考资料",
-      "summary": "2个页面",
+      "summary": "4个页面",
       "color": "#7e57c2"
     },
     {
-      "id": "血糖管理",
-      "label": "血糖管理",
-      "summary": "2个页面",
+      "id": "CF8 开发",
+      "label": "CF8 开发",
+      "summary": "3个页面",
       "color": "#29b6f6"
+    },
+    {
+      "id": "技能与工具",
+      "label": "技能与工具",
+      "summary": "3个页面",
+      "color": "#66bb6a"
     },
     {
       "id": "故障记录",
       "label": "故障记录",
       "summary": "1个页面",
-      "color": "#66bb6a"
+      "color": "#ffa726"
     },
     {
-      "id": "CF8 开发",
-      "label": "CF8 开发",
+      "id": "血糖管理",
+      "label": "血糖管理",
       "summary": "1个页面",
-      "color": "#ffa726"
+      "color": "#5c6bc0"
     }
   ],
   "nodes": [
@@ -153,7 +159,7 @@
       "id": "art-game-ui-concepts",
       "label": "Game Ui Concepts",
       "type": "concept",
-      "cluster": "游戏设计",
+      "cluster": "美术与技术",
       "summary": "[concept] art/game-ui-concepts",
       "status": "active",
       "tags": [
@@ -166,7 +172,7 @@
       "id": "art-hud-benchmarks",
       "label": "Hud Benchmarks",
       "type": "concept",
-      "cluster": "游戏设计",
+      "cluster": "美术与技术",
       "summary": "[concept] art/hud-benchmarks",
       "status": "active",
       "tags": [
@@ -474,7 +480,7 @@
       "id": "hermes-tips-new-role-onboarding",
       "label": "New Role Onboarding",
       "type": "concept",
-      "cluster": "美术与技术",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] hermes-tips/new-role-onboarding",
       "status": "active",
       "tags": [
@@ -581,7 +587,7 @@
       "id": "openclaw-automation-discord-business",
       "label": "Discord Business",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/automation/discord-business",
       "status": "active",
       "tags": []
@@ -590,7 +596,7 @@
       "id": "openclaw-automation-flight-scraper",
       "label": "Flight Scraper",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/automation/flight-scraper",
       "status": "active",
       "tags": []
@@ -599,7 +605,7 @@
       "id": "openclaw-automation-job-applicant",
       "label": "Job Applicant",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/automation/job-applicant",
       "status": "active",
       "tags": []
@@ -608,7 +614,7 @@
       "id": "openclaw-automation-morning-briefing",
       "label": "Morning Briefing",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/automation/morning-briefing",
       "status": "active",
       "tags": []
@@ -617,7 +623,7 @@
       "id": "openclaw-automation-negotiation-agent",
       "label": "Negotiation Agent",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/automation/negotiation-agent",
       "status": "active",
       "tags": []
@@ -626,7 +632,7 @@
       "id": "openclaw-automation-overnight-coder",
       "label": "Overnight Coder",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/automation/overnight-coder",
       "status": "active",
       "tags": []
@@ -635,7 +641,7 @@
       "id": "openclaw-business-churn-predictor",
       "label": "Churn Predictor",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/business/churn-predictor",
       "status": "active",
       "tags": []
@@ -644,7 +650,7 @@
       "id": "openclaw-business-competitor-pricing",
       "label": "Competitor Pricing",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/business/competitor-pricing",
       "status": "active",
       "tags": []
@@ -653,7 +659,7 @@
       "id": "openclaw-business-customer-support",
       "label": "Customer Support",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/business/customer-support",
       "status": "active",
       "tags": []
@@ -662,7 +668,7 @@
       "id": "openclaw-business-deal-forecaster",
       "label": "Deal Forecaster",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/business/deal-forecaster",
       "status": "active",
       "tags": []
@@ -671,7 +677,7 @@
       "id": "openclaw-business-erp-admin",
       "label": "Erp Admin",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/business/erp-admin",
       "status": "active",
       "tags": []
@@ -680,7 +686,7 @@
       "id": "openclaw-business-invoice-tracker",
       "label": "Invoice Tracker",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/business/invoice-tracker",
       "status": "active",
       "tags": []
@@ -689,7 +695,7 @@
       "id": "openclaw-business-lead-gen",
       "label": "Lead Gen",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/business/lead-gen",
       "status": "active",
       "tags": []
@@ -698,7 +704,7 @@
       "id": "openclaw-business-meeting-scheduler",
       "label": "Meeting Scheduler",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/business/meeting-scheduler",
       "status": "active",
       "tags": []
@@ -707,7 +713,7 @@
       "id": "openclaw-business-objection-handler",
       "label": "Objection Handler",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Hermes 技巧",
       "summary": "[concept] openclaw/business/objection-handler",
       "status": "active",
       "tags": []
@@ -1324,7 +1330,7 @@
       "id": "cf8-db-csv-sync-lessons",
       "label": "Db Csv Sync Lessons",
       "type": "concept",
-      "cluster": "Linux 运维",
+      "cluster": "CF8 开发",
       "summary": "[note] cf8/db-csv-sync-lessons",
       "status": "active",
       "tags": [
@@ -1338,7 +1344,7 @@
       "id": "cf8-db-csv-sync-workflow",
       "label": "Db Csv Sync Workflow",
       "type": "concept",
-      "cluster": "Linux 运维",
+      "cluster": "CF8 开发",
       "summary": "[note] cf8/db-csv-sync-workflow",
       "status": "active",
       "tags": [
@@ -2439,7 +2445,7 @@
       "id": "game-patterns-game_loop",
       "label": "Game Loop",
       "type": "entity",
-      "cluster": "游戏设计",
+      "cluster": "Godot 引擎",
       "summary": "[reference] game-patterns/game_loop",
       "status": "active",
       "tags": [
@@ -2466,7 +2472,7 @@
       "id": "reference-cgm-alert-thresholds-textbook",
       "label": "Cgm Alert Thresholds Textboo",
       "type": "entity",
-      "cluster": "血糖管理",
+      "cluster": "参考资料",
       "summary": "[reference] reference/cgm-alert-thresholds-textbook",
       "status": "active",
       "tags": [
@@ -2481,7 +2487,7 @@
       "id": "reference-codebase-memory-mcp",
       "label": "Codebase Memory Mcp",
       "type": "entity",
-      "cluster": "Linux 运维",
+      "cluster": "参考资料",
       "summary": "[reference] reference/codebase-memory-mcp",
       "status": "active",
       "tags": [
@@ -2495,7 +2501,7 @@
       "id": "reference-diabetes-life-guide",
       "label": "糖尿病患者实用生活指南 — Diabetes Sourc",
       "type": "entity",
-      "cluster": "Hermes 技巧",
+      "cluster": "参考资料",
       "summary": "[reference] reference/diabetes-life-guide",
       "status": "active",
       "tags": [
@@ -2509,7 +2515,7 @@
       "id": "reference-gdd-standard",
       "label": "Gdd Standard",
       "type": "entity",
-      "cluster": "游戏设计",
+      "cluster": "参考资料",
       "summary": "[reference] reference/gdd-standard",
       "status": "active",
       "tags": [
@@ -2538,7 +2544,7 @@
       "id": "reference-glucose-revolution-hacks",
       "label": "控糖革命10招 — Glucose Revolution",
       "type": "entity",
-      "cluster": "Hermes 技巧",
+      "cluster": "参考资料",
       "summary": "[reference] reference/glucose-revolution-hacks",
       "status": "active",
       "tags": [
@@ -2553,7 +2559,7 @@
       "id": "reference-hypoglycemia-knowledge",
       "label": "低血糖知识体系 — 糖御医核心参考",
       "type": "entity",
-      "cluster": "Hermes 技巧",
+      "cluster": "参考资料",
       "summary": "[reference] reference/hypoglycemia-knowledge",
       "status": "active",
       "tags": [
@@ -2567,7 +2573,7 @@
       "id": "reference-joslin-hypoglycemia-exercise",
       "label": "低血糖临床处理 — Joslin Deskbook 补充",
       "type": "entity",
-      "cluster": "Hermes 技巧",
+      "cluster": "参考资料",
       "summary": "[reference] reference/joslin-hypoglycemia-exercise",
       "status": "active",
       "tags": [
@@ -2582,7 +2588,7 @@
       "id": "reference-joslin-nutrition-complete",
       "label": "糖尿病医学营养治疗 — Joslin Deskbook ",
       "type": "entity",
-      "cluster": "Hermes 技巧",
+      "cluster": "参考资料",
       "summary": "[reference] reference/joslin-nutrition-complete",
       "status": "active",
       "tags": [
@@ -2597,7 +2603,7 @@
       "id": "reference-karpathy-claude-md",
       "label": "Karpathy Claude Md",
       "type": "entity",
-      "cluster": "美术与技术",
+      "cluster": "参考资料",
       "summary": "[reference] reference/karpathy-claude-md",
       "status": "active",
       "tags": [
@@ -2611,7 +2617,7 @@
       "id": "reference-williams-diabetes-core",
       "label": "糖尿病核心知识 — Williams 内分泌学精华",
       "type": "entity",
-      "cluster": "Hermes 技巧",
+      "cluster": "参考资料",
       "summary": "[reference] reference/williams-diabetes-core",
       "status": "active",
       "tags": [
@@ -2640,7 +2646,7 @@
       "id": "reverse-engineering-cm4-commentary-system",
       "label": "CM4 比赛解说系统完整逆向",
       "type": "entity",
-      "cluster": "游戏设计",
+      "cluster": "逆向工程",
       "summary": "[reference] reverse-engineering/cm4-commentary-system",
       "status": "active",
       "tags": [
@@ -2657,7 +2663,7 @@
       "id": "reverse-engineering-cm4-engine-godot-implementation",
       "label": "CM4 比赛引擎实现规范 (可直接用于 Godot)",
       "type": "entity",
-      "cluster": "游戏设计",
+      "cluster": "逆向工程",
       "summary": "[reference] reverse-engineering/cm4-engine-godot-implementation",
       "status": "active",
       "tags": [
@@ -2690,7 +2696,7 @@
       "id": "reverse-engineering-cm4-gaps-urgency-constraints-roles",
       "label": "三个缺口补充：urgency_factor / 硬约束表",
       "type": "entity",
-      "cluster": "游戏设计",
+      "cluster": "逆向工程",
       "summary": "[reference] reverse-engineering/cm4-gaps-urgency-constraints-roles",
       "status": "active",
       "tags": [
@@ -2739,7 +2745,7 @@
       "id": "reverse-engineering-cm4-match-engine-full-analysis",
       "label": "CM4 比赛引擎完整逆向分析",
       "type": "entity",
-      "cluster": "游戏设计",
+      "cluster": "逆向工程",
       "summary": "[reference] reverse-engineering/cm4-match-engine-full-analysis",
       "status": "active",
       "tags": [
@@ -2835,7 +2841,7 @@
       "id": "reference-godot-automation",
       "label": "Godot Automation",
       "type": "concept",
-      "cluster": "Soccer NO.1",
+      "cluster": "参考资料",
       "summary": "[skill] reference/godot-automation",
       "status": "active",
       "tags": [
@@ -2850,7 +2856,7 @@
       "id": "skills-deep-intelligence",
       "label": "Deep Intelligence",
       "type": "concept",
-      "cluster": "Hermes 技巧",
+      "cluster": "技能与工具",
       "summary": "[skill] skills/deep-intelligence",
       "status": "active",
       "tags": [
@@ -2866,7 +2872,7 @@
       "id": "skills-game-designer-grill",
       "label": "Game Designer Grill",
       "type": "concept",
-      "cluster": "游戏设计",
+      "cluster": "技能与工具",
       "summary": "[skill] skills/game-designer-grill",
       "status": "active",
       "tags": [
@@ -2881,7 +2887,7 @@
       "id": "skills-grill-me",
       "label": "Grill Me",
       "type": "concept",
-      "cluster": "Hermes 技巧",
+      "cluster": "技能与工具",
       "summary": "[skill] skills/grill-me",
       "status": "active",
       "tags": [
@@ -2945,7 +2951,7 @@
       "id": "specs-demo-spec",
       "label": "Demo Spec",
       "type": "concept",
-      "cluster": "游戏设计",
+      "cluster": "参考资料",
       "summary": "[spec] specs/demo-spec",
       "status": "active",
       "tags": [
@@ -2961,7 +2967,7 @@
       "id": "projects-hermes-app",
       "label": "HermesApp — 移动端 AI 助手网页",
       "type": "entity",
-      "cluster": "Hermes 技巧",
+      "cluster": "Linux 运维",
       "summary": "[project] projects/hermes-app",
       "status": "active",
       "tags": [
@@ -3071,7 +3077,7 @@
       "id": "research-sysak-comprehensive-report",
       "label": "SysAK (System Analysis Kit) ",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Linux 运维",
       "summary": "[research] research/sysak-comprehensive-report",
       "status": "active",
       "tags": [
@@ -3089,7 +3095,7 @@
       "id": "research-sysak-diagnostic-toolkit",
       "label": "SysAK Research Report",
       "type": "concept",
-      "cluster": "其他",
+      "cluster": "Linux 运维",
       "summary": "[research] research/sysak-diagnostic-toolkit",
       "status": "active",
       "tags": [
@@ -3155,7 +3161,7 @@
       "id": "wiki-books-aliyun-cloud-disk-complete-guide",
       "label": "阿里云服务器云盘使用全攻略：ESSD与SSD云盘技术解析",
       "type": "entity",
-      "cluster": "其他",
+      "cluster": "Linux 运维",
       "summary": "[wiki/book] wiki/books/aliyun-cloud-disk-complete-guide",
       "status": "active",
       "tags": [
@@ -3174,7 +3180,7 @@
       "id": "wiki-books-aliyun-ops-architecture-practice",
       "label": "阿里云运维架构实践秘籍",
       "type": "entity",
-      "cluster": "其他",
+      "cluster": "Linux 运维",
       "summary": "[wiki/book] wiki/books/aliyun-ops-architecture-practice",
       "status": "active",
       "tags": [
@@ -3192,7 +3198,7 @@
       "id": "wiki-books-being-online-wang-jian",
       "label": "Being Online — 王坚《在线》英文原版核心哲",
       "type": "entity",
-      "cluster": "其他",
+      "cluster": "Linux 运维",
       "summary": "[wiki/book] wiki/books/being-online-wang-jian",
       "status": "active",
       "tags": [
@@ -3209,7 +3215,7 @@
       "id": "books-design-patterns-gof",
       "label": "Design Patterns: Elements of",
       "type": "entity",
-      "cluster": "Linux 运维",
+      "cluster": "Godot 引擎",
       "summary": "[book] books/design-patterns-gof",
       "status": "active",
       "tags": [
@@ -3244,7 +3250,7 @@
       "id": "books-javascript-professional-js-4th",
       "label": "Professional JavaScript for ",
       "type": "entity",
-      "cluster": "Linux 运维",
+      "cluster": "JavaScript 前端工程化",
       "summary": "[book] books/javascript-professional-js-4th",
       "status": "active",
       "tags": [
@@ -3289,6 +3295,52 @@
         "code-smell",
         "incremental-change",
         "refactoring"
+      ]
+    },
+    {
+      "id": "projects-soccer-no1-prototype-v2-design",
+      "label": "原型 v2 设计文档：多向量冲突决策链",
+      "type": "concept",
+      "cluster": "游戏设计",
+      "summary": "[note] projects/soccer-no1-prototype-v2-design",
+      "status": "active",
+      "tags": [
+        "design-doc",
+        "football",
+        "game-design",
+        "godot",
+        "project-soccer-no1",
+        "prototype",
+        "prototype-v2"
+      ]
+    },
+    {
+      "id": "projects-soccer-no1-distillation-multi-vector",
+      "label": "蒸馏结果：多向量冲突决策模型",
+      "type": "concept",
+      "cluster": "游戏设计",
+      "summary": "[note] projects/soccer-no1-distillation-multi-vector",
+      "status": "active",
+      "tags": [
+        "decision-model",
+        "design-thinking",
+        "distillation",
+        "football",
+        "game-design",
+        "project-soccer-no1"
+      ]
+    },
+    {
+      "id": "project-soccer-no1-football-color-domain",
+      "label": "Football RPG Color Domain Se",
+      "type": "concept",
+      "cluster": "美术与技术",
+      "summary": "[concept] project-soccer-no1/football-color-domain",
+      "status": "active",
+      "tags": [
+        "color-domain",
+        "cross-domain",
+        "football"
       ]
     }
   ],
