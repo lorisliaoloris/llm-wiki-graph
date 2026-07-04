@@ -5,9 +5,10 @@
 
 ## 铁律
 
-1. **Gbrain 是真相源** — 所有内容（页面、link、tag）在 Gbrain 维护
+1. **Gbrain 是真相源** — 所有内容（页面、link、tag、summary）在 Gbrain 维护
 2. **graph.json 是导出物** — 从 Gbrain 自动生成，提交到本仓库供可视化消费
 3. **不手改 graph.json** — 发现数据不对 → 修 Gbrain → 重新导出
+4. **每个页面必须有 summary** — `summary` 是 frontmatter 必填字段，作为图谱节点的描述文字
 
 ## Slug 映射（新 Agent 最容易踩的坑）
 
@@ -34,27 +35,69 @@ const tid = typeof e.target === 'object' ? e.target.id : e.target;
 ## graph.json 生成流程
 
 ```
-1. mcp_gbrain_list_pages → 获取全部页面
-2. 按 slug 前缀 + type 自动分类 → clusters
-3. 每个页面 → 一个 node（id 做 slug 映射）
-4. mcp_gbrain_get_links → 每条 link → 一条 edge（source/target 做 slug 映射）
-5. 输出 graph.json + git commit + push
+1. mcp_gbrain_list_pages（按 type 分组拉取）→ 获取全部页面
+2. mcp_gbrain_get_page → 提取 summary（frontmatter > 第一句完整话）
+3. mcp_gbrain_get_tags → 获取每个页面的 tag
+4. 按 slug 前缀 + tag 自动分类 → clusters
+5. 每个页面 → 一个 node（id 做 slug 映射，含 summary + slug）
+6. mcp_gbrain_get_links → 每条 link → 一条 edge（source/target 做 slug 映射）
+7. 输出 graph.json + git commit + push
 ```
+
+## Gbrain 页面要求（各 Agent 必读）
+
+创建或更新 Gbrain 页面时，必须包含以下 frontmatter：
+
+```yaml
+---
+title: "页面标题（28 字以内，作为图谱节点标签）"
+slug: domain/page-name
+type: concept | entity | reference | note | book
+summary: "一句完整的话描述本页内容。图谱点击节点时显示。"
+tags: [tag1, tag2, tag3]
+---
+```
+
+**summary 铁律**：
+- 必须写，不能留空
+- 一句完整的话，不是截断，不是标签列表
+- 自包含——不看标题也能理解
+- 具体——说清楚是什么、为什么重要
+
+详情见 Hermes skill `llm-wiki` 最新版。
 
 ## 知识团（cluster）分类规则
 
-按 slug 前缀自动归类：
+**优先级：slug 前缀 > tag 关键词 > 默认归入「其他」**
 
 | slug 前缀 | cluster |
 |-----------|---------|
-| `design-theory/` | 游戏设计 |
-| `design-thinking/` | 游戏设计 |
-| `game-design/` | 游戏设计 |
 | `reverse-engineering/` | 逆向工程 |
-| `projects/soccer-*` | Soccer NO.1 |
-| `skills/` | 技能与工具 |
-| `reference/` | 参考资料 |
-| 无前缀 + LLM Wiki 关键词 | LLM Wiki 知识图谱 |
+| `cf8/` | CF8 开发 |
+| `linux-ops/` | Linux 运维 |
+| `art-tech/`、`art/` | 美术与技术 |
+| `ddia/`、`chapter*/` | DDIA 读书笔记 |
+| `books/javascript/` | JavaScript 前端工程化 |
+| `books/`（非 javascript） | Godot 引擎 |
+| `design-theory/`、`design-thinking/`、`game-design/` | 游戏设计 |
+| `projects/soccer-*`、`football-knowledge/` | Soccer NO.1 |
+| `skills/`、`inventory/`、`tools/` | 技能与工具 |
+| `reference/`、`specs/` | 参考资料 |
+| `hermes-tips/`、`agents/`、`openclaw/` | Hermes 技巧 |
+| `glucose/` | 血糖管理 |
+| `bug/` | 故障记录 |
+| `java-concurrency/` | Java 并发 |
+| `anatomy_of_a_redis/`、`commands_in_redis/` | Redis 剖析 |
+| `game-patterns/` | Godot 引擎 |
+| LLM Wiki 关键词 | LLM Wiki 知识图谱 |
+
+**无 slug 前缀匹配时**，按 tag 关键词分配：
+- `game-design`、`soccer`、`cm4`、`足球` → 游戏设计
+- `linux`、`server`、`kernel`、`sysctl`、`devops`、`ecs` → Linux 运维
+- `art`、`美术`、`ui`、`svg` → 美术与技术
+- 其余 → 其他
+
+**tag 的作用**：各 Agent 给自己的页面打 tag → 导出脚本按 tag 归类 → 节点出现在正确的知识团中。不打 tag = 永远在「其他」。
 
 ## 维护日志
 
